@@ -1,0 +1,43 @@
+<div>
+  <div class="nixy" ng-if="vm.showNixy">
+    <div class="nixy-expanded" style="display: none">
+      <div class="nixy-header">
+        <a href class="nixy-close">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
+        <div class="nixy-photo"></div>
+      </div>
+      <div class="chatCont" id="chatCont">
+        <div id="result_div" class="resultDiv">
+          <div ng-repeat-start="message in vm.chat"
+               ng-class="{
+                  'botResult': message.sender === 'bot',
+                  'userEnteredText': message.sender === 'user',
+                  'text-danger': message.style === 'error'
+               }"
+               ng-bind-html="message.text | linky:'_blank'"
+          >
+          </div>
+          <div class="clearfix" ng-repeat-end=""></div>
+        </div>
+        <div class="chatForm" id="chat-div">
+          <div class="spinner" ng-show="vm.$busy">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
+          <input type="text" id="chat-input" autocomplete="off"
+                 placeholder="Ask Nixy..." class="form-control bot-txt"
+                 ng-model="vm.input"
+                 ng-keyup="$event.which === 13 && vm.handleUserMessage()"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="nixy-collapsed">
+      <a href >
+        <i></i> Have any nutrition questions?
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h3 class="modal-title">Copy {{vm.food.food_name}}</h3>
+</div>
+<div class="modal-body">
+  <label>Consume at</label>
+  <datepicker class="date-picker" ng-model="vm.date" show-weeks="false"></datepicker>
+  <timepicker class="time-picker" ng-model="vm.date" hour-step="1" minute-step="15"></timepicker>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" type="button" ng-click="vm.copy()">Copy</button>
+  <button class="btn btn-default" type="button" ng-click="vm.close()">Close</button>
+</div>

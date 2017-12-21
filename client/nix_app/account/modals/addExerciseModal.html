@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <span class="btn-modal-close" ng-click="vm.close();">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </span>
+  <h3 class="modal-title">Log Exercise</h3>
+</div>
+<div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="exercise">Enter your exercise below:</label>
+          <textarea rows="10" cols="50"
+                    name="exercise" id="exercise" class="form-control"
+                    placeholder="45min spinning and 2 mile jog"
+                    ng-model="vm.exercises"
+                    focus-if="vm.focus"
+                   ></textarea>
+        </div>
+      </form>
+
+  <div ng-if="vm.recent.length">
+    Recent Exercise:
+    <div ng-repeat="recentExercise in vm.recent">
+      <a href ng-click="vm.submit(recentExercise)">{{recentExercise}}</a>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div>
+    <button class="btn btn-success" type="button"
+            ng-click="vm.submit()"
+            ng-disabled="!vm.exercises || vm.submit.$busy">Submit
+    </button>
+    <button class="btn btn-default" type="button"
+            ng-click="vm.close()">Cancel
+    </button>
+    <button ng-if="vm.edit" class="btn btn-danger" type="button" ng-click="vm.delete()">Delete</button>
+  </div>
+  <alert type="danger" class="tidy-alert" ng-if="vm.$error">
+    {{vm.$error.message || vm.$error}}
+  </alert>
+</div>

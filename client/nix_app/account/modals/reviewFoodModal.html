@@ -1,0 +1,312 @@
+<div class="modal-header">
+  <div class="row">
+    <div class="col-xs-12">
+      <span class="btn-modal-back" ng-click="vm.addFoodModal();">
+        <i class="fa fa-2x fa-angle-left" aria-hidden="true"></i>
+      </span>
+      <span class="btn-modal-close" ng-click="vm.close();">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+      <h3 class="modal-title text-center">Basket</h3>
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal review-food-form" name="reviewFoodsForm">
+    <div class="form-group">
+      <div class="col-sm-12">
+        <div instant-smart-search="vm.instantSmartSearch"
+             max-food-name-length="35"
+             autofocus="vm.focusSearch"></div>
+      </div>
+    </div>
+    <alert class="tidy-alert" type="danger" ng-if="vm.smartSearch.error">
+      {{vm.smartSearch.error.message || 'Unknown error occured'}}
+    </alert>
+    <div class="review-foods-basket-notification basket">
+      <alert type="success" class="basket-hint" ng-if="!vm.reviewFoodsBasket.foods.length">
+        Search foods to add to {{vm.consumedAt.meal}}
+        <i class="fa fa-hand-o-up"></i>
+      </alert>
+      <review-foods-basket-notification></review-foods-basket-notification>
+    </div>
+    <div class="form-group" ng-repeat="food in vm.reviewFoodsBasket.foods"
+         ng-init="!food._servingQty && (food._servingQty = food.serving_qty)">
+      <div class="col-xs-11">
+        <div class="review-item-calorie padding-top">
+          <div class="green cal">{{vm.reviewFoodsBasket.getNutrientValue(food, vm.user.default_nutrient) | number: 0}}
+          </div>
+          <span class="note">
+            {{vm.primaryNutrients[vm.user.default_nutrient].shortName || vm.primaryNutrients[vm.user.default_nutrient].name}}
+          </span>
+        </div>
+        <div class="review-item-info padding-top clickable" ng-click="vm.openFoodInfoModal(food)">
+          <i class="fa fa-info-circle"></i>
+        </div>
+        <div class="review-item-photo">
+          <img ng-src="{{food.photo.thumb || food.metadata.photo.thumbnail || '//d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png'}}">
+        </div>
+        <div class="review-item-wrap">
+          <div class="review-item-serving-size">
+            <input type="text" class="form-control text-center"
+                   ng-model="food._servingQty">
+          </div>
+          <div class="review-item-serving-unit">
+            <div class="form-control-static" ng-if="!food.alt_measures || food.alt_measures.length <= 1">
+              {{food.serving_unit}}
+            </div>
+
+            <select class="form-control"
+                    ng-if="food.alt_measures.length > 1"
+                    ng-init="vm.setCurrentMeasure(food)"
+                    ng-model="food._measure"
+                    ng-options="m as m.measure for m in food.alt_measures"
+                    ng-change="vm.changeFoodMeasure(food)"
+            >
+            </select>
+          </div>
+          <div>
+            {{food.food_name}}
+            <div class="review-item-brand" ng-if="food.brand_name">
+              {{food.brand_name}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-1 delete-item-wrap">
+        <a href class="btn-delete-item" ng-click="vm.reviewFoodsBasket.remove(food)">
+          <i class="fa fa-times"></i>
+        </a>
+      </div>
+    </div>
+
+
+
+    <div class="form-group review-item-total-calories" ng-if="vm.reviewFoodsBasket.foods.length">
+      <div class="review-item-calorie green">
+        {{vm.reviewFoodsBasket.getTotalNutrientValue(vm.user.default_nutrient) | number: 0}}
+      </div>
+      Total {{vm.primaryNutrients[vm.user.default_nutrient].name | ucfirst}}
+    </div>
+
+    <div class="row macronutrients">
+      <div class="col calorie" ng-if="vm.user.default_nutrient != 208">
+        {{vm.reviewFoodsBasket.getTotalNutrientValue(208) | number: 0}}
+        <span>Calories</span>
+      </div>
+      <div class="col protein" ng-if="vm.user.default_nutrient != 203">
+        {{vm.reviewFoodsBasket.getTotalNutrientValue(203) | number: 0}}g
+        <span>Protein</span>
+      </div>
+      <div class="col carb" ng-if="vm.user.default_nutrient != 205">
+        {{vm.reviewFoodsBasket.getTotalNutrientValue(205) | number: 0}}g
+        <span>Carbs</span>
+      </div>
+      <div class="col fat" ng-if="vm.user.default_nutrient != 204">
+        {{vm.reviewFoodsBasket.getTotalNutrientValue(204) | number: 0}}g
+        <span>Fat</span>
+      </div>
+      <div class="col sodium" ng-if="vm.user.default_nutrient != 307">
+        {{vm.reviewFoodsBasket.getTotalNutrientValue(307) | number: 0}}mg
+        <span>Sodium</span>
+      </div>
+    </div>
+
+    <div class="form-group review-item-total-calories" ng-if="!vm.reviewFoodsBasket.multiple">
+      <div class="review-item-calorie green">
+        {{vm.reviewFoodsBasket.getTotalNutrientValue(vm.user.default_nutrient) / vm.reviewFoodsBasket.servings | number: 0}}
+      </div>
+      {{vm.primaryNutrients[vm.user.default_nutrient].name | ucfirst}} per serving
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12" ng-if="vm.reviewFoodsBasket.foods.length > 1">
+        <p>
+          Appear on food log as:
+        </p>
+        <label class="radio-inline">
+          <input type="radio" ng-model="vm.reviewFoodsBasket.multiple" ng-value="true"> Multiple Foods
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-model="vm.reviewFoodsBasket.multiple" ng-value="false"> Single Food
+        </label>
+
+      </div>
+    </div>
+    <div class="form-group" ng-if="!vm.reviewFoodsBasket.multiple">
+      <label class="control-label col-xs-4">Meal Name</label>
+      <div class="col-xs-8">
+        <input class="form-control" type="text" ng-model="vm.reviewFoodsBasket.mealName" placeholder="e.g.: After workout meal" required>
+      </div>
+    </div>
+    <div class="form-group" ng-if="!vm.reviewFoodsBasket.multiple">
+      <label class="control-label col-xs-4">Servings</label>
+      <div class="col-xs-8">
+        <input class="form-control" type="number" min="1" ng-model="vm.reviewFoodsBasket.servings" required>
+      </div>
+    </div>
+  </form>
+
+  <div class="consumed-at" ng-click="vm.consumedAt.toggle()">
+      <span class="btn-now pull-right">
+        <span ng-show="vm.consumedAt.useNow">
+          Now <i class="fa fa-chevron-right"></i>
+        </span>
+        <i ng-show="!vm.consumedAt.useNow" class="fa fa-chevron-down"></i>
+      </span>
+    <strong>When:</strong>
+    {{vm.consumedAt.day || (vm.consumedAt.getValue(true) | amDateFormat:'MM/DD/YY')}},
+    {{vm.consumedAt.getMeal()}}
+  </div>
+  <div class="date-option" ng-show="!vm.consumedAt.useNow">
+    <label>Meal</label>
+    <div class="btn-group btn-group-sm btn-group-justified">
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.meal"
+             btn-radio="'Breakfast'" uncheckable>Breakfast</label>
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.meal"
+             btn-radio="'Lunch'" uncheckable>Lunch</label>
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.meal" btn-radio="'Dinner'"
+             uncheckable="uncheckable">Dinner</label>
+      <label class="btn btn-default"
+             ng-class="{active: vm.consumedAt.meal.indexOf('Snack') > -1}"
+             ng-click="vm.consumedAt.meal.indexOf('Snack') === -1 && (vm.consumedAt.meal = 'Morning Snack')"
+      >Snack</label>
+    </div>
+    <div class="btn-group btn-group-sm btn-group-justified" ng-show="vm.consumedAt.meal.indexOf('Snack') > -1">
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.meal"
+             btn-radio="'AM Snack'" uncheckable>AM Snack</label>
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.meal"
+             btn-radio="'PM Snack'" uncheckable>PM Snack</label>
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.meal"
+             btn-radio="'Late Snack'" uncheckable>Late Snack</label>
+    </div>
+    <br>
+    <label>Date</label>
+    <div class="btn-group btn-group-sm btn-group-justified">
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.day"
+             btn-radio="'Today'" uncheckable>
+        Today
+      </label>
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.day"
+             btn-radio="'Yesterday'" uncheckable>
+        Yesterday
+      </label>
+      <label class="btn btn-default"
+             ng-model="vm.consumedAt.day"
+             btn-radio="null" uncheckable>
+        <i class="fa fa-calendar"></i>
+        Choose Date
+      </label>
+    </div>
+    <br>
+    <div ng-show="vm.consumedAt.showDatePicker">
+      <datepicker
+        class="date-picker"
+        ng-model="vm.consumedAt.datePicker"
+        show-weeks="false"
+      ></datepicker>
+    </div>
+    <br><br>
+  </div>
+
+  <div class="border-box">
+    <strong>
+      Photo:
+    </strong>
+    <div class="text-center thumbnail recipe-photo"
+         ng-class="{uploading: vm.imageUpload.$busy}"
+         ng-if="vm.imageUpload.file || vm.imageUpload.backupFile || vm.reviewFoodsBasket.photo.thumb"
+
+         ngf-select ngf-drop
+         ng-model="vm.imageUpload.file"
+         name="photo"
+         ngf-model-invalid="vm.imageUpload.invalidFile"
+         ngf-model-options="{allowInvalid: false, updateOn: 'change drop dropUrl paste'}"
+         ngf-fix-orientation="true"
+         ngf-accept="'image/*'"
+         ngf-pattern="'image/*'"
+         ngf-drag-over-class="{pattern: 'image/*', accept:'btn-success', reject:'btn-danger', delay:100}"
+         ngf-change="vm.imageUpload.onChange()"
+         ngf-before-model-change="vm.imageUpload.beforeChange()"
+         ngf-max-size="'10MB'"
+    >
+      <button class="btn-delete-recipe-photo"
+              ng-click="$event.stopPropagation(); vm.clearImageUpload()"
+      ></button>
+
+      <img ng-src="{{(vm.imageUpload.file || vm.imageUpload.backupFile || vm.reviewFoodsBasket.photo.thumb) | ngfDataUrl}}"
+           alt="">
+    </div>
+
+    <div class="text-center">
+      <div class="margin-bottom">
+        <button class="btn btn-default"
+                ng-if="!(vm.imageUpload.file || vm.imageUpload.backupFile || vm.reviewFoodsBasket.photo.thumb)"
+
+                ngf-select ngf-drop
+                ng-model="vm.imageUpload.file"
+                ng-disabled="vm.imageUpload.$busy"
+                name="photo"
+
+                ngf-model-invalid="vm.imageUpload.invalidFile"
+                ngf-model-options="{allowInvalid: false, updateOn: 'change drop dropUrl paste'}"
+                ngf-fix-orientation="true"
+                ngf-accept="'image/*'"
+                ngf-pattern="'image/*'"
+                ngf-drag-over-class="{pattern: 'image/*', accept:'btn-success', reject:'btn-danger', delay:100}"
+                ngf-change="vm.imageUpload.onChange()"
+                ngf-before-model-change="vm.imageUpload.beforeChange()"
+                ngf-max-size="'10MB'"
+                ng-click="vm.imageUpload.blur($event)">
+          <span ng-hide="vm.imageUpload.$busy">Pick photo</span>
+          <span ng-show="vm.imageUpload.$busy">Saving photo <i class="fa fa-spinner fa-spin"></i></span>
+        </button>
+      </div>
+
+      <alert type="danger" class="tidy-alert" ng-if="reviewFoodsForm.photo.$error.maxSize">
+        Max file size is 10MB. Please choose a smaller image.
+      </alert>
+
+      <alert type="danger" class="tidy-alert" ng-if="vm.imageUpload.$error">
+        Image upload failed: {{vm.imageUpload.$error.message}}
+      </alert>
+    </div>
+  </div>
+
+
+</div>
+<div class="modal-footer">
+  <p>
+    <button class="btn btn-success btn-block" type="button" ng-click="vm.submit()"
+            ng-disabled="reviewFoodsForm.$invalid || vm.reviewFoodsBasket.foods.length < 1 || vm.imageUpload.$busy">
+      <i class="fa fa-pencil"></i>
+      <span ng-if="vm.reviewFoodsBasket.multiple">Log {{vm.reviewFoodsBasket.foods.length}} foods</span>
+      <span ng-if="!vm.reviewFoodsBasket.multiple">Log 1 serving</span>
+
+    </button>
+
+    <alert class="submit-alert" type="danger" ng-if="vm.submit.$error">
+      <span>An unexpected server error has occurred.</span>
+      <br>
+      <small>
+        Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+        <span ng-if="vm.submit.$error.id">
+            and reference the error code: {{vm.submit.$error.id}}
+        </span>
+      </small>
+    </alert>
+  </p>
+  <br>
+  <p>
+    <a href ng-click="vm.reviewFoodsBasket.clear()">
+      <i class="fa fa-times"></i> Clear basket
+    </a>
+  </p>
+</div>

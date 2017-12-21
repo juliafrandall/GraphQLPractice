@@ -1,0 +1,195 @@
+<div class="container">
+  <div class="row">
+    <ol class="breadcrumb">
+      <li>
+        <a ui-sref="site.database"> Nutritionix Database</a> &gt;
+      </li>
+      <li class="active">{{vm.item.display_name}}</li>
+    </ol>
+  </div>
+</div>
+<div class="container" itemscope itemtype="https://schema.org/Product">
+  <div class="row item-title bg-white padding">
+    <div class="col-lg-12 as-table">
+      <div class="as-table-cell text-center item-thumbnail" ng-if="vm.item.photo.thumb">
+        <img itemprop="image" ng-src="{{vm.item.photo.thumb}}"
+             alt="{{vm.item.display_name}}" title="{{vm.item.display_name}}">
+      </div>
+      <div class="as-table-cell">
+        <h1 class="food-item-name" itemprop="name"
+            ng-bind-html="vm.item.display_name"></h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="row bg-white padding">
+    <div class="col-lg-9">
+      <div class="row">
+        <div class="col-sm-5 col-lg-5">
+
+          <div id="nutrition-label" nutrition-label="vm.labelData"
+               nutrition-label-options="{userFunctionOnQuantityChange: vm.onQuantityChange}"></div>
+          <p>
+            <track-widget food="vm.trackFood"></track-widget>
+            <a href ui-sref="site.trackApp" class="app-text-ad">Nutritionix App</a>
+          </p>
+
+          <div class="rounded-box" ng-if="vm.trackFood.nf_calories > 10">
+            <div class="box-title">
+              Source of Calories
+            </div>
+            <div class="box-content">
+              <canvas class="chart chart-pie"
+                      chart-data="vm.pieChart.data"
+                      chart-labels="vm.pieChart.labels"
+                      chart-legend="true"
+                      chart-colors="['#1AA6B7', '#F0AB00', '#b3217c', '#808080']"
+                      chart-options="{
+                          responsive: true,
+                          maintainAspectRatio: true,
+                          legend: {
+                              display: true,
+                              position: 'right',
+                              labels: {
+                                generateLabels: vm.pieChart.generateLabels
+                              },
+                              onClick: null
+                          },
+                          tooltips: {
+                            callbacks: {
+                              label: vm.pieChart.label
+                            }
+                          }
+                        }"
+              >
+              </canvas>
+
+              <div class="small grey" ng-if="vm.pieChart.showAlcohol">
+                * Calories from alcohol is an estimate, and may include artificial sweeteners and sugar alcohols.
+              </div>
+            </div>
+          </div>
+
+          <div class="padding-bottom">
+          <span>
+            <b>Region: </b> <span class="flag-icon flag-icon-us"></span> US
+          </span>
+          </div>
+
+
+        </div>
+
+        <div class="col-sm-7 col-lg-7">
+          <div class="rounded-box burn-calories" ng-if="vm.trackFood.nf_calories > 10">
+            <div class="box-title">
+              How long would it take to burn off {{vm.trackFood.nf_calories | fdaRound: 'calories'}} KCal?
+            </div>
+            <div class="box-content">
+              <table class="table m-b-none">
+                <tbody>
+                <tr>
+                  <td>Walking (3mph)</td>
+                  <td>{{vm.getBurnTime(3.5) | number: 0}} minutes</td>
+                </tr>
+                <tr>
+                  <td>Running (6mph)</td>
+                  <td>{{vm.getBurnTime(9.8) | number: 0}} minutes</td>
+                </tr>
+                <tr>
+                  <td>Bicycling (10mph)</td>
+                  <td>{{vm.getBurnTime(6.8) | number: 0}} minutes</td>
+                </tr>
+                </tbody>
+              </table>
+              <div>
+                <small ng-if="!vm.user">
+                  Values estimated based on person weighting 140 lbs.
+                  <a ui-sref="account.login.login">Login</a>
+                  to personalize.
+                </small>
+                <small ng-if="vm.user && !vm.user.weight_kg">
+                  Values estimated based ​on​
+                  <span ng-if="vm.user.measure_system != 1">
+                  140 lbs
+                </span>
+                  <span ng-if="vm.user.measure_system == 1">
+                  63.64 kg
+                </span>
+                  body weight.
+
+                  Visit the <a ui-sref="account.cabinet.dailyCalories">Daily Calories</a> page
+                  to personalize this measure.
+                </small>
+                <small ng-if="vm.user && vm.user.weight_kg">
+                  These figures are estimated based on the weight you saved into Nutritionix Track.
+
+                  Visit the <a ui-sref="account.cabinet.dailyCalories">Daily Calories</a> page
+                  to update your weight.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="rounded-box">
+            <div class="box-content">
+              <a class="amazon" target="_blank"
+                 rel="nofollow"
+                 ng-href="{{'https://www.amazon.com/gp/search' +
+                          '?ie=UTF8&camp=1789&creative=9325&index=grocery' +
+                          '&keywords=' + (vm.item.food_name | encodeUri) +
+                          '&linkCode=ur2&tag=nutritionix07-20'}}">
+                <i class="fa fa-amazon"></i> Find on Amazon
+              </a>
+            </div>
+          </div>
+
+          <div ng-if="vm.item.sub_recipe.length"
+               class="rounded-box">
+            <div class="box-title">
+              Nutritionix sub-recipe for {{vm.item.serving_qty}} {{vm.item.serving_unit}}:
+            </div>
+            <div class="box-content">
+              <table class="table table-condensed table-striped table-bordered">
+                <tr>
+                  <th>Serving</th>
+                  <th style="width: 100%">Ingredient</th>
+                  <th>Calories</th>
+                </tr>
+                <tr ng-repeat="ingredient in vm.item.sub_recipe">
+                  <td class="nobr">
+                    <span ng-show="ingredient.serving_qty >= 0.25">
+                      {{ingredient.serving_qty | smartNumber:true:false:2}}
+                      {{ingredient.serving_unit | noplural: ingredient.serving_qty}}
+                    </span>
+                    <span ng-hide="ingredient.serving_qty >= 0.25">
+                      {{ingredient.serving_weight | smartNumber:true:false:2}} g
+                    </span>
+                  </td>
+                  <td class="nobr">
+                    <a ui-sref="site.food({natural_query: (ingredient.food | cleanurl)})">
+                      {{ingredient.food | noplural: ingredient.serving_qty}}
+                    </a>
+                  </td>
+                  <td class="nobr">
+                    {{ingredient.calories | number: ingredient.calories >= 10 ? 0 : 1}}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <p class="text-center">
+        <div ads></div>
+      </p>
+    </div>
+    <div class="row hidden-xs hidden-sm hidden-md">
+      <div class="col-md-12">
+        <p class="text-center">
+          <div ads></div>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

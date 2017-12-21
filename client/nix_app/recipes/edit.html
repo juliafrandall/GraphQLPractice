@@ -1,0 +1,192 @@
+<div class="grey-background">
+  <div class="page-banner basil-bucket">
+    <div class="overlay-300"></div>
+    <div class="overlay-text">
+      <h1>Recipes</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="#" ui-sref="account.cabinet.myFoods">Recipes</a> &gt;</li>
+      <li class="active">
+        Edit Recipe: {{vm.recipe.food_name | ucwords}}
+      </li>
+    </ol>
+    <div class="content-margin padding">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-lg-9 col-md-8 col-sm-8">
+              <a ui-sref="account.cabinet.myFoods" class="btn btn-default btn-sm pull-left btn-back">
+                <i class="fa fa-chevron-left"></i>
+              </a>
+              <h2 style="margin-top:0;">
+                Edit Recipe: {{vm.recipe.food_name | ucwords}}
+              </h2>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-4 text-right">
+              <a class="btn btn-info"
+                 ui-sref="site.recipes.public-view({
+                            recipe_name: (vm.recipe.food_name | cleanurl),
+                            id: vm.recipe.public_id
+                          })"
+                 target="_blank"
+                 ng-if="vm.recipe.public_id && vm.recipe.is_public"
+
+              >
+                <i class="fa fa-external-link"></i>
+                View Recipe Page
+              </a>
+            </div>
+          </div>
+          <form>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="form-group">
+                  <label for="recipe_name">Recipe Name:</label>
+                  <input id="recipe_name" type="text" class="form-control"
+                         ng-model="vm.recipe.food_name"
+                         focus-if="vm.focusFoodName">
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="table-responsive">
+            <form ng-submit="vm.submit.enable()" class="form-inline">
+              <table class="table table-ingredients">
+                <thead>
+                <tr>
+                  <th>Ingredient</th>
+                  <th class="text-center">Weight (g)</th>
+                  <th class="text-center">Calories</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat="ingredient in vm.recipe.ingredients"
+                    ng-init="!ingredient._servingQty && (ingredient._servingQty = ingredient.serving_qty)">
+                  <td>
+                    <div class="ingredient-photo">
+                      <img ng-src="{{ingredient.photo.thumb}}" alt="">
+                    </div>
+                    <div class="ingredient-detail">
+
+                      <input type="text" class="form-control form-control-inline text-center input-serving-qty"
+                             ng-model="ingredient._servingQty" ng-change="vm.generateLabel(); vm.submit.enable()">
+
+                      <span ng-if="!ingredient.alt_measures || ingredient.alt_measures.length <= 1">
+                          {{ingredient.serving_unit | characters: 30}}
+                        </span>
+
+                      <select class="form-control"
+                              ng-if="ingredient.alt_measures.length > 1"
+                              ng-init="vm.setCurrentMeasure(ingredient)"
+                              ng-model="ingredient._measure"
+                              ng-options="m as (m.measure | characters: 30) for m in ingredient.alt_measures"
+                              ng-change="vm.changeFoodMeasure(ingredient)"
+                      >
+                      </select>
+
+
+                      <!--<a href="" class="add-note">+ Add note</a>-->
+                      <div class="input-padding-top">
+                        {{ingredient.food_name | ucwords}}
+                      </div>
+
+                    </div>
+                  </td>
+                  <td class="text-center">{{vm.getIngredientWeight(ingredient) | number: 0}}</td>
+                  <td class="text-center">{{vm.getIngredientCalories(ingredient) | number: 0}}</td>
+                  <td>
+                    <a href class="remove" ng-click="vm.removeIngredient(ingredient)">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </form>
+          </div>
+
+          <p>
+            <a href ng-click="vm.addIngredients.modal()">+ Add Ingredients</a>
+          </p>
+          <br>
+
+          <div class="row">
+            <div class="col-md-8">
+              <div class="form-group">
+                <label for="serving_qty">Recipe Makes:</label>
+                <div class="form-online">
+                  <input id="serving_qty" type="text" class="form-control text-center input-serving-qty"
+                         ng-model="vm.recipe.serving_qty">
+                  <input type="text" class="form-control input-serving-unit" ng-model="vm.recipe.serving_unit">
+                </div>
+              </div>
+            </div>
+          </div>
+          <p>
+            <a href ng-click="vm.addRecipeInstructions()">+ Add/Edit Recipe Instructions</a>
+          </p>
+          <br>
+          <div class="row">
+            <div class="col-xs-6">
+              <button class="btn btn-lg"
+                      ng-class="{'btn-success': vm.submit.$busy !== 3, 'btn-danger': vm.submit.$busy === 3}"
+                      ng-click="vm.submit()"
+                      ng-disabled="!vm.submit.$enabled || vm.submit.$busy">
+                <span ng-hide="vm.submit.$busy">Save</span>
+                <span ng-show="vm.submit.$busy === 1">Saving <i class="fa fa-spinner fa-spin"></i></span>
+                <span ng-show="vm.submit.$busy === 2">Saved <i class="fa fa-check"></i></span>
+                <span ng-show="vm.submit.$busy === 3">Not Saved <i class="fa fa-times"></i></span>
+              </button>
+            </div>
+            <div class="col-xs-6 text-right">
+              <button ng-click="vm.addToFoodLog()" class="btn btn-success">
+                <i class="fa fa-plus"></i>
+                Add to Food Log
+              </button>
+
+              <button ng-click="vm.deleteRecipe()" class="btn btn-danger">
+                Delete Food
+              </button>
+            </div>
+          </div>
+          <br>
+
+          <div>
+            <a ui-sref="account.cabinet.myFoods" class="btn btn-default btn-sm">
+              <i class="fa fa-chevron-left"></i> Back to My Foods
+            </a>
+          </div>
+        </div>
+
+        <div class="col-md-4" ng-if="vm.total">
+          <div id="nutrition-label" nutrition-label="vm.total"></div>
+          <ul class="nutrition-label-attr">
+            <li>Vitamin D<span class="note">**</span> : {{vm.labelData.vitamin_d || 0 | number: 0}} IU</li>
+            <li class="ng-binding">
+              Phosphorus<span class="note">**</span> : {{vm.total.phosphorus || 0 | number: 0}} mg
+            </li>
+            <li class="ng-binding">
+              Potassium<span class="note">**</span> : {{vm.total.potassium || 0 | number: 0}} mg
+            </li>
+            <li class="ng-binding">
+              Caffeine<span class="note">**</span> : {{vm.total.caffeine || 0 | number: 0}} mg
+            </li>
+          </ul>
+          <p class="note">
+            ** Please note that our restaurant and branded grocery food database does not have these attributes
+            available, and if your food log contains restaurant or branded grocery foods, these totals may be incorrect.
+            The data from these these attributes is for reference purpose only, and should not be used for any chronic
+            disease management.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end container fluid -->
+</div>

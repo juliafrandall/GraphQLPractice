@@ -1,0 +1,186 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <h1>
+      <a class="btn btn-default btn-sm btn-back" href ui-sref="account.cabinet.coach-portal.view-patient({id: vm.patient.id})">
+        <i class="fa fa-chevron-left"></i>
+      </a>
+
+      {{ vm.patient.first_name}}'s Food Log
+    </h1>
+
+    <div class="foodlog">
+      <div class="date-nav hidden-xs">
+        <div class="col-sm-3 col-md-3">
+          <button class="btn btn-default btn-prev-day" ng-click="vm.go.prev()">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="col-sm-6 col-md-6 text-center">
+          <button class="btn btn-default btn-next-day"
+                  ng-click="vm.go.today()"
+          >
+            <strong ng-if="vm.viewDate.format(vm.dateFormat) == vm.today.format(vm.dateFormat)">Today</strong>
+            <strong ng-if="vm.viewDate.format(vm.dateFormat) !== vm.today.format(vm.dateFormat)">{{ vm.viewDate | amDateFormat : 'dddd' }}</strong>, <span style="font-size:11px;">{{ vm.viewDate | amDateFormat : 'MM/DD' }}</span>
+          </button>
+        </div>
+        <div class="col-sm-3 col-md-3 text-right">
+          <button class="btn btn-default btn-next-day" ng-click="vm.go.next()">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel panel-default panel-log-food">
+        <div class="panel-heading" ng-click="vm.dailyTotalModal()">
+          <div class="angle-right">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </div>
+          <h3 class="panel-title" unreleased>
+            <strong>{{vm.viewDate | amDateFormat:'ddd'}}</strong>
+            <span>{{vm.viewDate | amDateFormat:'MM/D/YY'}}</span>
+          </h3>
+          <div class="progress-wrap">
+            <div class="target-calories">
+              <span
+                class="hidden-sm hidden-md hidden-lg"> {{vm.totals.remaining_calories | abs | number: 0}}</span>
+              {{vm.totals.remaining_calories >= 0 ? 'remaining' : 'over'}}
+              <span class="hidden-xs"> {{vm.totals.remaining_calories | abs | number: 0}}</span>
+            </div>
+            <div class="burned-calories">
+              <span>{{vm.totals.total_cal_burned | number: 0}}</span> Cal burned
+            </div>
+            <div class="current-calories">
+              <span>{{vm.totals.nf_calories | number: 0}}</span> Cal intake
+            </div>
+            <progressbar class="calorie-progress"
+                         type="{{vm.totals.progressColor || 'success'}}"
+                         value="vm.totals.progress || 0"></progressbar>
+          </div>
+        </div>
+        <div class="row macronutrients" ng-click="vm.dailyTotalModal()">
+          <div class="col protein">
+            {{vm.stats.total[203] | number: 0}}g
+            <span>Protein</span>
+          </div>
+          <div class="col carb">
+            {{vm.stats.total[205] | number: 0}}g
+            <span>Carbs</span>
+          </div>
+          <div class="col fat">
+            {{vm.stats.total[204] | number: 0}}g
+            <span>Fat</span>
+          </div>
+          <div class="col sodium">
+            {{vm.stats.total[307] | number: 0}}mg
+            <span>Sodium</span>
+          </div>
+        </div>
+        <ul class="list-group list-group-items"
+            ng-repeat="meal in vm.meals"
+            ng-if="!meal.getIsVisible || meal.getIsVisible()"
+        >
+          <!--breakfast-->
+          <li class="list-group-item divider" ng-if="meal.label">
+            <div class="meal-info" ng-click="vm.dailyTotalModal(meal.type)">
+              <span class="badge badge-calorie ">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                {{vm.stats[meal.type][208] | number: 0}}
+              </span>
+            </div>
+
+            <span>
+              {{meal.label | uppercase}}
+            </span>
+          </li>
+
+          <li class="list-group-item"
+              ng-repeat="food in vm.foods | filter: {meal_type: meal.type}"
+              ng-click="vm.viewFoodModal(food)"
+          >
+            <div class="angle-right">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </div>
+            <span class="badge badge-calorie no-label">
+              {{food.nf_calories | number: 0}}
+            </span>
+            <span class="badge badge-camera" ng-if="food.photo.is_user_uploaded">
+              <i class="fa fa-camera"></i>
+            </span>
+            <div class="item-photo">
+              <img ng-src="{{food.photo.thumb}}" alt="{{food.food_name | ucwords}}">
+            </div>
+            {{food.food_name | ucwords}}
+            <span class="item-serving ng-binding">
+              <span ng-if="food.brand_name">{{food.brand_name | ucwords}},</span>
+              {{food.serving_qty}} {{food.serving_unit}}
+            </span>
+          </li>
+        </ul>
+        <ul class="list-group list-group-items">
+          <li class="list-group-item divider" ng-if="!vm.getHasSnack()">
+            <span>
+              Snacks &nbsp;
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </span>
+          </li>
+          <li class="list-group-item divider">
+            <span>
+              Exercise
+            </span>
+          </li>
+          <li class="list-group-item" ng-repeat="exercise in vm.exercises">
+            <span class="badge badge-calorie no-label">
+              -{{exercise.nf_calories | number: 0}} Cal
+            </span>
+            <div class="item-photo">
+              <img ng-src="{{exercise.photo.thumb}}" alt="{{exercise.name | ucwords}}">
+            </div>
+            {{exercise.name | ucwords}}
+            <span class="item-serving">
+              {{exercise.duration_min}} min
+            </span>
+          </li>
+          <!--<li class="list-group-item divider">
+            <span class="badge badge-calorie" ng-if="vm.totals.avg_weight_kg > 0">
+              {{vm.totals.avg_weight_kg | kgToUserUnits | number: 1}} {{vm.weightUnit}}
+            </span>
+            <span>
+              Average weight
+            </span>
+          </li>
+          <li class="list-group-item" ng-repeat="weight in vm.weights">
+            {{weight.kg | kgToUserUnits | number: 1}}
+            {{vm.weightUnit}}
+            <span class="item-serving">
+              {{weight.timestamp | amDateFormat: 'hh:mmA'}}
+            </span>
+          </li>-->
+          <li class="list-group-item divider">
+            <span>
+              Water &nbsp;
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </span>
+          </li>
+          <li class="list-group-item">
+            {{vm.totals.water_consumed_liter | volume: true}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="btn-track-wrap hidden-sm hidden-md hidden-lg">
+  <button class="btn btn-default btn-prev-day pull-left" ng-click="vm.go.prev()">
+    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    {{vm.viewDate | amSubtract : '1' : 'day' | amDateFormat : 'dddd, M/D'}}
+  </button>
+  <button class="btn btn-default btn-next-day pull-right" ng-click="vm.go.next()">
+    {{vm.viewDate | amAdd : '1' : 'day' | amDateFormat : 'dddd, M/D'}}
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="btn btn-success btn-track" ng-click="vm.addFoodModal()">
+    <i class="fa fa-2x fa-plus"></i>
+    <strong>Track</strong>
+  </button>
+</div>

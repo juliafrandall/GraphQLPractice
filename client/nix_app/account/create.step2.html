@@ -1,0 +1,112 @@
+<h1 class="text-center">
+  Finish Setup
+</h1>
+<p class="text-center">
+  Finish your account setup
+</p>
+
+<br>
+<div ng-if="!vm.validateEmail.$hide && vm.originalMe.email">
+  <div ng-if="!vm.validateEmail.$requested">
+    <div class="alert alert-success alert-sm" ng-if="vm.me.is_activated">
+      <i class="fa fa-check-circle" aria-hidden="true"></i>
+      &nbsp; Email validated
+    </div>
+
+    <div class="alert alert-warning alert-sm" ng-if="!vm.me.is_activated">
+      <i class="fa fa-times-circle" aria-hidden="true"></i>
+      &nbsp; Email not validated. <a href ng-click="vm.validateEmail()">Validate</a>
+    </div>
+  </div>
+
+  <div ng-if="vm.validateEmail.$requested">
+    <div class="alert alert-success alert-sm" ng-if="vm.validateEmail.$success">
+      <i class="fa fa-check-circle" aria-hidden="true"></i>
+      &nbsp; Email validation email is sent
+    </div>
+
+    <div class="alert alert-danger alert-sm" ng-if="vm.validateEmail.$error">
+      <i class="fa fa-times-circle" aria-hidden="true"></i>
+      &nbsp; Email validation request failed. <a href ng-click="vm.validateEmail()">Retry</a>
+    </div>
+  </div>
+</div>
+
+<form name="form" ng-submit="vm.setupAccount()">
+  <div ng-if="!vm.originalMe.first_name" class="form-group"
+       ng-class="{'has-error': form.firstName.$dirty && !(form.firstName.$error | isEmptyObject)}">
+    <label for="firstName" class="sr-only">First Name</label>
+    <input id="firstName" type="text" name="firstName" placeholder="First Name" class="form-control"
+           ng-model="vm.me.first_name" required>
+
+    <div ng-show="form.firstName.$dirty && !(form.firstName.$error | isEmptyObject)"
+         ng-messages="form.firstName.$error" class="text-danger" role="alert">
+      <div ng-message="required">First Name is required</div>
+    </div>
+  </div>
+
+  <div ng-if="!vm.originalMe.email" class="form-group"
+       ng-class="{
+        'has-error': form.email.$dirty && !(form.email.$error | isEmptyObject) && form.email.$blur
+       }">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email"
+           placeholder="somebody@example.com"
+           class="form-control"
+           ng-model="vm.me.email"
+           ng-focus="form.email.$blur = false"
+           ng-blur="form.email.$blur = true"
+           required>
+
+    <div ng-show="form.email.$dirty && !(form.email.$error | isEmptyObject)  && form.email.$blur"
+         ng-messages="form.email.$error" class="text-danger" role="alert">
+      <div ng-message="required">Email is required</div>
+      <div ng-message="email">This is not a valid email</div>
+    </div>
+  </div>
+
+  <div class="form-group"
+       ng-class="{'has-error': form.username.$dirty && !(form.username.$error | isEmptyObject) && form.username.$blur}">
+    <label for="email">Username</label>
+    <input id="username" type="text" name="username"
+           placeholder="somebody"
+           class="form-control"
+           ng-model="vm.me.username"
+           ng-focus="form.username.$blur = false"
+           ng-blur="form.username.$blur = true">
+
+    <div ng-show="form.username.$dirty && !(form.username.$error | isEmptyObject)  && form.username.$blur"
+         ng-messages="form.username.$error" class="text-danger" role="alert">
+      <div ng-message="required">Username is required</div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Country</label>
+    <select id="country_code" name="country_code"
+            class="form-control"
+            ng-model="vm.me.country_code"
+            ng-options="c.country_code as c.name for c in vm.countryData"
+            required>
+    </select>
+  </div>
+
+  <p>
+    <button type="submit" class="btn btn-success btn-lg btn-block"
+            ng-disabled="form.$invalid">
+      Submit
+    </button>
+
+    <alert class="submit-alert" type="danger" ng-if="vm.setupAccount.$error">
+      <span ng-if="vm.setupAccount.$error.message">{{vm.setupAccount.$error.message}}</span>
+      <span ng-if="!vm.setupAccount.$error.message">An unexpected server error has occurred.</span>
+      <br>
+      <small>
+        Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+        <span ng-if="vm.setupAccount.$error.id">
+            and reference the reference code: {{vm.setupAccount.$error.id}}
+        </span>
+      </small>
+    </alert>
+  </p>
+</form>

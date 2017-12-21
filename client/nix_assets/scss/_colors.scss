@@ -1,0 +1,46 @@
+$official_green: #58a61c;
+$light-green: #dff0d8;
+$dark_green: #668364;
+$light_grey: #B4BDB3;
+$bootstrap_grey: #f8f8f8;
+$faded-text-grey: #6f7c82;
+$icon-color-red: #CC0000;
+$icon-color-blue: #4775FF;
+$icon-color-light-green: #47A347;
+$business-header-color: $light-green;
+$consumer-header-color: $light-green;
+$business-icon-color: #66A3FF;
+$consumer-icon-color: #66A3FF;
+$track-green: #28A54C;
+
+
+.business-header-bg {
+  background-color: $business-header-color;
+}
+
+.business-icon-color {
+  color: $business-icon-color;
+}
+
+.consumer-header-bg {
+  background-color: $consumer-header-color;
+}
+
+.consumer-icon-color {
+  color: $consumer-icon-color;
+}
+
+.black{
+  color: #111;
+}
+
+.white{
+  color: #fff;
+}
+.grey {
+  color: #999;
+}
+.green {
+	color: $official_green;
+}
+

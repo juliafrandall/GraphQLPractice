@@ -1,0 +1,385 @@
+<form name="vm.form" novalidate class="edit-recipe">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="border-box">
+        <div class="row">
+          <div class="col-sm-7 col-md-7">
+            <div class="form-inline">
+              <div class="as-label">
+                <h1>
+                  {{vm.recipe.id ? 'Edit Recipe' : 'New Recipe'}}
+                </h1>
+
+                <a ui-sref="site.recipes.public-view({recipe_name: (vm.recipe.name | cleanurl), id: vm.recipe.public_id})"
+                   target="_blank" ng-if="vm.isPublic"
+                >Public Recipe View</a>
+              </div>
+
+              <div class="form-group"
+                   ng-class="{'has-error': vm.form.name.$invalid && (vm.form.name.$dirty || vm.submit.$attempted)}">
+                <input type="text" class="form-control input-lg input-recipe-name"
+                       name="name"
+                       autocomplete="off"
+                       placeholder="Recipe Name"
+                       ng-model="vm.recipe.name"
+                       focus-if="vm.focusFoodName"
+                       required
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5 col-md-5 heading-buttons">
+            <div class="btn-group btn-sharing">
+              <label class="btn btn-default active"
+                     ng-model="vm.recipe.is_public"
+                     btn-radio="0">Private</label>
+              <label class="btn btn-default"
+                     ng-model="vm.recipe.is_public"
+                     btn-radio="1">Published</label>
+            </div>
+            <button class="btn"
+                    ng-class="{'btn-success': vm.submit.$busy !== 3, 'btn-danger': vm.submit.$busy === 3}"
+                    ng-click="vm.submit()"
+                    ng-disabled="!vm.submit.$enabled || vm.submit.$busy || vm.getIngredientsHasErrors()">
+              <span ng-hide="[1,2,3].indexOf(vm.submit.$busy) > -1">Save</span>
+              <span ng-show="vm.submit.$busy === 1">Saving <i class="fa fa-spinner fa-spin"></i></span>
+              <span ng-show="vm.submit.$busy === 2">Saved <i class="fa fa-check"></i></span>
+              <span ng-show="vm.submit.$busy === 3">Not Saved <i class="fa fa-times"></i></span>
+            </button>
+            <button class="btn btn-default" ng-click="vm.copyRecipe()" ng-if="vm.recipe.id">
+              Copy
+            </button>
+            <button class="btn btn-danger"
+                    ng-if="vm.recipe.id"
+                    ng-click="vm.deleteRecipe()">Delete
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="row custom-colswrap">
+    <div class="col-md-8 col1">
+      <div class="border-box">
+        <div class="row">
+          <div class="col-sm-7 col-md-7">
+            <div class="form-inline form-recipe-timer">
+              <label for="preparation-time" class="control-label">Time (min)</label>
+              <div class="form-group recipe-time">
+                <input type="number" id="preparation-time" class="form-control w70 text-center"
+                       ng-blur="vm.updateTime('prep_time_min')"
+                       ng-model="vm.recipe.prep_time_min" min="0"
+                >
+                <span class="time-label">Preparation</span>
+              </div>
+              <div class="form-group recipe-time">
+                <input type="number" id="cooking-time" class="form-control w70 text-center"
+                       ng-blur="vm.updateTime('cook_time_min')"
+                       ng-model="vm.recipe.cook_time_min" min="0"
+                >
+                <span class="time-label">Cooking</span>
+              </div>
+              <div class="total-time">
+                <i class="fa fa-2x fa-clock-o" aria-hidden="true"></i>
+                &nbsp; <strong>Total: {{vm.recipe.cook_time_min + vm.recipe.prep_time_min}} min</strong>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5 col-md-5">
+            <div class="form-inline form-recipe-timer">
+              <div class="recipe-makes">
+                <label for="" class="control-label">Recipe makes</label>
+                <div class="form-group"
+                     ng-class="{'has-error': vm.form.serving_qty.$invalid && (vm.form.serving_qty.$dirty || vm.submit.$attempted)}"
+                >
+                  <input type="text" class="form-control w50 text-center" placeholder="1"
+                         name="serving_qty"
+                         ng-model="vm.recipe.serving_qty"
+                         focus-me="'focus'"
+                         required
+                  >
+                </div>
+                <div class="form-group"
+                     ng-class="{'has-error': vm.form.serving_unit.$invalid && (vm.form.serving_unit.$dirty || vm.submit.$attempted)}"
+                >
+                  <label for="" class="sr-only"></label>
+                  <input type="text" class="form-control w90" placeholder="serving"
+                         name="serving_unit"
+                         ng-model="vm.recipe.serving_unit"
+                         required
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="border-box">
+        <h3 class="underline">
+          Ingredients
+        </h3>
+
+        <div class="form-group form-group-ingredient-search" unreleased>
+          <button class="btn btn-success">Save</button>
+          <div class="form-control-wrap">
+            <input type="text" class="form-control" placeholder="Section Name (e.g. Dressing)">
+          </div>
+
+        </div>
+
+        <table class="table table-ingredients">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Weight</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="ingredient in vm.recipe.ingredients">
+            <td class="image">
+              <span ng-hide="ingredient.$error">
+                 <img class="common-food-image" ng-src="{{ingredient.photo.thumb}}"
+                      alt="{{ingredient.food_name | ucwords}}"
+                      title="{{ingredient.food_name | ucwords}}">
+              </span>
+            </td>
+            <td class="raw-food">
+              <div ng-class="{'input-group': ingredient.$error}">
+                <input class="form-control original_input" type="text"
+                       ng-model="ingredient.metadata.original_input"
+                       ng-model-options="{debounce: 500}"
+                       ng-change="vm.updateIngredient(ingredient)"
+                >
+                <div class="input-group-addon" ng-if="ingredient.$error"
+                     tooltip="{{ingredient.$error.message}}"
+                     tooltip-append-to-body="true"
+                >
+                  <i class="fa fa-question"></i>
+                </div>
+              </div>
+            </td>
+            <td class="ingredient-info">
+              <span ng-hide="ingredient.$error">
+                {{ingredient.nf_calories | number: 0}} kcal
+              </span>
+            </td>
+            <td class="ingredient-info">
+              <span ng-hide="ingredient.$error">
+                {{ingredient.serving_weight_grams | number: 0}}g
+              </span>
+            </td>
+            <td class="buttons">
+              <i class="fa fa-times delete-ingredient clickable" aria-hidden="true"
+                 ng-click="vm.removeIngredient(ingredient)"></i>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <p>
+          <span class="add-ingredient-green clickable" ng-click="vm.addIngredients.modal()"
+                ng-hide="!vm.recipe.ingredients.length && vm.submit.$attempted"
+          >+ Add Ingredients</span>
+          <span class="text-danger clickable" ng-click="vm.addIngredients.modal()"
+                ng-show="!vm.recipe.ingredients.length && vm.submit.$attempted"
+          >+ Add at least one ingredient</span>
+        </p>
+        <p unreleased>
+          <a href="#">+ New Section</a>
+        </p>
+      </div>
+      <div class="border-box">
+        <h3 class="underline">
+          Directions
+        </h3>
+        <div class="form-group">
+          <label for="directions" class="sr-only">Directions</label>
+          <textarea name="directions" id="directions" class="form-control" cols="30" rows="10"
+                    ng-model="vm.recipe.directions"
+          ></textarea>
+        </div>
+        <div class="text-center">
+          <button class="btn"
+                  ng-class="{'btn-success': vm.submit.$busy !== 3, 'btn-danger': vm.submit.$busy === 3}"
+                  ng-click="vm.submit()"
+                  ng-disabled="!vm.submit.$enabled || vm.submit.$busy || vm.getIngredientsHasErrors()">
+            <span ng-hide="[1,2,3].indexOf(vm.submit.$busy) > -1">Save</span>
+            <span ng-show="vm.submit.$busy === 1">Saving <i class="fa fa-spinner fa-spin"></i></span>
+            <span ng-show="vm.submit.$busy === 2">Saved <i class="fa fa-check"></i></span>
+            <span ng-show="vm.submit.$busy === 3">Not Saved <i class="fa fa-times"></i></span>
+          </button>
+
+          <button class="btn btn-default" ng-click="vm.copyRecipe()" ng-if="vm.recipe.id">
+            Copy
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col2">
+      <div class="row">
+        <div class="col-sm-6 col-md-12" ng-if="vm.total">
+          <div class="nutrition-label" nutrition-label="vm.total"></div>
+          <p class="note">
+            <a class="btn btn-success" ng-href="{{vm.deepLink}}" target="_blank">Log to Nutritionix Track</a>
+          </p>
+          <div class="border-box">
+            <h3 class="underline">
+              Micronutrients
+            </h3>
+            <table id="micronutrients" class="table table-striped table-fluid">
+              <tbody>
+              <tr ng-repeat="nutrient in vm.total.micronutrients"
+                  ng-show="$index < 2 || vm.total.micronutrients.showAll">
+                <td>
+                  <strong>{{nutrient.name}}</strong>
+                </td>
+                <td class="nobr">
+                  {{nutrient.value | number : nutrient.value
+                  < 0.5 ? 2 : 1}} {{nutrient.unit}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-success" type="button"
+                    ng-click="vm.total.micronutrients.showAll = !vm.total.micronutrients.showAll">
+              <span ng-hide="vm.total.micronutrients.showAll">View All Micronutrients</span>
+              <span ng-show="vm.total.micronutrients.showAll">View Less Micronutrients</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-12">
+          <div class="border-box" unreleased>
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Add Food Tags">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Add Diet Types">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </span>
+              </div>
+            </div>
+            <select name="" id="" class="form-control">
+              <option value="">Choose Meal Type</option>
+            </select>
+          </div>
+          <div class="border-box">
+            <h3 class="underline">
+              Photo
+            </h3>
+            <div class="text-center thumbnail recipe-photo"
+                 ng-class="{uploading: vm.submit.$busy === '1.1'}"
+                 ng-if="vm.imageUpload.file || vm.imageUpload.backupFile || vm.recipe.photo.thumb"
+
+                 ngf-select ngf-drop
+                 ng-model="vm.imageUpload.file"
+                 name="photo"
+                 ngf-model-invalid="vm.imageUpload.invalidFile"
+                 ngf-model-options="{allowInvalid: false, updateOn: 'change drop dropUrl paste'}"
+                 ngf-fix-orientation="true"
+                 ngf-accept="'image/*'"
+                 ngf-pattern="'image/*'"
+                 ngf-drag-over-class="{pattern: 'image/*', accept:'btn-success', reject:'btn-danger', delay:100}"
+                 ngf-change="vm.imageUpload.onChange()"
+                 ngf-before-model-change="vm.imageUpload.beforeChange()"
+                 ngf-max-size="'10MB'"
+            >
+              <button class="btn-delete-recipe-photo"
+                      ng-show="!(vm.recipe.photo.thumb.indexOf('nix-apple-grey') > -1)"
+                      ng-click="$event.stopPropagation(); vm.deletePhoto()"
+              ></button>
+
+              <img ng-src="{{(vm.imageUpload.file || vm.imageUpload.backupFile || vm.recipe.photo.thumb) | ngfDataUrl}}"
+                   alt="{{vm.recipe.name}}">
+            </div>
+
+            <div class="text-center">
+              <div class="margin-bottom">
+                <button class="btn btn-default"
+                        ng-if="!(vm.imageUpload.file || vm.imageUpload.backupFile || vm.recipe.photo.thumb)"
+
+                        ngf-select ngf-drop
+                        ng-model="vm.imageUpload.file"
+                        ng-disabled="vm.submit.$busy"
+                        name="photo"
+
+                        ngf-model-invalid="vm.imageUpload.invalidFile"
+                        ngf-model-options="{allowInvalid: false, updateOn: 'change drop dropUrl paste'}"
+                        ngf-fix-orientation="true"
+                        ngf-accept="'image/*'"
+                        ngf-pattern="'image/*'"
+                        ngf-drag-over-class="{pattern: 'image/*', accept:'btn-success', reject:'btn-danger', delay:100}"
+                        ngf-change="vm.imageUpload.onChange()"
+                        ngf-before-model-change="vm.imageUpload.beforeChange()"
+                        ngf-max-size="'10MB'"
+                        ng-click="vm.imageUpload.blur($event)">
+                  <span ng-hide="vm.submit.$busy === '1.1'">Pick photo</span>
+                  <span ng-show="vm.submit.$busy === '1.1'">Saving photo <i class="fa fa-spinner fa-spin"></i></span>
+                </button>
+              </div>
+
+              <alert type="danger" class="tidy-alert" ng-if="vm.form.photo.$error.maxSize">
+                Max file size is 10MB. Please choose a smaller image.
+              </alert>
+
+              <alert type="danger" class="tidy-alert" ng-if="vm.imageUpload.$error">
+                Image upload failed: {{
+                 vm.imageUpload.$error.message ||
+                 'Unknown error. Please try again or contact support'
+                }}
+              </alert>
+            </div>
+          </div>
+          <div class="border-box">
+            <h3 class="underline">
+              Sources of Calories
+            </h3>
+            <canvas class="chart chart-pie"
+                    height="300"
+                    chart-data="vm.pieChart.data"
+                    chart-labels="vm.pieChart.labels"
+                    chart-legend="true"
+                    chart-colors="['#1AA6B7', '#F0AB00', '#b3217c', '#808080']"
+                    chart-options="{
+                      responsive: true,
+                      maintainAspectRatio: true,
+                      legend: {
+                          display: true,
+                          position: 'bottom',
+                          fullWidth: true,
+                          labels: {
+                            usePointStyle: false,
+                            generateLabels: vm.pieChart.generateLabels
+                          },
+                          onClick: null
+                      },
+                      tooltips: {
+                        callbacks: {
+                          label: vm.pieChart.label
+                        }
+                      }
+                    }"
+            >
+            </canvas>
+            <div class="small grey" ng-if="vm.pieChart.showAlcohol">
+              * Calories from alcohol is an estimate, and may include artificial sweeteners and sugar alcohols.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

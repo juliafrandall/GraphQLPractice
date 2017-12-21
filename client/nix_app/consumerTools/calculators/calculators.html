@@ -1,0 +1,44 @@
+  <div class="page-banner basil-bucket">
+    <div class="overlay-300"> </div>
+    <div class="overlay-text">
+      <h1> Nutritionix Calculators</h1>
+    </div>
+  </div>
+
+    <ol class="breadcrumb">
+      <li><a href="#" ui-sref="site.consumerTools">Consumer Tools</a></li> >
+      <li class="active">Calculator</li>
+    </ol>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3>
+        We offer a customized meal-building experience for the following restaurant chains.
+      </h3>
+    </div>
+  </div>
+</div>
+<div class="container container-calc-brands">
+  <div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-3 col-calc-brand" ng-repeat="calculator in vm.calculatorArray">
+        <a href="{{calculator.desktop_calculator_url}}" target="_blank">
+          <span class="brand-logo">
+            <img ng-src="{{calculator.logo_url}}" alt="{{calculator.brand_name + ' Nutrition Calculator'}}">
+          </span>
+          <span class="brand-name" ng-bind-html="calculator.brand_name"></span>
+        </a>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="text-center col-lg-12">
+      <p>
+        If you are a restaurant owner, please visit our <a href="#" ui-sref="site.restaurantPlatform">restaurant platform</a> page
+      </p>
+      <br>
+    </div>
+  </div>
+</div>

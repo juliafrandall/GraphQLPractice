@@ -1,0 +1,48 @@
+<div class="panel panel-default container">
+  <div class="row margin-top">
+    <div class="col-xs-6">
+      <h1>
+        Recipes
+      </h1>
+    </div>
+    <div class="col-xs-6 text-right">
+      <a href ui-sref="account.cabinet.recipes.new" class="btn btn-success">
+        <i class="fa fa-cutlery" aria-hidden="true"></i>
+        Create Recipe (new)
+      </a>
+    </div>
+  </div>
+
+  <div ng-if="vm.recipes.length == 0">
+    You do not have any recipes
+  </div>
+
+  <div ng-if="vm.recipes.length > 0">
+    <table class="table table-condensed table-striped table-hover">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Serving</th>
+        <th>Preparation time</th>
+        <th>Date</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="recipe in vm.recipes">
+        <td>{{recipe.name}}</td>
+        <td>{{recipe.serving_qty}} {{recipe.serving_unit}}</td>
+        <td>{{recipe.cook_time_min + recipe.prep_time_min}} min</td>
+        <td>{{recipe.updated_at | amDateFormat: 'MM/DD/YY'}}</td>
+        <td>
+          <a href ui-sref="account.cabinet.recipes.edit({id: recipe.id})">
+            <i class="fa fa-edit"></i>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

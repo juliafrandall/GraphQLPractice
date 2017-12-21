@@ -1,0 +1,458 @@
+<ads-page-level></ads-page-level>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+          <li ng-if="vm.item.item_type == 1"><a href="#" ui-sref="site.brandsList.navigate({type: 'restaurant'})">Restaurants</a> &gt;</li>
+          <li ng-if="vm.item.item_type == 2"><a href="#" ui-sref="site.brandsList.navigate({type: 'grocery'})">Grocery Brands</a> &gt;</li>
+          <li class="active">{{ vm.item.brand_name }}</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div class="container" has-schema="vm.item.item_type" itemscope itemtype="https://schema.org/Product">
+  <div class="row item-title bg-white padding">
+    <div class="col-md-9 col-lg-9 as-table">
+      <div class="as-table-cell text-center item-thumbnail"  ng-if="vm.item.thumbnail">
+        <img has-schema="vm.item.item_type" itemprop="image" ng-src="{{vm.item.thumbnail}}"
+             alt="{{vm.item.thumbnail_title}}" title="{{vm.item.thumbnail_title}}">
+      </div>
+      <div class="as-table-cell">
+
+        <h1 has-schema="vm.item.item_type" itemprop="name" class="food-item-name" ng-bind-html="vm.item.item_name"></h1>
+
+        <p has-schema="vm.item.item_type" itemprop="brand" itemscope itemtype="https://schema.org/Organization" class="food-item-brand">
+          <a ui-sref="site.brandsDetail.navigate({brand_name: (vm.item.brand_name | cleanurl), id: vm.item.brand_id})">
+            <span has-schema="vm.item.item_type" itemprop="name" ng-bind-html="vm.item.brand_name"></span>
+          </a>
+        </p>
+        <meta has-schema="vm.item.item_type" itemprop="productID" content="{{ vm.item.item_id }}">
+        <meta has-schema="vm.item.item_type" itemprop="url" content="{{ vm.productURL }}">
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-3">
+      <div fb-like></div>
+    </div>
+  </div>
+  <div class="row bg-white padding">
+    <div class="col-lg-9">
+    <div class="row">
+      <div class="col-sm-5 col-lg-5">
+
+        <div id="nutrition-label"
+             nutrition-label="vm.labelData"
+             nutrition-label-options="{userFunctionOnQuantityChange: vm.onQuantityChange}"></div>
+        <p>
+          <track-widget food="vm.trackFood"></track-widget>
+          <a href ui-sref="site.trackApp" class="app-text-ad">Nutritionix App</a>
+        </p>
+
+        <div class="rounded-box" ng-if="vm.trackFood.nf_calories > 10">
+          <div class="box-title">
+            Source of Calories
+          </div>
+          <div class="box-content">
+            <canvas class="chart chart-pie"
+                    chart-data="vm.pieChart.data"
+                    chart-labels="vm.pieChart.labels"
+                    chart-legend="true"
+                    chart-colors="['#1AA6B7', '#F0AB00', '#b3217c', '#808080']"
+                    chart-options="{
+                          responsive: true,
+                          maintainAspectRatio: true,
+                          legend: {
+                              display: true,
+                              position: 'right',
+                              labels: {
+                                generateLabels: vm.pieChart.generateLabels
+                              },
+                              onClick: null
+                          },
+                          tooltips: {
+                            callbacks: {
+                              label: vm.pieChart.label
+                            }
+                          }
+                        }"
+            >
+            </canvas>
+
+            <div class="small grey" ng-if="vm.pieChart.showAlcohol">
+              * Calories from alcohol is an estimate, and may include artificial sweeteners and sugar alcohols.
+            </div>
+          </div>
+        </div>
+
+        <div class="ingredient-statement" ng-if="vm.item.ingredient_statement">
+          <h4>Ingredients</h4>
+          {{vm.item.ingredient_statement}}
+        </div>
+
+        <div class="padding-bottom">
+          <span ng-if="vm.item.updated_at">
+            <b>Last updated: </b>
+            {{vm.item.updated_at | amUtc | amLocal | amDateFormat:'MM/DD/YY hh:mmA'}}
+          </span>
+          <br />
+          <span ng-if="vm.item.data_source">
+            <b>Source: </b>
+            <a ui-sref="site.database">{{vm.item.data_source}}</a>
+          </span>
+          <br>
+          <span>
+            <b>Region: </b>
+            <span ng-if="vm.item.region == 2">
+              <span class="flag-icon flag-icon-gb"></span>
+              UK
+            </span>
+
+            <span ng-if="vm.item.region != 2">
+              <span class="flag-icon flag-icon-us"></span>
+              US
+            </span>
+          </span>
+        </div>
+
+      </div>
+
+      <div class="col-sm-7 col-lg-7">
+        <p ng-if="vm.calculatorBrand">
+          <a ng-href="{{vm.calculatorBrand.desktop_calculator_url}}" target="_blank"
+             class="nutrition-tool-widget"
+             tooltip="{{vm.calculatorBrand.proper_brand_name}}">
+            <span class="widget-brand">
+              <img ng-src="https://res.cloudinary.com/nutritionix/image/upload/w_50,h_50,c_fit,d_default_abu3if.png/{{vm.calculatorBrand.brand_id}}.png"
+                   alt="{{vm.calculatorBrand.proper_brand_name}}">
+            </span>
+            <span class="widget-text">
+              <span class="sm">Nutrition</span> Calculator
+            </span>
+            <span class="widget-icon">
+              <i class="fa fa-2x fa-calculator" aria-hidden="true"></i>
+              <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </span>
+          </a>
+        </p>
+        <div class="rounded-box burn-calories" ng-if="vm.trackFood.nf_calories > 10">
+          <div class="box-title">
+            How long would it take to burn off {{vm.trackFood.nf_calories | fdaRound: 'calories'}} KCal?
+          </div>
+          <div class="box-content">
+            <table class="table m-b-none">
+              <tbody>
+              <tr>
+                <td>Walking (3mph)</td>
+                <td>{{vm.getBurnTime(3.5) | number: 0}} minutes</td>
+              </tr>
+              <tr>
+                <td>Running (6mph)</td>
+                <td>{{vm.getBurnTime(9.8) | number: 0}} minutes</td>
+              </tr>
+              <tr>
+                <td>Bicycling (10mph)</td>
+                <td>{{vm.getBurnTime(6.8) | number: 0}} minutes</td>
+              </tr>
+              </tbody>
+            </table>
+            <div>
+              <small ng-if="!vm.user">
+                Values estimated based on person weighting 140 lbs.
+                <a ui-sref="account.login.login">Login</a>
+                to personalize.
+              </small>
+              <small ng-if="vm.user && !vm.user.weight_kg">
+                Values estimated based ​on​
+                <span ng-if="vm.user.measure_system != 1">
+                  140 lbs
+                </span>
+                <span ng-if="vm.user.measure_system == 1">
+                  63.64 kg
+                </span>
+                body weight.
+
+                Visit the <a ui-sref="account.cabinet.dailyCalories">Daily Calories</a> page
+                to personalize this measure.
+              </small>
+              <small ng-if="vm.user && vm.user.weight_kg">
+                These figures are estimated based on the weight you saved into Nutritionix Track.
+
+                Visit the <a ui-sref="account.cabinet.dailyCalories">Daily Calories</a> page
+               to update your weight.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-box" ng-show="vm.item.scans_30day > 0">
+          <div class="box-title">
+            Barcode Scans
+            <i class="fa fa-info-circle noselect"
+               popover-placement="right"
+               popover-trigger="mouseenter"
+               popover="Millions of consumers rely on Nutritionix data to log their diets.
+                        These anonymous statistics indicate how many
+                        times this particular product has been looked up in the last 30 days."></i>
+          </div>
+          <div class="box-content">
+            This product has been looked up {{vm.item.scans_30day | number: 0}} times in the last 30 days
+          </div>
+        </div>
+
+        <div ng-if="vm.tagData && vm.item.item_type == 2 && vm.item.metric_qty" class="rounded-box">
+          <div class="box-title">
+            {{vm.tagData.tag_name | ucwords}} Ranking <span class="label label-info">beta</span>
+          </div>
+
+          <div class="box-content">
+            <div class="form-inline">
+              <small>
+                <select
+                    ng-model="vm.chart.nutrient"
+                    ng-options="key as label for (key , label) in vm.chart.nutrients"
+                    ng-change="vm.chart.reset()"></select>
+                compared to other
+                <a ui-sref="site.grocery({
+                              parent_tag: (vm.tagData.parent_tag_name | cleanurl),
+                              child_tag: (vm.tagData.tag_name | cleanurl),
+                              id: vm.tagData.tag_id
+                            })">
+                  {{vm.tagData.tag_name | pluralize}}</a>:
+              </small>
+            </div>
+            <div class="chart-y-label">
+              <small>{{vm.chart.getLegend('Density, ')}}</small>
+            </div>
+            <div class="chart-with-y-label">
+              <canvas class="chart chart-bar" style="display: block;"
+                      chart-data="vm.chart.data"
+                      chart-labels="vm.chart.labels"
+                      fill-opacity="0"
+                      chart-colours="[
+                        {
+                          fillColor: '#494EE3',
+                          strokeColor: '#97BBCD',
+                          pointColor: '#97BBCD',
+                          pointStrokeColor: '#fff',
+                          pointHighlightFill: '#fff',
+                          pointHighlightStroke: '#97BBCD'
+                        },
+                        {
+                          fillColor: '#DCDCDC',
+                          strokeColor: '#DCDCDC',
+                          pointColor: '#DCDCDC',
+                          pointStrokeColor: '#fff',
+                          pointHighlightFill: '#fff',
+                          pointHighlightStroke: '#DCDCDC'
+                        },
+                        '#F7464A',
+                        '#46BFBD',
+                        '#FDB45C',
+                        '#949FB1',
+                        '#4D5360'
+                      ]"
+                      chart-options="{
+                        animation: false,
+                        maintainAspectRatio: false,
+                        responsive: true,
+                        showTooltips: false,
+                        barShowStroke: false,
+                        barWidth: 2,
+                        scales: {xAxes: [{stacked: true, categoryPercentage: 0.2}]},
+                        tooltips: {enabled: false}
+                    }"
+
+                      height="200"
+                  >
+              </canvas>
+            </div>
+
+            <small>
+              This {{vm.tagData.tag_name}} has less {{vm.chart.getLegend() | lowercase }} than {{vm.getX() | number:
+              0}}% of
+              <a ui-sref="site.grocery({
+                            parent_tag: (vm.tagData.parent_tag_name | cleanurl),
+                            child_tag: (vm.tagData.tag_name | cleanurl),
+                            id: vm.tagData.tag_id
+                          })">
+                popular {{vm.tagData.tag_name | pluralize}}
+              </a>
+            </small>
+          </div>
+        </div>
+
+        <div ng-if="vm.item.item_type == 2" class="rounded-box">
+          <div class="box-content">
+            <a class="amazon" target="_blank"
+               rel="nofollow"
+               ng-href="{{'https://www.amazon.com/gp/search' +
+                          '?ie=UTF8&camp=1789&creative=9325&index=grocery' +
+                          '&keywords=' + (vm.item.brand_name + ' ' + vm.item.item_name | encodeUri) +
+                          '&linkCode=ur2&tag=nutritionix07-20'}}">
+              <i class="fa fa-amazon"></i> Find on Amazon
+            </a>
+          </div>
+        </div>
+
+        <div ng-if="vm.item.related.length > 0">
+          <div class="rounded-box">
+            <div class="box-title">
+              Related products from <span ng-bind-html="vm.item.brand_name"></span>:
+            </div>
+            <div class="box-content">
+              <div ng-repeat="relatedItem in vm.item.related">
+                <a  ui-sref="site.itemsDetail({
+                              brand: (vm.item.brand_name | cleanurl),
+                              item_name: (relatedItem.item_name | cleanurl),
+                              item_id: relatedItem.item_id
+                            })"
+                   ><span has-schema="vm.item.item_type" itemscope itemtype="https://schema.org/Product" itemprop="isRelatedTo">
+                     <span has-schema="vm.item.item_type" ng-bind-html="relatedItem.item_name" itemprop="name"></span>
+                   </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 10px;" ng-if="vm.item.item_type === 1">
+            <a ng-href="/restaurant-map?bid={{vm.item.brand_id}}">
+              <i class="fa fa-map-marker"></i>
+              Find nearby <span ng-bind-html="vm.item.brand_name"></span> locations
+            </a>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <a ui-sref="site.brandsDetail.navigate({
+                          brand_name: (vm.item.brand_name | cleanurl),
+                          id: vm.item.brand_id
+                        })">
+              Browse all <span ng-bind-html="vm.item.brand_name"></span> products
+            </a>
+          </div>
+
+        </div>
+
+        <div ng-if="vm.item.item_type == 1 && vm.item.related_from_other_restaurants.length > 0">
+          <div class="rounded-box">
+            <div class="box-title">
+              Related products from other restaurants:
+            </div>
+            <div class="box-content">
+              <div ng-repeat="relatedItem in vm.item.related_from_other_restaurants">
+                <a ui-sref="site.itemsDetail({
+                              brand: (relatedItem.brand_name | cleanurl),
+                              item_name: (relatedItem.item_name | cleanurl),
+                              item_id: relatedItem.item_id
+                            })"
+                   tooltip-html-unsafe="{{relatedItem.brand_name + ', ' + relatedItem.item_name}}"
+                >
+                  <span ng-bind-html="relatedItem.brand_name | characters : 30"></span>,
+                  <span ng-bind-html="relatedItem.item_name | characters : 30"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <a ui-sref="site.brandsList.navigate({type: 'restaurant'})">
+              Browse all restaurants
+            </a>
+          </div>
+
+        </div>
+
+        <div ng-if="vm.item.item_type == 3 && vm.item.sizes.length" class="rounded-box">
+          <div class="box-title">
+            Other Sizes:
+          </div>
+          <div class="box-content">
+            <div ng-repeat="relatedItem in vm.item.sizes">
+              <a ui-sref="site.itemsDetail({
+                            brand: (relatedItem.brand_name | cleanurl),
+                            item_name: (relatedItem.item_name | cleanurl),
+                            item_id: relatedItem.item_id
+                          })"
+                 ng-bind-html="relatedItem.item_name">
+              </a>
+              {{relatedItem.calories | number:0}} Calories
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="vm.item.item_type == 3 && vm.item.remote_db_key > 999999 && vm.item.recipe.ingredients.length"
+             class="rounded-box">
+          <div class="box-title">
+            Nutritionix sub-recipe for {{vm.item.serving_qty}} {{vm.item.serving_unit}}:
+          </div>
+          <div class="box-content">
+            <table class="table table-condensed table-striped table-bordered">
+              <tr>
+                <th>Serving</th>
+                <th style="width: 100%">Ingredient</th>
+                <th>Calories</th>
+              </tr>
+              <tr ng-repeat="ingredient in vm.item.recipe.ingredients">
+                <td class="nobr">
+                  <span ng-show="ingredient.serving_qty >= 0.25">
+                    {{ingredient.serving_qty | smartNumber}}
+                    {{ingredient.serving_unit | noplural: ingredient.serving_qty}}
+                  </span>
+                  <span ng-hide="ingredient.serving_qty >= 0.25">
+                    {{ingredient.serving_weight | smartNumber:true:false:2}}
+                    {{'grams' | noplural: ingredient.serving_weight}}
+                  </span>
+                </td>
+                <td class="nobr">
+                  <a ui-sref="site.food({natural_query: (ingredient.food | cleanurl)})">
+                    {{ingredient.food | noplural: ingredient.serving_qty}}
+                  </a>
+                </td>
+                <td class="nobr">
+                  {{ingredient.calories | number: 0}}
+                </td>
+              </tr>
+            </table>
+
+            <div>
+              Recipe Published by:
+              <a ui-sref="site.about">{{vm.item.recipe.published_by}}</a>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="vm.popularInTag && vm.popularInTag.length" class="rounded-box">
+          <div class="box-title">
+            Popular <span has-schema="vm.item.item_type" itemprop="category">{{vm.tagData.tag_name | pluralize}}</span>
+          </div>
+
+          <div class="box-content">
+            <div class="row">
+              <div class="col-xs-4 col-md-4 col-lg-4" ng-repeat="item in vm.popularInTag">
+                <a class="thumbnail"
+                   ui-sref="site.itemsDetail({
+                              brand: (item.brand_name | cleanurl),
+                              item_name: (item.item_name | cleanurl),
+                              item_id: item.item_id
+                            })" >
+                  <img ng-src="{{item.package_url}}" alt="{{item.item_name}}">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="col-lg-3">
+      <p class="text-center">
+        <div ads></div>
+      </p>
+    </div>
+    <div class="row hidden-xs hidden-sm hidden-md">
+      <div class="col-md-12">
+        <p class="text-center">
+          <div ads></div>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<!-- Template Engine: jinja2  -->
+<div class="wrapper">
+    <h2 style="color: green;">Post Deploy Test - Report</h2>
+    {% if payload.username %}
+        <strong>Requested by: </strong>{{ payload.username }}<br/>
+    {% endif %}
+
+    {% if payload.origin %}
+        <strong>Origin: </strong>{{ payload.origin }}<br/>
+    {% endif %}
+
+    {% if payload.retry_count %}
+        <strong>Retry Count: </strong>{{ payload.retry_count }}<br/>
+    {% endif %}
+
+    <br/>
+    {% if not passed_tests and not failed_tests %}
+    <p><strong>There are not test results!</strong></p>
+    {% endif %}
+
+    {% if passed_tests and payload.origin != "cronjob" %}
+    <table>
+        <caption>
+            <h3>Passed Tests</h3>
+            <h4> {{ passed_tests|length }} of {{ tests_count }} tests has passed.</h4>
+        </caption>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>URL</th>
+                <th>Elapse Time(in secs.)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for test in passed_tests %}
+            {% if not test.failures %}
+            <tr style="background: {{ loop.cycle('#E1E1E1', '#D4D4D4') }};">
+                <td>{{ loop.index }}</td>
+                <td><a href="https://www.browserstack.com/automate/builds/{{ test.meta.buildId }}/sessions/{{ test.sessionId }}">{{ test.id }}</a></td>
+                <td><a href="{{ test.meta.lastURL }}">{{ test.meta.lastURL }}</a></td>
+                <td>{{ test.timeElapsed/1000 }}</td>
+                <td style="text-align: center; color:green;">&#10004;</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+    {% endif %}
+
+
+    {% if failed_tests %}
+    <table>
+        <caption>
+            <h3>Failed Tests and Errors</h3>
+            <h4> {{ failed_tests|length }} of {{ tests_count }} tests has failed.</h4> <!-- TODO: fix count value -->
+        </caption>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>URL</th>
+                <th>Elapse Time(in secs.)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for test in failed_tests %}
+            {% if test.id %}
+                <tr style="background: #FF6347; height: 25px;">
+                    <td>{{ loop.index }}</td>
+                    <td><a href="https://www.browserstack.com/automate/builds/{{ test.meta.buildId }}/sessions/{{ test.sessionId }}">{{ test.id }}</a></td>
+                    <td><a href="{{ test.meta.lastURL }}">{{ test.meta.lastURL }}</a></td> <!-- TODO: Add URL -->
+                    <td>{{ test.timeElapsed/1000 }}</td>
+                    <td style="text-align: center;color:red;"><span>&#10006;</span></td>
+                </tr>
+
+                <tr style="background:#F68672">
+                    <td colspan="5" style="text-align: center"><strong>Error Message</strong></td>
+                </tr>
+
+                <tr style="background: #FEB0A2">
+                    <td colspan="5">{{test.error.message}}</td>
+                </tr>
+            {% endif %}
+
+            {% if test.errors %}
+                <tr style="background:#F68672; height: 25px;">
+                    <td colspan="5" style="text-align: center"><strong>Error Messages</strong></td>
+                </tr>
+
+                {% for error in test.errors %}
+                    <tr style="background: #FEB0A2">
+                        <td colspan="5">{{error.message}} </br>
+                        <h4><strong>Traceback</strong></h4>
+                        {{error.traceback}}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+    {% endif %}
+</div>

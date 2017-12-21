@@ -1,0 +1,316 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <ng-include
+      ng-if="vm.showOnboarding && vm.log.foods.length == 0"
+      src="'/nix_app/account/onboarding.html'"
+      ng-controller="AccountOnBoardingCtrl"></ng-include>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <div class="btn-add-food pull-right">
+      <button type="button" class="btn btn-track-food hidden-xs" ng-click="vm.addFoodModal()">
+        <i class="fa fa-plus"></i> &nbsp;
+        <strong>Browse Foods</strong>
+      </button>
+
+      <review-foods-basket-button></review-foods-basket-button>
+
+    </div>
+    <h1>
+      {{ vm.user.get('first_name')}}'s Food Log
+    </h1>
+    <div class="sidebar">
+      <!-- Diet Logging Graph -->
+      <diet-graph
+        api="vm.dietGraphApi"
+        nutrient-id="vm.me.default_nutrient"
+        target="vm.me.default_nutrient_value"
+        on-click-handler="vm.calendarClickHandler"
+        initial-display-date="vm.viewDate"
+        show-missed="1"
+        title="Track Calendar"></diet-graph>
+      <!-- End Diet Logging Graph -->
+
+      <table class="table table-stats" ng-if="vm.streak">
+        <thead>
+        <tr>
+          <th colspan="3">Stats</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>
+            Days Tracked
+            <h3>{{vm.streak.daysLogged || 0}}</h3>
+            days
+          <td>
+            Unique Foods
+            <h3>{{vm.streak.uniqueFoods || 0}}</h3>
+            foods
+          </td>
+          <td>
+            Current Streak
+            <h3>{{vm.streak.streak || 0}}</h3>
+            days
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="text-center">
+        <app-add></app-add>
+      </div>
+
+    </div>
+
+    <div class="foodlog">
+
+      <form class="form-log-food">
+        <div unreleased>
+          <button class="btn btn-track-primary" ng-click="vm.addFoodModal()">Submit</button>
+          <div class="form-group">
+            <button class="btn btn-block btn-log-food" ng-click="vm.addFoodModal()">What did you eat?</button>
+          </div>
+        </div>
+        <div instant-smart-search="vm.instantSmartSearch" class="margin-bottom"></div>
+      </form>
+      <div class="date-nav hidden-xs">
+        <div class="col-sm-3 col-md-3" ng-class="{'move-to-day-target': vm.drag.placeholder == 'yesterday'}"
+             drop-container
+             on-drop="vm.drag.moveDay($event, $dragData, 'yesterday')"
+             drop-accepts="vm.drag.highlightDay('yesterday')"
+             on-drag-leave="vm.drag.leave()"
+        >
+          <button class="btn btn-default btn-prev-day" ng-click="vm.go.prev()">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            <!-- {{vm.viewDate | amSubtract : '1' : 'day' | amDateFormat : 'dddd, M/D'}} -->
+          </button>
+        </div>
+        <div class="col-sm-6 col-md-6 text-center">
+          <button class="btn btn-default btn-next-day"
+                  ng-click="vm.go.today()"
+          >
+            <strong ng-if="vm.viewDate.format(vm.dateFormat) == vm.today.format(vm.dateFormat)">Today</strong>
+            <strong ng-if="vm.viewDate.format(vm.dateFormat) !== vm.today.format(vm.dateFormat)">{{ vm.viewDate | amDateFormat : 'dddd' }}</strong>, <span style="font-size:11px;">{{ vm.viewDate | amDateFormat : 'MM/DD' }}</span>
+          </button>
+        </div>
+        <div class="col-sm-3 col-md-3 text-right" ng-class="{'move-to-day-target': vm.drag.placeholder == 'tomorrow'}"
+             drop-container
+             on-drop="vm.drag.moveDay($event, $dragData, 'tomorrow')"
+             drop-accepts="vm.drag.highlightDay('tomorrow')"
+             on-drag-leave="vm.drag.leave()"
+        >
+          <button class="btn btn-default btn-next-day" ng-click="vm.go.next()">
+            <!-- {{ vm.viewDate | amAdd : '1' : 'day' | amDateFormat : 'dddd, M/D'}} -->
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div class="drop-placeholder text-center margin-top"
+           ng-if="vm.drag.placeholder == 'yesterday' || vm.drag.placeholder == 'tomorrow'">
+        Move to {{vm.drag.placeholder | ucfirst}}
+      </div>
+
+      <div class="food-log-notification" unreleased>
+        <review-foods-basket-notification></review-foods-basket-notification>
+      </div>
+
+
+      <div class="panel panel-default panel-log-food">
+        <div class="panel-heading" ng-click="vm.dailyTotalModal()">
+          <div class="angle-right">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </div>
+          <h3 class="panel-title" unreleased>
+            <strong>{{vm.viewDate | amDateFormat:'ddd'}}</strong>
+            <span>{{vm.viewDate | amDateFormat:'MM/D/YY'}}</span>
+          </h3>
+          <div class="progress-wrap">
+            <div class="target-calories">
+              <span class="hidden-sm hidden-md hidden-lg">
+                {{ (vm.goals.daily_kcal - vm.totals.total_cal + vm.totals.total_cal_burned) | abs |  number: 0}}
+              </span>
+              Cal {{vm.goals.daily_kcal - vm.totals.total_cal + vm.totals.total_cal_burned >= 0 ? 'remaining' : 'over'}}
+              <span class="hidden-xs">
+                {{ (vm.goals.daily_kcal - vm.totals.total_cal + vm.totals.total_cal_burned) | abs |  number: 0}}
+              </span>
+            </div>
+            <div class="burned-calories">
+              <span> - {{ vm.totals.total_cal_burned | aboveZero |  number: 0}}</span>
+              Cal burned
+            </div>
+            <div class="current-calories">
+              <span>{{vm.totals.total_cal | number: 0}}</span> Cal intake
+            </div>
+            <div class="progress calorie-progress">
+              <div class="progress-bar"
+                   ng-class="vm.setProgressBarColor(vm.totals.total_cal - vm.totals.total_cal_burned)"
+                   role="progressbar"
+                   aria-valuenow="{{ (vm.totals.total_cal / (vm.goals.daily_kcal + vm.totals.total_cal_burned) * 100).toFixed(0) }}"
+                   aria-valuemin="0" aria-valuemax="100"
+                   ng-style="{width: ((vm.totals.total_cal / (vm.goals.daily_kcal + vm.totals.total_cal_burned) * 100).toFixed(0) + '%')}">
+                <span class="sr-only">&nbsp;</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row macronutrients" ng-click="vm.dailyTotalModal()">
+          <div class="col calorie" ng-if="vm.me.default_nutrient != 208">
+            {{vm.stats.total[208] | number: 0}}
+            <span>Calories</span>
+          </div>
+          <div class="col protein" ng-if="vm.me.default_nutrient != 203">
+            {{vm.stats.total[203] | number: 0}}g
+            <span>Protein</span>
+          </div>
+          <div class="col carb" ng-if="vm.me.default_nutrient != 205">
+            {{vm.stats.total[205] | number: 0}}g
+            <span>Carbs</span>
+          </div>
+          <div class="col fat" ng-if="vm.me.default_nutrient != 204">
+            {{vm.stats.total[204] | number: 0}}g
+            <span>Fat</span>
+          </div>
+          <div class="col sodium" ng-if="vm.me.default_nutrient != 307">
+            {{vm.stats.total[307] | number: 0}}mg
+            <span>Sodium</span>
+          </div>
+        </div>
+        <ul class="list-group list-group-items"
+            drop-container
+            on-drop="vm.drag.onDrop($event, $dragData, meal.type)"
+            drop-accepts="vm.drag.dropAccepts($dragData, meal.type)"
+            on-drag-leave="vm.drag.leave($event, $dragData, meal.type)"
+
+            ng-repeat="meal in vm.meals"
+            ng-if="!meal.getIsVisible || meal.getIsVisible()"
+        >
+          <!--breakfast-->
+          <li class="list-group-item divider" ng-if="meal.label">
+            <div class="meal-info" ng-click="vm.dailyTotalModal(meal.type)">
+              <span class="badge badge-calorie ">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                {{vm.stats[meal.type][vm.primaryNutrient.id] | number: 0}}
+              </span>
+            </div>
+
+            <span ng-click="vm.addFoodModal(meal.type)">
+              {{meal.label | uppercase}} &nbsp;
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </span>
+          </li>
+
+          <li class="drop-placeholder" ng-if="meal.type && vm.drag.placeholder == meal.type">
+            Move to {{meal.label | ucfirst}}
+          </li>
+          <li class="list-group-item"
+              ng-repeat="food in vm.foods | filter: {meal_type: meal.type}"
+              ng-click="vm.editFoodModal(food)"
+              drag-container="true"
+              drag-data="food"
+          >
+            <div class="angle-right">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </div>
+            <span class="badge badge-calorie no-label">
+              {{food.full_nutrients | nutrient : vm.primaryNutrient.id : 'value' | number: 0}}
+            </span>
+            <span class="badge badge-camera" ng-if="food.photo.is_user_uploaded">
+              <i class="fa fa-camera"></i>
+            </span>
+            <div class="item-photo">
+              <img ng-src="{{food.photo.thumb}}" alt="{{food.food_name | ucwords}}">
+            </div>
+            {{food.food_name | ucwords}}
+            <span class="item-serving ng-binding">
+              <span ng-if="food.brand_name" class="ng-binding ng-scope">{{food.brand_name | ucwords}},</span>
+              {{food.serving_qty}} {{food.serving_unit}}
+            </span>
+          </li>
+        </ul>
+        <ul class="list-group list-group-items">
+          <li class="list-group-item divider" ng-if="!vm.getHasSnack()">
+            <span ng-click="vm.addFoodModal(2)">
+              Snacks &nbsp;
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </span>
+          </li>
+          <li class="list-group-item divider">
+            <span ng-click="vm.addExerciseModal()">
+              Exercise &nbsp;
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </span>
+          </li>
+          <li class="list-group-item" ng-repeat="exercise in vm.exercises" ng-click="vm.addExerciseModal(exercise)">
+            <span class="badge badge-calorie no-label">
+              -{{exercise.nf_calories | number: 0}} Cal
+            </span>
+            <div class="item-photo">
+              <img ng-src="{{exercise.photo.thumb}}" alt="{{exercise.name | ucwords}}">
+            </div>
+            {{exercise.name | ucwords}}
+            <span class="item-serving">
+              {{exercise.duration_min}} min
+            </span>
+          </li>
+          <li class="list-group-item complete-profile" ng-if="!vm.me.gender || !vm.me.weight_kg || !vm.me.height_cm || !vm.me.birth_year">
+            Complete your profile
+            <a ui-sref="account.cabinet.profile">here</a>
+            for more accurate exercise tracking.
+          </li>
+          <li class="list-group-item divider">
+          <span class="badge badge-calorie" ng-if="vm.weights.avg">
+            avg {{vm.weights.avg | kgToUserUnits | number: 1}} {{vm.weightUnit}}
+          </span>
+          <span ng-click="vm.addWeightModal()">
+            Weigh-in &nbsp;
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </span>
+          </li>
+          <li class="list-group-item" ng-repeat="weight in vm.weights" ng-click="vm.addWeightModal(weight)">
+            {{weight.kg | kgToUserUnits | number: 1}}
+            {{vm.weightUnit}}
+            <span class="item-serving">
+              {{weight.timestamp | amDateFormat: 'hh:mmA'}}
+            </span>
+          </li>
+          <li class="list-group-item divider">
+            <span ng-click="vm.addWaterModal()">
+              Water &nbsp;
+              <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            </span>
+          </li>
+          <li class="list-group-item">
+            {{vm.water | volume: true}}
+          </li>
+        </ul>
+
+        <div class="small margin-top grey">
+          <sup>*</sup>Click and drag foods to move to different meal time or day
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div class="row">
+  <div class="col-xs-12">
+    <weight-graph max-points="30"></weight-graph>
+  </div>
+</div>
+<div class="btn-track-wrap hidden-sm hidden-md hidden-lg">
+  <button class="btn btn-default btn-prev-day pull-left" ng-click="vm.go.prev()">
+    <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    {{vm.viewDate | amSubtract : '1' : 'day' | amDateFormat : 'dddd, M/D'}}
+  </button>
+  <button class="btn btn-default btn-next-day pull-right" ng-click="vm.go.next()">
+    {{vm.viewDate | amAdd : '1' : 'day' | amDateFormat : 'dddd, M/D'}}
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+  </button>
+  <button type="button" class="btn btn-success btn-track" ng-click="vm.addFoodModal()">
+    <i class="fa fa-2x fa-plus"></i>
+    <strong>Track</strong>
+  </button>
+</div>

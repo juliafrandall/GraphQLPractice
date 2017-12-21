@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href>Exercise</a> &gt;</li>
+        <li class="active">{{vm.exercise.name | ucwords}}</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row bg-white padding">
+
+    <!-- col1 -->
+    <div class="col-md-7">
+      <h1>
+        {{vm.exercise.name | ucwords}}
+      </h1>
+      <p ng-show="vm.exercise.description">
+        {{vm.exercise.description}}
+      </p>
+
+      <div class="estimate-calories-burned">
+        <div class="exercise-photo">
+          <img ng-src="{{vm.exercise.photo.highres || vm.exercise.photo.thumb}}"
+               class="img-responsive center-block"
+               alt="{{vm.exercise.name | ucwords}}">
+        </div>
+        <div class="calories-burned">
+          <p>Estimate Calories Burned</p>
+          <strong>{{vm.exercise.nf_calories | number: 0}} kcal</strong>
+        </div>
+      </div>
+      <div class="wrap-exercise-info">
+        <div class="row">
+          <div class="col-sm-4 col-md-4">
+            <span class="col-header">
+              <a href="#">MET</a>
+            </span>
+            {{vm.exercise.met}}
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <span class="col-header">Duration</span>
+            {{vm.exercise.duration_min}} mins
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <span class="col-header">Calories Expended</span>
+            {{vm.exercise.nf_calories | number: 0}} kcal
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="vm.exercise.benefits">
+        <h3 class="subheading-highlight">
+          Benefits of {{vm.exercise.name | ucwords}}
+        </h3>
+        <div marked="vm.exercise.benefits"></div>
+      </div>
+    </div>
+
+    <!-- col2 -->
+    <div class="col-md-offset-1 col-md-4">
+      <p class="text-center">
+        <div ads></div>
+      </p>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,232 @@
+<ads-page-level></ads-page-level>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="#" ui-sref="site.database">Database</a> &gt;</li>
+        <li ng-if="vm.brand.type == 1 || vm.brand.type == 2"><a
+          href="#" ui-sref="site.brandsList.navigate({type: ({1: 'restaurant', 2: 'grocery'})[vm.brand.type]})"
+        >{{({1: 'Restaurants', 2: 'Grocery Brands'})[vm.brand.type]}}</a> &gt;</li>
+        <li class="active" ng-bind-html="vm.brand.name"></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row item-title bg-white padding">
+    <div class="col-sm-8 col-md-9 col-lg-9 as-table">
+      <div class="as-table-cell text-center item-thumbnail">
+        <img ng-src="{{vm.brand.logo || 'https://s3.amazonaws.com/cdn4-nutritionix/images/gray_nix_apple_small.png'}}" alt="{{vm.brand.name}}">
+      </div>
+      <div class="as-table-cell">
+        <h1 class="food-item-name" ng-bind-html="vm.brand.name"></h1>
+        <p class="food-item-brand">
+          Browse a list of all products from <span ng-bind-html="vm.brand.name"></span>
+        </p>
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-3">
+      <p ng-if="vm.calculatorBrand" class="btn-calc-wrap">
+        <a ng-href="{{vm.calculatorBrand.desktop_calculator_url}}" target="_blank"
+           class="nutrition-tool-widget center"
+           tooltip="{{vm.calculatorBrand.proper_brand_name}}">
+              <span class="widget-brand">
+                <img
+                  ng-src="https://res.cloudinary.com/nutritionix/image/upload/w_50,h_50,c_fit,d_default_abu3if.png/{{vm.calculatorBrand.brand_id}}.png"
+                  alt="{{vm.calculatorBrand.proper_brand_name}}">
+              </span>
+          <span class="widget-text">
+                <span class="sm">Nutrition</span> Calculator
+              </span>
+          <span class="widget-icon">
+                <i class="fa fa-2x fa-calculator" aria-hidden="true"></i>
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+              </span>
+        </a>
+      </p>
+      <div fb-like></div>
+    </div>
+  </div>
+
+  <div class="row row-brand-info">
+    <div class="col-sm-6 col-md-6" ng-if="vm.brand.popularTrackItems.length >= 3">
+      <div class="panel panel-default panel-popular-track-items">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            What are <a ui-sref="site.trackApp">Nutritionix Track</a>
+            app users eating from <span ng-bind-html="vm.brand.name"></span>?
+          </h3>
+        </div>
+        <div class="panel-body">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Popularity</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="food in vm.brand.popularTrackItems">
+              <td>{{$index + 1}}</td>
+              <td>
+                <a ui-sref="site.itemsDetail({
+                                        brand: (vm.brand.name | cleanurl),
+                                        item_name: (food.food_name | cleanurl),
+                                        item_id: food.nix_item_id
+                                     })"
+                   ng-bind-html="food.food_name">
+                </a>
+              </td>
+              <td class="text-right nowrap">{{food.nf_calories | fdaRound: 'calories'}} cal</td>
+            </tr>
+            </tbody>
+          </table>
+
+          <p class="text-center">
+            <div ads></div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6" ng-if="vm.brand.popularTrackItems.length >= 3">
+      <div ng-if="vm.brand.guide" class="alert alert-info alert-dietitian-recommendation clearfix" role="alert">
+        <div class="dietitian-recommendation">
+          <h4>
+            Dietitian's recommendation for <span ng-bind-html="vm.brand.name"></span>
+          </h4>
+          <span ng-bind-html="vm.brand.guide"></span>
+          <i>Recommendation Last Updated: {{vm.brand.guide_updated_at | amDateFormat:'MM/DD/YY'}}</i>
+        </div>
+        <div class="dietitian">
+          <h6 class="text-center"><strong>Recommendation by:</strong></h6>
+          <a class="dietitian-photo" ui-sref="site.about">
+            <img ng-src="{{vm.brand.dietitian_photo}}" alt="{{vm.brand.dietitian_name}}">
+          </a>
+          <a class="dietitian-name" ui-sref="site.about">{{vm.brand.dietitian_name}}</a>
+        </div>
+        <a href class="dietitian-info"
+           popover="The Nutritionix registered dietitian team has curated this advice
+                  to provide some general tips for how to eat healthier at {{ vm.brand.name }}.
+                  Please note that this is not meant to be medical advice,
+                  and if you have any health questions or concerns, please contact your primary care physician."
+           popover-trigger="focus" popover-placement="left">
+          <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div class="square-ad text-center" ng-if="!vm.brand.guide">
+        <div ads></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row row-ad" ng-if="vm.brand.guide || vm.brand.popularTrackItems.length < 3">
+    <div class="col-md-12 text-center">
+      <div ads></div>
+    </div>
+  </div>
+  <div class="row brands-detail-background">
+    <div class="col-sm-5 col-md-4 col-lg-4">
+
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search {{vm.brand.name}} Menu"
+             ng-model="vm.navigationState.params.search"
+             ng-keyup="$event.which === 13 && vm.search.perform()">
+      <span class="input-group-btn">
+        <button class="btn btn-success" ng-click="vm.search.perform()">Go</button>
+      </span>
+    </div>
+
+    </div>
+  </div>
+
+  <div class="row bg-white padding">
+    <div class="col-xs-12">
+      <a ng-href="/restaurant-map?bid={{vm.brand._id}}">
+        <i class="fa fa-map-marker"></i>
+        Find <span ng-bind-html="vm.brand.name"></span> locations near me
+      </a>
+    </div>
+  </div>
+
+  <div class="row bg-white padding">
+    <div class="col-lg-12" ng-if="vm.total_hits > 0">
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-brands-list">
+            <thead>
+            <th>
+              Product Name
+            </th>
+            <th class="text-center">
+              Calories
+            </th>
+            <th>
+            </th>
+            </thead>
+            <tr class="item-row item-hover"
+                ng-repeat="item in vm.items"
+                ui-sref="site.itemsDetail({
+                                        brand: (vm.brand.name | cleanurl),
+                                        item_name: (item.item_name | cleanurl),
+                                        item_id: item.item_id
+                                     })">
+              <td class="col-xs-9">
+                <p>
+                  <a ui-sref="site.itemsDetail({
+                                                  brand: (vm.brand.name | cleanurl),
+                                                  item_name: (item.item_name | cleanurl),
+                                                  item_id: item.item_id
+                                                })"
+                     ng-bind-html="item.item_name"></a>
+                </p>
+                <span class="grey">{{item.serving_qty}} {{item.serving_unit}} </span>
+              </td>
+              <td class="text-center">{{item.calories | caloriesfda}}</td>
+              <td class="text-center">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-12 text-center" ng-show="vm.items">
+          <pagination ng-if="vm.items && vm.itemsPerPage < vm.total_hits"
+                      total-items="vm.total_hits"
+                      ng-model="vm.currentPage"
+                      max-size="5"
+                      ng-change="vm.pageChanged()"
+                      items-per-page="vm.itemsPerPage"
+                      num-pages="numPages"
+                      first-text="&lsaquo;"
+                      last-text="&rsaquo;"
+                      previous-text="&laquo;"
+                      next-text="&raquo;"
+                      boundary-links="true"
+                      state="vm.navigationState">
+          </pagination>
+
+
+        </div>
+        <div class="row padding-bottom" ng-if="vm.items && vm.itemsPerPage < vm.total_hits">
+          <div class="col-md-offset-3 col-md-6">
+            <pagination-info total-items="vm.total_hits"
+                             current-page="vm.currentPage"
+                             items-per-page="vm.itemsPerPage"
+                             class="pagination-info">
+            </pagination-info>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12" ng-if="vm.total_hits == 0">
+      Sorry, no results were found
+    </div>
+  </div>
+  <br>
+  <p class="text-center">
+    <div ads></div>
+  </p>
+
+</div>

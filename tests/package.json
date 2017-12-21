@@ -1,0 +1,30 @@
+{
+  "name": "nix-live-test",
+  "version": "1.0.0",
+  "description": "Worker which test Nutritionix live site",
+  "main": "test.sh",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattsilvllc/nix-live-test.git"
+  },
+  "keywords": [
+    "nutritionix",
+    "ironworker"
+  ],
+  "author": "Nutritionix",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mattsilvllc/nix-live-test/issues"
+  },
+  "homepage": "https://github.com/mattsilvllc/nix-live-test",
+  "dependencies": {
+    "intern": "^3.0.6",
+    "moment": "^2.17.1"
+  }
+}

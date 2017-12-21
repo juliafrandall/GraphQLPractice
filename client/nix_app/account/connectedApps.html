@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.preferences" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      Connected Apps
+    </h1>
+
+      <ul class="list-group list-group-apps">
+        <li class="list-group-item clearfix">
+          <div class="pull-right" ng-if="vm.me">
+            <input type="checkbox" toggle-checkbox ng-model="vm.toggles.fitbit"
+                   ng-change="vm.toggles.toggle('fitbit', $event)">
+          </div>
+          <div class="app-waiting-for-status" ng-if="!vm.me">
+            <i class="fa fa-spinner fa-spin"></i>
+          </div>
+          <div class="app-icon">
+            <img ng-src="{{ baseUrl }}/nix_assets/images/icon_fitbit.png" alt="Fitbit">
+          </div>
+          <strong class="app-name">Fitbit</strong>
+          <span class="app-by">by Fitbit</span>
+          <div class="clearfix"></div>
+          <alert ng-if="vm.messages.fitbit" class="tidy-alert"
+                 dismiss-on-timeout="5000"
+                 type="{{vm.messages.fitbit.type}}"
+                 close="vm.messages.close('fitbit')">
+            {{vm.messages.fitbit.message}}
+          </alert>
+        </li>
+        <li class="list-group-item clearfix">
+          <div class="app-not-available">
+            Coming soon
+          </div>
+          <div class="app-icon">
+            <img ng-src="{{baseUrl}}/nix_assets/images/icon_ios_health.png" alt="HealthKit">
+          </div>
+          <strong class="app-name">HealthKit</strong>
+          <span class="app-by">by Apple</span>
+        </li>
+        <li class="list-group-item clearfix">
+          <div class="app-not-available">
+            Coming soon
+          </div>
+          <div class="app-icon">
+            <img ng-src="{{baseUrl}}/nix_assets/images/icon_google_fit.png" alt="Google Fit">
+          </div>
+          <strong class="app-name">Google Fit</strong>
+          <span class="app-by">by Google</span>
+        </li>
+        <li class="list-group-item clearfix" unreleased>
+          <div class="app-not-available">
+            Coming soon
+          </div>
+          <div class="app-icon">
+            <img ng-src="{{baseUrl}}/nix_assets/images/icon_jawbone_up.png" alt="Up">
+          </div>
+          <strong class="app-name">Up</strong>
+          <span class="app-by">by Jawbone</span>
+        </li>
+      </ul>
+
+
+  </div>
+</div>

@@ -1,0 +1,243 @@
+
+<div class="container items nl-items" ng-if="vm.naturalResult">
+  <div class="row">
+    <div class="col-md-7 col-lg-6">
+      <div class="row wrap">
+
+        <ul class="list-search-results nl-search-results">
+          <li>
+            <h3>
+              Smart Result
+              &nbsp;
+
+              <sup class="smart-search-link">
+                <a href="http://blog.nutritionix.com/2016/03/28/announcing-nutritionix-natural-language/"
+                   target="_blank">
+                  <i class="fa fa-question-circle"></i>
+                </a>
+              </sup>
+
+            </h3>
+            <div href class="item-link clearfix">
+              <a ng-href="{{vm.getSmartFoodLink()}}">
+                <div class="arrow-wrap">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </div>
+              </a>
+
+              <div class="item-nutrition-wrap">
+                <div class="item-nutrition" itemscope itemtype="https://schema.org/NutritionInformation">
+                  <strong class="value">{{vm.getNaturalCalories() | number: 0}}</strong>
+                  <span class="unit">Calories</span>
+                </div>
+              </div>
+              <div class="item-description-wrap">
+                <div class="item-photo-wrap">
+                  <a ng-href="{{vm.getSmartFoodLink()}}">
+                    <img class="item-photo"
+                         ng-src="{{vm.naturalResult.metadata.photo.thumbnail}}"
+                         alt="{{vm.naturalResult.food_name}}"
+                         title="{{vm.naturalResult.food_name}}">
+                  </a>
+                </div>
+                <div class="item-description">
+                  <h4 class="name">
+                    <a ng-href="{{vm.getSmartFoodLink()}}">
+                      {{vm.naturalResult.food_name}}
+                    </a>
+                  </h4>
+                  <div class="natural-result" itemscope itemtype="https://schema.org/NutritionInformation">
+                    <input class="qty form-control" type="number" min="0" ng-model="vm.measureQty" select-on-click>
+                    <select class="measure form-control"
+                            ng-model="vm.measure"
+                            ng-options="m as m.measure for m in vm.naturalResult.alt_measures"
+                            ng-change="vm.changeMeasure()"
+                    >
+                    </select>
+                  </div>
+                  <div class="track-button-wrap">
+                    <track-widget food="vm.naturalResult"></track-widget>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="padding-top text-center">
+  <div ads></div>
+</div>
+<div class="container items">
+  <div class="row wrap">
+    <div class="col-xs-12" ng-if="!(vm.results.branded.length || vm.results.common.length)">
+      <div class="no-result">
+      <h1 class="sr-only" ng-if="vm.originalQuery">
+        No results found
+      </h1>
+      <h2 ng-if="vm.originalQuery">
+        Sorry, we have no results for <strong>"{{vm.originalQuery}}"</strong> please try another search.
+      </h2>
+      <h1 class="sr-only" ng-if="!vm.originalQuery">
+        Search
+      </h1>
+      <h2 ng-if="!vm.originalQuery">
+        Please enter a search query.
+      </h2>
+
+      <form role="search" ng-submit="vm.search.perform()">
+        <div class="input-group col-md-5">
+          <input type="text"
+                 autocomplete="off"
+                 focus-me="true"
+                 class="form-control"
+                 ng-model="vm.search.query"
+                 typeahead="suggestion.text for suggestion in vm.search.suggest($viewValue)"
+                 typeahead-on-select="vm.search.perform()"
+                 placeholder="Search Food Database"
+                 typeahead-wait-ms="20"
+                 typeahead-focus-first="false"
+          >
+              <span ng-click="vm.search.perform()" class="input-group-addon">
+                <i class="fa fa-search"> </i>
+              </span>
+        </div>
+      </form>
+      </div>
+    </div>
+
+      <h1>
+        Search Results
+      </h1>
+    <div class="col-md-6" ng-if="vm.results.branded.length || vm.results.common.length">
+
+
+      <h2>Common Foods</h2>
+      <ul class="list-search-results">
+        <li ng-repeat="item in vm.results.common | limitTo: (vm.showAll.common ? 100: 5)">
+          <a href="#" class="item-link clearfix"
+             ui-sref="site.food({natural_query: (item.metadata.original_input | cleanurl)})">
+
+
+            <div class="arrow-wrap">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </div>
+
+            <div class="item-nutrition-wrap">
+              <div class="item-nutrition" itemscope itemtype="https://schema.org/NutritionInformation">
+                <strong class="value" class="calories">{{item.nf_calories | caloriesfda}}</strong>
+                <span class="unit">Calories</span>
+              </div>
+            </div>
+            <div class="item-photo-wrap">
+              <img class="item-photo"
+                   ng-src="{{item.photo.thumb}}"
+                   alt="{{item.food_name}}">
+            </div>
+            <div class="item-description-wrap">
+              <div class="item-description">
+                <h4 class="name" ng-bind-html="item.food_name"></h4>
+                <h5 class="grey" itemscope itemtype="https://schema.org/NutritionInformation">
+                  {{item.serving_qty}} {{item.serving_unit}}
+                  <span ng-show="item.serving_weight_grams"> ({{item.serving_weight_grams}} g) </span>
+                </h5>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="show-more" ng-if="vm.results.common.length > 5">
+          <button type="button" class="btn btn-default" ng-click="vm.showAll.common = !vm.showAll.common">
+            <span ng-show="vm.showAll.common">
+              <i class="fa fa-chevron-up"></i>
+              Show Less Common Foods
+            </span>
+            <span ng-show="!vm.showAll.common">
+              <i class="fa fa-chevron-down"></i>
+              Show More Common Foods
+            </span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6" ng-if="vm.results.branded.length || vm.results.common.length">
+      <h2>Branded Foods</h2>
+
+      <p class="item-widget" ng-if="vm.calculatorBrand">
+        <a ng-href="{{vm.calculatorBrand.desktop_calculator_url}}" target="_blank"
+           class="nutrition-tool-widget"
+           tooltip="{{vm.calculatorBrand.proper_brand_name}}">
+          <span class="widget-brand">
+            <img
+                ng-src="https://res.cloudinary.com/nutritionix/image/upload/w_50,h_50,c_fit,d_default_abu3if.png/{{vm.calculatorBrand.brand_id}}.png"
+                alt="{{vm.calculatorBrand.proper_brand_name}}">
+          </span>
+          <span class="widget-text">
+            <span class="sm">Nutrition</span> Calculator
+          </span>
+          <span class="widget-icon">
+            <i class="fa fa-2x fa-calculator" aria-hidden="true"></i>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+          </span>
+        </a>
+      </p>
+
+      <ul class="list-search-results">
+        <li ng-repeat="item in vm.results.branded | limitTo: (vm.showAll.branded ? 100: 5)">
+          <a href="#" class="item-link clearfix"
+             ui-sref="site.itemsDetail({
+                        brand: (item.brand_name | cleanurl),
+                        item_name: (item.food_name | cleanurl),
+                        item_id: item.nix_item_id
+                      })">
+
+
+            <div class="arrow-wrap">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            </div>
+
+            <div class="item-nutrition-wrap">
+              <div class="item-nutrition" itemscope itemtype="https://schema.org/NutritionInformation">
+                <strong class="value" class="calories">{{item.nf_calories | caloriesfda}}</strong>
+                <span class="unit">Calories</span>
+              </div>
+            </div>
+            <div class="item-photo-wrap">
+              <img class="item-photo"
+                   ng-src="//res.cloudinary.com/nutritionix/image/upload/w_50,h_50,c_fit,d_default_abu3if.png/{{item.nix_brand_id}}.png"
+                   alt="{{item.food_name}}">
+            </div>
+            <div class="item-description-wrap">
+              <div class="item-description">
+                <h4 class="name" ng-bind-html="item.food_name"></h4>
+                <h5 class="manufacturer" ng-bind-html="item.brand_name"></h5>
+                <h5 class="grey" itemscope itemtype="https://schema.org/NutritionInformation">
+                  {{item.serving_qty}} {{item.serving_unit}}
+                </h5>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li class="show-more" ng-if="vm.results.branded.length > 5">
+          <button type="button" class="btn btn-default" ng-click="vm.showAll.branded = !vm.showAll.branded">
+            <span ng-show="vm.showAll.branded">
+              <i class="fa fa-chevron-up"></i>
+              Show Less Branded Foods
+            </span>
+            <span ng-show="!vm.showAll.branded">
+              <i class="fa fa-chevron-down"></i>
+              Show More Branded Foods
+            </span>
+          </button>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="padding-bottom text-center">
+    <div ads></div>
+</div>

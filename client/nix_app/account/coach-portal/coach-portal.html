@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.labs" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      Coach Portal
+    </h1>
+    <h4>
+      <a href="#" class="send-mail pull-right">
+        <i class="fa fa-envelope-o"></i>
+      </a>
+      Coach ID: <strong>{{vm.user.coach.code}}</strong> &nbsp;
+    </h4>
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search my patients" ng-model="vm.search">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="list-group list-group-patients">
+        <a ui-sref="account.cabinet.coach-portal.view-patient({id: patient.id})"
+           ng-repeat="patient in vm.patients | filter: vm.search"
+           class="list-group-item">
+          <i class="fa fa-chevron-right"></i>
+          <span class="last-online" unreleased="">36 min ago</span>
+          {{patient.name}}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

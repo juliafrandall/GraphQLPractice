@@ -1,0 +1,45 @@
+.form-group-serving {
+  margin-bottom: 10px !important;
+}
+.form-group-serving input {
+  width: 50px !important;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.page-natural-demo {
+  .page-description {
+    padding: 10px;
+  }
+
+  .tag-thumbnail img {
+    width: 60px;
+  }
+
+  .text-xs {
+    font-size: 10px;
+  }
+
+  table.results td {
+    vertical-align: middle;
+  }
+}
+.nav-tabs-natural-demo {
+  li {
+    a {
+      font-size: 18px;
+      .beta-label {
+
+        color: #31708f;
+        font-size: 11px;
+        border-radius: 4px;
+      }
+    }
+  }
+}
+.tab-content-natural-demo {
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+}

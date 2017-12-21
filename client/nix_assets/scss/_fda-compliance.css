@@ -1,0 +1,174 @@
+.row-brands {
+  text-align: center;
+}
+
+.row-brands > div {
+  line-height: 40px;
+  padding: 10px 0;
+}
+
+.row-brands > div > img {
+  max-width: 90px;
+  max-height: 40px;
+}
+
+.row-compliance-solutions {
+  padding: 30px 0 0 0;
+}
+
+.fda-compliance-solution {
+  padding: 125px 25px 25px 25px;
+  background: #a4ed52 url("/nix_assets/images/fda-compliance/bg_arrow.png") center top no-repeat;
+}
+
+.compliance-feature {
+  padding: 20px 20px 0 20px;
+  /*min-height: 480px;     */
+}
+
+.compliance-feature h3,
+.compliance-feature h4,
+.compliance-feature h5 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.solution-arrow {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #69b313;
+}
+
+.compliance-wrap h3,
+.compliance-wrap h4 {
+  font-weight: 600;
+}
+
+.compliance-wrap {
+  margin-bottom: 25px;
+  border-top: 5px solid #69b313;
+  -webkit-box-shadow: 1px 1px 10px #ddd;
+  -moz-box-shadow: 1px 1px 10px #ddd;
+  box-shadow: 1px 1px 10px #ddd;
+}
+
+.col-md-4:nth-child(2) .compliance-wrap {
+  border-top: 5px solid #82cc2c;
+}
+
+.col-md-4:nth-child(3) .compliance-wrap {
+  border-top: 5px solid #9be545;
+}
+
+.row-brands > div > img {
+  max-width: 180px;
+  max-height: 70px;
+}
+
+.screenshot {
+  max-width: 220px;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
+.screenshot img {
+  max-height: 150px;
+}
+
+.screenshot2 {
+  padding: 10px 0;
+  text-align: center;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background: #eee;
+}
+
+.screenshot2 img {
+  max-height: 89px;
+}
+
+.content-padding-tbl {
+  padding: 15px 0 0 0;
+}
+
+.content-padding-trb {
+  padding: 0;
+}
+
+
+/* Small devices (landscape view) */
+
+@media (min-width: 450px) {
+  .row-brands > div {
+    line-height: 70px;
+    padding: 25px 0;
+  }
+  .row-brands > div > img {
+    max-width: 180px;
+    max-height: 70px;
+  }
+}
+
+
+/* Small devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {
+  .row-compliance-solutions {
+    padding-bottom: 30px;
+  }
+  .compliance-wrap {
+    font-size: 15px;
+    margin-bottom: 0;
+  }
+  .compliance-wrap h3 {
+    font-size: 19px;
+  }
+  .compliance-feature {
+    min-height: 440px;
+  }
+  .fda-compliance-solution {
+    min-height: 895px;
+  }
+  .content-padding-tbl {
+    padding: 30px 0 30px 0;
+  }
+  .content-padding-trb {
+    padding: 30px 15px 30px 0;
+  }
+  .screenshot2 img {
+    max-height: 75px;
+  }
+}
+
+
+/* Medium devices (desktops, 992px and up) */
+
+@media (min-width: 992px) {
+  .content-padding-tbl {
+    padding: 30px 0 30px 15px;
+  }
+  .content-padding-trb {
+    padding: 30px 15px 30px 0;
+  }
+  .screenshot2 img {
+    max-height: 89px;
+  }
+  .compliance-feature {
+    min-height: 450px;
+  }
+  .fda-compliance-solution {
+    min-height: 930px;
+  }
+}
+
+
+/* Large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {
+  .compliance-wrap {
+    font-size: 17px;
+  }
+}

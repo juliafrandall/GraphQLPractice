@@ -1,0 +1,7 @@
+{
+  "user": "newsite",
+  "hosts": "deploy_name_newsite_production",
+  "branch": "master",
+  "git_repo": "git@github.com:mattsilvllc/NewSiteDesign.git",
+  "repo_root_path": "/home/newsite/NewSiteDesign"
+}

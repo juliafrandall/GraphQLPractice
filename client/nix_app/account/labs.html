@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.dashboard" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      Labs <sup class="beta"><span class="label label-info"> Beta </span></sup>
+    </h1>
+
+    <div class="list-group list-group-preferences">
+      <a href="#" ui-sref="reports.word-cloud" class="list-group-item">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          <i class="fa fa-cloud" aria-hidden="true"></i>
+          &nbsp;
+          Word cloud
+        </p>
+      </a>
+
+      <a href="#" class="list-group-item"
+         ui-sref="reports.nutrient2({begin: vm.reportBoundaries.begin, end: vm.reportBoundaries.end})">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          <i class="fa fa-bar-chart" aria-hidden="true"></i>
+          &nbsp;
+          Nutrient Report
+        </p>
+      </a>
+
+      <a href="#" class="list-group-item"
+         ui-sref="account.cabinet.coach-portal.subscribe">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          <i class="fa fa-list" aria-hidden="true"></i>
+          &nbsp;
+          <span ng-if="vm.user.premium_user">Manage Pro</span>
+          <span ng-if="!vm.user.premium_user">Subscribe to Pro</span>
+        </p>
+      </a>
+
+      <a href="#" class="list-group-item"
+         ui-sref="account.cabinet.csvExport">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          <i class="fa fa-file-excel-o" aria-hidden="true"></i>
+          &nbsp;
+          CSV Export
+        </p>
+      </a>
+
+      <a href="#" class="list-group-item" ng-if="vm.user.grocery_agent"
+         ui-sref="account.cabinet.recipes.new">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          <i class="fa fa-cutlery" aria-hidden="true"></i>
+          &nbsp;
+          Create Recipe (new)
+        </p>
+      </a>
+
+      <a href="#" class="list-group-item" ng-if="vm.user.grocery_agent"
+         ui-sref="account.cabinet.lists.list">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          <i class="fa fa-list-ul" aria-hidden="true"></i>
+          &nbsp;
+          Create Ranked Food Lists
+        </p>
+      </a>
+    </div>
+  </div>
+</div>

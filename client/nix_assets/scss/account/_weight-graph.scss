@@ -1,0 +1,77 @@
+.weight-graph {
+  .panel-chart {
+    border-radius: 0;
+    .dropdown-menu {
+      width: 281px;
+      padding: 4px;
+    }
+
+    canvas {
+      max-height: 200px;
+    }
+  }
+  .panel-chart .panel-heading {
+    padding-top: 4px;
+
+  }
+  .panel-chart .form .control-label {
+    font-size: 12px;
+    margin-bottom: 0;
+  }
+  .status {
+    text-align: center;
+    color: #999;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+  .status strong {
+    text-transform: none;
+    display: block;
+    color: #333;
+    font-size: 12px;
+  }
+  //.weight-change .glyphicon {
+  //  background: -webkit-linear-gradient(#fff, #6AB316);
+  //  -webkit-background-clip: text;
+  //  -webkit-text-fill-color: transparent;
+  //}
+
+  .weight-change .glyphicon-arrow-down {
+    background: -webkit-linear-gradient(#fff, #6AB316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .weight-change .glyphicon-arrow-up {
+    background: -webkit-linear-gradient(#ff0000, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .form>.row>div:first-child {
+    margin-bottom: 10px;
+  }
+
+  .panel-chart {
+    width: 100%;
+  }
+
+  @media(min-width: 768px) {
+
+    .form>.row>div:first-child {
+      margin-bottom: 0;
+    }
+    .status {
+      font-size: 11px;
+    }
+    .status strong {
+      font-size: 14.5px;
+      font-weight: normal;
+    }
+
+  }
+
+  .input-group .form-control {
+    height: 30px;
+  }
+}

@@ -1,0 +1,47 @@
+pipeline:
+  build:
+    image: docker.nutritionix.com/owend/node:6.2.2
+    secrets:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - NUTRITIONIX_API_ID
+      - NUTRITIONIX_API_KEY
+      - MYSQL_HOST
+      - MYSQL_REPLICA_HOST
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - REDIS_HOST
+      - REDIS_DATABASE
+    environment:
+      - PORT=8000
+    commands:
+      - ./.drone/build.sh
+    when:
+      event: [ push, pull_request ]
+
+  deploy:
+    image: docker.nutritionix.com/owend/node:6.2.2
+    secrets:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - SSH_KEY
+    commands:
+      - cd .drone
+      - ./ssh_init.sh
+      - eval `ssh-agent -s`
+      - ssh-add ~/.ssh/id_rsa
+      - bash -c "./deploy.sh production"
+    when:
+      event: [ push ]
+      branch: master
+
+  notify:
+    image: plugins/slack
+    secrets:
+      - slack_webhook
+    username: 'droneCI'
+    channel: 'newsite'
+    when:
+      status: [ success, failure ]
+
+branches: [ development, dev, master, production ]

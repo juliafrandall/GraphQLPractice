@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <span class="btn-modal-close" ng-click="vm.close();">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </span>
+  <h3 class="modal-title">Weigh-in</h3>
+</div>
+<div class="modal-body">
+  <h4 class="text-center">Record Weigh-in</h4>
+  <form class="form-horizontal">
+    <div class="form-group">
+
+      <div class="input-group input-group-weigh-in">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="vm.add()">
+            <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+          </button>
+        </span>
+        <input ng-model="vm.weight" type="text" class="form-control text-center"
+               placeholder="{{vm.weightPlaceholder | number : 1}}"
+               focus-me="vm.focus"
+        >
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button" ng-click="vm.subtract()">
+            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+          </button>
+        </span>
+        <span class="input-group-addon">{{vm.unit}}</span>
+      </div>
+
+    </div>
+    <div class="form-group">
+      <label class="col-xs-3 col-sm-3 control-label">Units</label>
+      <div class="col-xs-9 col-sm-9" ng-if="vm.isToday">
+        <label class="radio-inline">
+          <input type="radio" ng-value="0" ng-model="vm.measureSystem" ng-change="vm.changeMeasureSystem()">
+          Imperial (US)
+        </label>
+        <label class="radio-inline">
+          <input type="radio" ng-value="1" ng-model="vm.measureSystem" ng-change="vm.changeMeasureSystem()">
+          Metric
+        </label>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <div>
+    <button class="btn btn-success" type="button"
+            ng-disabled="!vm.weight"
+            ng-click="vm.submit()">Submit
+    </button>
+    <button class="btn btn-default" type="button" ng-click="vm.close()">Cancel</button>
+    <button ng-if="vm.edit" class="btn btn-danger" type="button" ng-click="vm.delete()">Delete</button>
+  </div>
+  <alert type="danger" class="tidy-alert" ng-if="vm.$error">
+    {{vm.$error.message || vm.$error}}
+  </alert>
+</div>

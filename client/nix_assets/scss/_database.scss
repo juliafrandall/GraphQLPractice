@@ -1,0 +1,106 @@
+
+.list-database,
+.list-database li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.list-database li {
+	margin-bottom: 30px;
+}
+.list-database .icon {
+	font-size: 8px;
+	line-height: normal;
+	padding-right: 20px;
+	display: block;
+	float: left;
+	@media(min-width: 768px) {
+		font-size: 20px;
+	}
+}
+
+.list-database li .database-info {
+	margin-left: 65px;
+	@media(min-width: 768px) {
+		margin-left: 130px;
+		padding-top: 4px;
+	}
+}
+
+.list-database li h3 {
+	margin-top: 0;
+	margin-bottom: 4px;
+}
+
+.list-database li h4 {
+	color: #999;
+	margin-top: 0;
+}
+
+.databaseImage {
+	background-image: url('https://s3.amazonaws.com/cdn4-nutritionix/images/grocery_stock.jpg');
+	background-image: linear-gradient(125deg, rgba(0,0,0,.7), rgba(0,0,0,.35)), url('https://s3.amazonaws.com/cdn4-nutritionix/images/grocery_stock.jpg');
+	height: 200px;
+	width: auto;
+	background-size: cover;
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	margin-bottom: 5px;
+}
+
+.databaseImage2 {
+	background-image: url('https://s3.amazonaws.com/cdn4-nutritionix/images/restaurant_stock.jpg');
+	background-image: linear-gradient(125deg, rgba(0,0,0,.7), rgba(0,0,0,.35)), url('https://s3.amazonaws.com/cdn4-nutritionix/images/restaurant_stock.jpg');
+	height: 200px;
+	width: auto;
+	background-size: cover;
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	margin-bottom: 5px;
+}
+
+.databaseImage3 {
+	background-image: url('https://s3.amazonaws.com/cdn4-nutritionix/images/common_foods_stock.jpg');
+	background-image: linear-gradient(125deg, rgba(0,0,0,.7), rgba(0,0,0,.35)), url('https://s3.amazonaws.com/cdn4-nutritionix/images/common_foods_stock.jpg');
+	height: 200px;
+	width: auto;
+	background-size: cover;
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	margin-bottom: 5px;
+}
+
+.database-section-container{
+	border: 1px solid #eee;
+	background-color: #fff;
+	margin-bottom: 15px;
+}
+.database-section-container h2 {
+	text-shadow: 1px 1px 1px #000;
+	text-align: center;
+	padding-top: 130px;
+}
+.database-section-container h5 {
+	font-family: 'Roboto Slab', sans-serif;
+	font-size: 16px;
+	margin-top: 0;
+}
+.database-info {
+	padding: 10px;
+	@media(min-width: 768px) {
+		min-height: 195px;
+	}
+}
+
+.databaseImage,
+.databaseImage2,
+.databaseImage3 {
+  position: relative;
+  overflow: hidden;
+  > a {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+}

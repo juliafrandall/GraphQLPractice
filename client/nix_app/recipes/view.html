@@ -1,0 +1,187 @@
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li>
+                <a href ui-sref="account.cabinet.recipes.list"> Recipes</a> &gt;
+            </li>
+          <li class="active">{{vm.recipe.name | ucwords}}</li>
+        </ol>
+    </div>
+</div>
+<div class="container">
+    <div class="row item-title bg-white padding">
+        <a href="#" ng-click="vm.print()" class="print-page"><i class="fa fa-print" aria-hidden="true"></i> </a>
+        <div class="col-sm-7 col-md-7 col-lg-7 as-table">
+            <div class="as-table-cell text-center item-thumbnail">
+                <img src="{{vm.recipe.photo.thumb}}">
+            </div>
+            <div class="as-table-cell">
+                <h1 class="food-item-name">
+                  {{vm.recipe.name | ucwords}}
+                </h1>
+              <p unreleased>
+                  <span class="recipe-tag">Vegan</span>
+                  <span class="recipe-tag">Gluten Free</span>
+                  <span class="recipe-tag">Low Carb</span>
+                </p>
+            </div>
+        </div>
+
+
+          <ul class="recipe-info">
+            <li>
+              <strong>{{vm.recipe.prep_time_min + vm.recipe.cook_time_min}} mins</strong>
+              <span>Total Time</span>
+            </li>
+            <li>
+              <strong>{{vm.recipe.serving_qty}}</strong>
+              <span>{{vm.recipe.serving_unit}}</span>
+            </li>
+            <li class="pin-it">
+              <a pin-it >
+                <i class="fa fa-pinterest" aria-hidden="true"></i>
+              </a>
+            </li>
+          </ul>
+
+
+    </div>
+    <div class="row bg-white padding row-cols-wrap">
+        <div class="col-md-4 col-ingredients">
+          <h3>
+            Ingredients
+          </h3>
+          <strong class="pull-right">
+            Calories
+          </strong>
+          <h4 unreleased>
+            Section name
+          </h4>
+          <ul class="recipe-ingredients-list">
+            <li ng-repeat="ingredient in vm.recipe.ingredients">
+              <div class="ingredient-img">
+                <img class="common-food-image" ng-src="{{ingredient.photo.thumb}}"
+                     alt="{{ingredient.food_name}}" title="{{ingredient.food_name}}">
+              </div>
+              <span class="ingredient-kcal">
+                {{ingredient.nf_calories | number: 0}} kcal
+              </span>
+              <div class="ingredient-item">
+
+                <a ng-href="{{ingredient | foodLink}}">
+                  <span ng-if="ingredient.metadata.original_input">
+                    {{ingredient.metadata.original_input}}
+                  </span>
+                  <span ng-if="!ingredient.metadata.original_input">
+                    {{ingredient.serving_qty}} {{ingredient.serving_unit}} {{ingredient.food_name}}
+                  </span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4 col-directions">
+          <h3>
+            Directions
+          </h3>
+          <div class="recipe-directions">
+            <ol ng-if="vm.directions">
+              <li ng-repeat="direction in vm.directions track by $index">
+                {{direction}}
+              </li>
+            </ol>
+
+            <span ng-if="!vm.directions">
+              No directions specified
+            </span>
+          </div>
+        </div>
+        <div class="col-md-4 col-nutrition">
+        <div class="row">
+          <div class="col-sm-6 col-md-12">
+            <div id="nutrition-label" nutrition-label="vm.labelData" ></div>
+          </div>
+          <div class="col-sm-6 col-md-12">
+            <!--<p ng-if="vm.addToFoodLog.$enabled">-->
+              <!--<button class="btn btn-success" ng-click="vm.addToFoodLog()">-->
+                <!--<i class="fa fa-plus-circle"></i>-->
+                <!--Add to food log-->
+              <!--</button>-->
+            <!--</p>-->
+
+            <h4>
+              Micronutrients
+            </h4>
+            <table id="micronutrients" class="table table-striped table-fluid">
+              <tbody>
+              <tr ng-repeat="nutrient in vm.labelData.micronutrients"
+                  ng-show="$index < 2 || vm.labelData.micronutrients.showAll">
+                <td>
+                  <strong>{{nutrient.name}}</strong>
+                </td>
+                <td class="nobr">
+                  {{nutrient.value | number : nutrient.value
+                  < 0.5 ? 2 : 1}} {{nutrient.unit}}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <p>
+              <button class="btn btn-success" type="button"
+                      ng-click="vm.labelData.micronutrients.showAll = !vm.labelData.micronutrients.showAll">
+                <span ng-hide="vm.labelData.micronutrients.showAll">View All Micronutrients</span>
+                <span ng-show="vm.labelData.micronutrients.showAll">View Less Micronutrients</span>
+              </button>
+            </p>
+            <p>
+              <a class="btn btn-success" ng-href="{{vm.deepLink}}" target="_blank">Log to Nutritionix Track</a>
+            </p>
+            <div class="padding-bottom">
+              <span>
+                <b>Region: </b> <span class="flag-icon flag-icon-us"></span> US
+              </span>
+            </div>
+            <div class="rounded-box">
+              <div class="box-title">
+                Source of Calories
+              </div>
+              <div class="box-content">
+                <canvas class="chart chart-pie"
+                        height="355"
+                        chart-data="vm.pieChart.data"
+                        chart-labels="vm.pieChart.labels"
+                        chart-legend="true"
+                        chart-colors="['#1AA6B7', '#F0AB00', '#b3217c', '#808080']"
+                        chart-options="{
+                          responsive: true,
+                          maintainAspectRatio: true,
+                          legend: {
+                              display: true,
+                              position: 'bottom',
+                              fullWidth: true,
+                              labels: {
+                                usePointStyle: false,
+                                generateLabels: vm.pieChart.generateLabels
+                              },
+                              onClick: null
+                          },
+                          tooltips: {
+                            callbacks: {
+                              label: vm.pieChart.label
+                            }
+                          }
+                        }"
+                >
+                </canvas>
+
+                <div class="small grey" ng-if="vm.pieChart.showAlcohol">
+                  * Calories from alcohol is an estimate, and may include artificial sweeteners and sugar alcohols.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+    </div>
+</div>

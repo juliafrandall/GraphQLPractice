@@ -1,0 +1,68 @@
+
+<div class="statbar-wrap"><div statbar> </div></div>
+<div class="container items bg-white">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <ol class="breadcrumb">
+        <li ng-class="{active: $last}" ng-repeat="breadcrumb in vm.breadcrumbs">
+          <span class="nobr" ng-if="!$last">
+            <a ng-href="{{breadcrumb.link}}">{{breadcrumb.text}}</a>  &gt;
+          </span>
+          <span class="nobr" ng-if="$last">{{breadcrumb.text}}</span>
+        </li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+      <br>
+
+      <h1>{{vm.title}}</h1>
+
+      <p>{{vm.description}}</p>
+
+      <div class="table-responsive">
+        <table class="table table-condensed table-striped table-hover">
+          <thead>
+          <tr>
+            <th>Database</th>
+            <th>Brand</th>
+            <th>Product Name</th>
+            <th>Added</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in vm.items">
+            <td>
+              <span ng-if="item.item_type == 1">Restaurant</span>
+              <span ng-if="item.item_type == 2">Grocery</span>
+              <span ng-if="item.item_type == 3">Common</span>
+            </td>
+            <td>
+              <a ui-sref="site.brandsDetail.navigate({brand_name: (item.brand_name | cleanurl), id: item.brand_id})"
+                 ng-bind-html="item.brand_name">
+              </a>
+            </td>
+            <td>
+              <a ui-sref='site.itemsDetail({
+                                    brand: (item.brand_name | cleanurl),
+                                    item_name: (item.item_name | cleanurl),
+                                    item_id: item.item_id
+                                  })'
+                 ng-bind-html="item.item_name">
+              </a>
+            </td>
+            <td>
+              <span class="nobr" ng-bind="item.created_at | amDateFormat:'MM/DD/YYYY hh:mm A'"></span>
+              <span class="nobr">(<span am-time-ago="item.created_at"></span>)</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+#node_modules should be ignored by default
+
+server/node_modules/
+nodemodules/
+client/nix_dist/
+client/bower_components/

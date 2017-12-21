@@ -1,0 +1,23 @@
+nix_bower_components/
+node_modules/
+packages
+nix_dist/
+npm-debug.log
+
+.DS_Store
+
+# configs
+nginx
+*/config/development*
+
+# terraform
+*.tfvars
+terraform.tfstate
+terraform.tfstate.backup
+
+# tests
+BrowserStackLocal
+tests/iron.json
+tests/payload.json
+tests/config.json
+tests/screenshots/

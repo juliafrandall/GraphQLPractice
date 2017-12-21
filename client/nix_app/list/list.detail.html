@@ -1,0 +1,115 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a ui-sref="site.listIndex">Lists</a> &gt;</li>
+        <li class="active">{{vm.list.name}}</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row bg-white padding">
+    <div class="col-xs-12">
+      <h1 class="food-item-name">
+        {{vm.list.name}}
+      </h1>
+      <div class="row item-title">
+        <div class="col-md-4 col-lg-4 as-table">
+          <div class="as-table-cell">
+            <p>
+              {{vm.list.description}}
+            </p>
+            <div class="created-by">
+              <div ng-class="{'created-by-photo': vm.list.user_photo, 'created-by-icon': !vm.list.user_photo}">
+                <img ng-src="{{vm.list.user_photo}}" alt="{{vm.list.user_name}}"
+                     ng-if="vm.list.user_photo"
+                >
+
+                <i class="fa fa-3x fa-user"  ng-if="!vm.list.user_photo"></i>
+              </div>
+              By <a ng-href="{{vm.list.user_profile_link}}" ng-if="vm.list.user_profile_link">{{vm.list.user_name}}</a>
+              <span ng-if="!vm.list.user_profile_link">{{vm.list.user_name}}</span>
+            </div>
+            <div class="edit-list-link" ng-if="vm.list.user_id === vm.user.id">
+              <a href ui-sref="account.cabinet.lists.edit({id: vm.list.id})" >
+                <i class="fa fa-edit"></i> Edit this list
+              </a>
+            </div>
+
+            <div class="list-diets" ng-if="vm.list.labels.length">
+              Diets related to this list:
+              <br>
+              <span class="badge badge-success" ng-repeat="label in vm.list.labels">
+                {{label.name}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-lg-3" ng-show="vm.list.photo">
+          <img ng-src="{{vm.list.photo.thumb}}" alt="{{vm.list.name}}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row bg-white padding">
+    <!-- col1 -->
+    <div class="col-md-12 col-lg-12">
+      <table class="table table-food-list">
+        <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th><span>Food Name</span></th>
+          <th>
+              <span>
+                {{vm.nutrients.byId[vm.list.nutrient_focus].label}}
+                <span ng-if="vm.list.nutrient_focus !== 208">
+                  ({{vm.nutrientDefinitions[vm.list.nutrient_focus === -205 ? 205 : vm.list.nutrient_focus].unit || 'g'}})
+                </span>
+              </span>
+          </th>
+          <th><span>Serving</span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vm.list.items">
+          <td><img ng-src="{{item.photo.thumb}}" alt="{{item.food_name}}"></td>
+          <td>
+            <a ng-href="{{vm.getItemLink(item)}}">{{item.food_name}}</a>
+            <div ng-if="item.brand_name">
+              {{item.brand_name}}
+            </div>
+            <p ng-if="item.description">
+              {{ item.description }}
+            </p>
+          </td>
+          <td>{{
+            vm.nutrients.byId[vm.list.nutrient_focus].getValue(item)
+            | smartNumber: false: false: (vm.nutrients.byId[vm.list.nutrient_focus].getValue(item) < 1 ? 2 : 1): false
+            }}</td>
+          <td class="nobr">
+            <span ng-if="!item.$measure">
+              <span ng-if="!item.brand_name">
+                100 g
+              </span>
+              <span ng-if="item.brand_name">
+                {{item.serving_qty}} {{item.serving_unit === 'grams' ? 'g' : item.serving_unit}}
+              </span>
+            </span>
+            <span ng-if="item.$measure">
+              {{item.$measure.qty}} {{item.$measure.measure === 'grams' ? 'g' : item.$measure.measure}}
+            </span>
+
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <a ui-sref="site.listIndex">Browse More Lists</a>
+      </div>
+    </div>
+
+  </div>
+</div>

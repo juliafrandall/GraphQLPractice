@@ -1,0 +1,141 @@
+<div class="modal-header">
+  <span class="btn-modal-close" ng-click="vm.close();">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </span>
+  <h3 class="modal-title">View Food</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal form-edit-food">
+      <div class="form-group">
+      <div class="col-xs-12">
+        <div class="review-item-calorie padding-top">
+          <div class="green">{{vm.food.nf_calories | number: 0}}</div>
+          <span class="note">Cal</span>
+        </div>
+        <div class="review-item-photo">
+          <img ng-src="{{vm.food.photo.thumb || '//d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png'}}">
+        </div>
+        <div class="review-item-wrap">
+          <div>
+            {{vm.food.food_name}}
+            <div class="item-serving">
+              <span ng-if="vm.food.brand_name">{{vm.food.brand_name | ucwords}},</span>
+              {{vm.food.serving_qty}} {{vm.food.serving_unit}}
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-xs-5 col-sm-5 control-label">Consumed</label>
+        <div class="col-xs-7 col-sm-7">
+          <div class="form-control-static text-right">
+            {{vm.food.consumed_at | amDateFormat:'ddd., MM/DD/YY'}},
+            {{vm.meal | ucwords}}
+          </div>
+        </div>
+      </div>
+    </form>
+</div>
+
+<accordion class="accordion-modal-sections accordion-edit-food">
+  <!-- Full Nutrition Info -->
+  <accordion-group class="panel-nutrition-info panel-open" is-open="true">
+    <accordion-heading>
+      Full Nutrition Info
+    </accordion-heading>
+    <div class="accordion-content">
+      <div class="nutrition-label" nutrition-label="vm.labelData"></div>
+      <ul class="nutrition-label-attr">
+        <li>
+          Phosphorus<span class="note">**</span> : {{(vm.labelData.valuePhosphorus || 0) | number: 0}} mg
+        </li>
+        <li>
+          Potassium<span class="note">**</span> : {{(vm.labelData.valuePotassium || 0) | number: 0}} mg
+        </li>
+        <li>
+          Caffeine<span class="note">**</span> : {{vm.labelData.caffeine || 0 | number: 0}} mg
+        </li>
+      </ul>
+      <p ng-click="showMore = !showMore">
+        <span class="collapse-arrow">
+          <i ng-if="!showMore" class="fa fa-chevron-right"></i>
+          <i ng-if="showMore" class="fa fa-chevron-down"></i>
+        </span>
+        <strong>View more micronutrients</strong>
+      </p>
+      <ul ng-if="showMore" class="nutrition-label-attr">
+        <li>
+          Vitamin D<span class="note">**</span> : {{(vm.labelData.vitamin_d || 0) | number: 0}} IU
+        </li>
+        <li>
+          Vitamin E<span class="note">**</span> : {{vm.labelData.vitamin_e || 0 | number: 0}} IU
+        </li>
+        <li>
+          Vitamin K<span class="note">**</span> : {{vm.labelData.vitamin_k || 0 | number: 0}} µg
+        </li>
+        <li>
+          Thiamine<span class="note">**</span> : {{vm.labelData.thiamine || 0 | number: 0}} mg
+        </li>
+        <li>
+          Riboflavin<span class="note">**</span> : {{vm.labelData.riboflavin || 0 | number: 0}} mg
+        </li>
+        <li>
+          Niacin<span class="note">**</span> : {{vm.labelData.niacin || 0 | number: 0}} mg
+        </li>
+        <li>
+          Pantothenic Acid<span class="note">**</span> : {{vm.labelData.pantothenic_acid || 0 | number: 0}} mg
+        </li>
+        <li>
+          Vitamin B-6<span class="note">**</span> : {{vm.labelData.vitamin_b6 || 0 | number: 0}} mg
+        </li>
+        <li>
+          Vitamin B-12<span class="note">**</span> : {{vm.labelData.vitamin_b12 || 0 | number: 0}} µg
+        </li>
+        <li>
+          Folic Acid<span class="note">**</span> : {{vm.labelData.folic_acid || 0 | number: 0}} µg
+        </li>
+        <li>
+          Zinc<span class="note">**</span> : {{vm.labelData.zinc || 0 | number: 0}} mg
+        </li>
+        <li>
+          Magnesium<span class="note">**</span> : {{vm.labelData.magnesium || 0 | number: 0}} mg
+        </li>
+      </ul>
+      <p class="note">
+        ** Please note that our restaurant and branded grocery food database does not have these attributes
+        available, and if your food log contains restaurant or branded grocery foods, these totals may be incorrect.
+        The data from these these attributes is for reference purpose only, and should not be used for any chronic
+        disease management.
+      </p>
+    </div>
+  </accordion-group>
+
+  <!-- Notes -->
+  <accordion-group class="panel-notes" is-open="false" ng-if="vm.food.note">
+    <accordion-heading>
+      Notes
+    </accordion-heading>
+    <div class="accordion-content">
+      {{vm.food.note}}
+    </div>
+  </accordion-group>
+
+  <!-- Photos -->
+  <accordion-group class="panel-photo" is-open="false">
+    <accordion-heading>
+      Photo
+    </accordion-heading>
+    <div class="accordion-content">
+      <div class="thumbnail">
+        <img ng-src="{{vm.food.photo.highres || vm.food.photo.thumb}}" alt="{{vm.food.food_name}}">
+      </div>
+    </div>
+    </div>
+  </accordion-group>
+</accordion>
+
+<div class="modal-footer">
+  <button class="btn btn-default" type="button" ng-click="vm.close()"><i class="fa fa-times"></i> Close</button>
+</div>

@@ -1,0 +1,10 @@
+<a class="typeahead-recent-foods">
+    <span class="pull-right text-center">
+         <span class="typeahead-recent-food-calorie">{{match.model.nf_calories}}</span>
+        Cal
+     </span>
+     <i class="fa fa-2x fa-plus-circle pull-left" aria-hidden="true"></i>
+     <span class="typeahead-recent-food-name" ng-bind-html="match.model.item | typeaheadHighlight:query"></span>
+     <span class="typeahead-recent-food-brand" ng-bind-html="match.model.brand | typeaheadHighlight:query"></span>,
+     <span class="typeahead-recent-food-serving" ng-bind-html="match.model.serving | typeaheadHighlight:query"></span>
+</a>

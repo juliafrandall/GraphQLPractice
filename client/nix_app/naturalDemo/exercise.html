@@ -1,0 +1,118 @@
+<div class="grey-background page-natural-demo">
+  <div class="page-banner basil-bucket">
+    <div class="overlay-300"></div>
+    <div class="overlay-text">
+      <h1>
+        Natural Language API Demo - Exercise
+      </h1>
+    </div>
+  </div>
+
+  <ol class="breadcrumb">
+    <li>
+      <a href="/business/natural-language" ui-sref="site.naturalLanguage">Natural Language</a>
+    </li>
+    <li>></li>
+    <li><a href="/natural-demo" ui-sref="site.naturalDemo">Demo</a></li>
+    <li>></li>
+    <li class="active">Exercise</li>
+  </ol>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+        <ul class="nav nav-tabs nav-tabs-natural-demo">
+          <li>
+            <a href="/natural-demo" role="tab">Food</a>
+          </li>
+          <li class="active">
+            <a href="/natural-demo/exercise" ui-sref="site.naturalDemoExercise" role="tab">
+              Exercise </a>
+          </li>
+        </ul>
+        <div class="tab-content tab-content-natural-demo">
+          <div class="row">
+            <div class="col-sm-8 col-md-8">
+              <p>
+                            <textarea ng-model="vm.query" name="" id="" cols="30" rows="5" class="form-control"
+                                      ng-change="vm.clear()"
+                                      style="font-size:24px" placeholder="Enter your workout. Examples:
+- ran 3 miles
+- 30 min weight lifting
+- 30 min yoga"></textarea>
+
+              </p>
+
+              <p>
+                <button class="btn btn-lg btn-success" type="button" ng-click="vm.submit()"
+                        ng-disabled="!vm.query">
+                  Calculate Exercise
+                </button>
+              </p>
+              <div>
+                <br />
+                <p>
+                  <div banner></div>
+                </p>
+                <br>
+                <a href="https://developer.nutritionix.com/docs/v2" target="_blank">
+                  <i class="fa fa-file-text"></i>
+                  Natural Language API Documentation
+                </a>
+              </div>
+
+
+              <alert type="danger" ng-if="vm.submit.$error">
+                An unexpected server error has occurred.
+                <br> Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+                <span ng-if="vm.error.id">and reference the reference code: {{vm.error.id}}</span>
+              </alert>
+              <alert type="warning" ng-if="vm.data && ! vm.data.exercises.length">
+                No exercises were recognised in your request.
+                <br> If you believe this is an error, please email
+                <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+                with the problematic query
+              </alert>
+
+              <table class="table table-exercises" ng-if="vm.data.exercises.length">
+                <thead>
+                <tr>
+                  <th>Exercise Name</th>
+                  <th><a href="https://en.wikipedia.org/wiki/Metabolic_equivalent" target="_blank">MET</a></th>
+                  <th>Duration</th>
+                  <th>Calories Expended</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="exercise in vm.data.exercises">
+                  <td>
+                    <img ng-src="{{exercise.photo.thumb}}" width="60" alt="{{exercise.compendium_desc}}">
+                    {{exercise.name}}
+                  </td>
+                  <td>{{exercise.met}}</td>
+                  <td>{{exercise.duration_min | number: 0}} min</td>
+                  <td>{{exercise.nf_calories | number: 0}} kcal</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-sm-4 col-md-4  estimated-calories" ng-if="vm.data.exercises.length">
+              <div class="alert alert-info">
+                <p>
+                  <strong>Estimated Calories Burned:</strong>
+                </p>
+                <h2>
+                  {{vm.data.nf_calories | number: 0}} kcal
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- end container fluid -->
+</div>
+<div mini></div>

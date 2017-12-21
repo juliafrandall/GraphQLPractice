@@ -1,0 +1,9 @@
+<div class="modal-header">
+  <span ng-show="!vm.resutls.reject_reason" >Your message has been sent, and a representative will contact you within one business day.</span>
+  <pre ng-show="vm.results.reject_reason"> {{vm.results.reject_reason}}  </pre>
+</div>
+<div class="modal-footer">
+  <div class="pull-right">
+    <button class="btn btn-primary" ng-click="vm.close()"> Ok </button>
+  </div>
+</div>

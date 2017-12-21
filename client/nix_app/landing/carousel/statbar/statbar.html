@@ -1,0 +1,27 @@
+<div class="statbar">
+  <a href="#" ui-sref="site.database" class="statbar-link"></a>
+  <div>
+    <table>
+      <tr>
+        <td class="col-xs-4">
+          <span class="statbar-item-count green" ng-show="vm.showAnimation" count-up="{{vm.cpgCount}}" value="1" duration="1" unreleased></span>
+          <span class="statbar-item-count" style="color: #58a61c"> {{vm.cpgCount | number}} </span>
+          <!-- <br> -->
+          <span>Grocery Items</span>
+        </td>
+        <td class="col-xs-4">
+          <span class="statbar-item-count green" ng-show="vm.showAnimation" count-up="{{vm.restaurantCount}}" value="1" duration="1" unreleased> </span>
+          <span class="statbar-item-count" style="color: #58a61c"> {{vm.restaurantCount | number}} </span>
+          <!-- <br> -->
+           <span> Restaurant Items </span>
+        </td>
+        <td class="col-xs-4">
+          <span class="statbar-item-count green"  ng-show="vm.showAnimation" count-up="{{vm.usdaCount}}" value="1" duration="1" unreleased> </span>
+          <span class="statbar-item-count" style="color: #58a61c"> {{vm.usdaCount | number}} </span>
+          <!-- <br> -->
+           <span>  Common Foods </span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

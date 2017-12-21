@@ -1,0 +1,318 @@
+.tweet-container {
+    margin-bottom: 15px;
+    -webkit-transition: 1s linear all;
+    transition: 1s linear all;
+}
+sup.beta, sup.smart-search-link {
+    font-size: 65%;
+    top: -.4em;
+}
+
+.tweet-user-photo {
+    position: absolute;
+    left: -63px;
+    top: 0;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    overflow: hidden;
+}
+
+.tags {}
+
+.tweet-user {
+    font-weight: bold;
+    color: $official_green;
+}
+
+.tweet-time {
+    font-size: 11px;
+}
+
+.tweet-wrap {
+    font-size: 12px;
+    @media(min-width: 768px) {
+        margin-right: 120px;
+        font-size: 16px;
+    }
+}
+
+.tweet-text {}
+
+
+.repeated-item.ng-enter .repeated-item.ng-move .tweet-balloon,
+.panel-food-feed .list-group-item.repeated-item.ng-enter .repeated-item.ng-move  {
+    -webkit-transition: 0.8s linear all;
+    -moz-transition: 0.8s linear all;
+    -o-transition: 0.8s linear all;
+    transition: 0.8s linear all;
+    opacity: 0;
+    background-color: $official_green;
+}
+
+.repeated-item.ng-enter.ng-enter-active .tweet-balloon,
+.repeated-item.ng-move.ng-move-active .tweet-balloon,
+.panel-food-feed .list-group-item.repeated-item.ng-enter.ng-enter-active,
+.panel-food-feed .list-group-item.repeated-item.ng-move.ng-move-active  {
+    -webkit-transition: 1.2s linear all;
+    -moz-transition: 1.2s linear all;
+    -o-transition: 1.2s linear all;
+    transition: 1.2s linear all;
+    opacity: .5;
+    background-color: $official_green;
+}
+
+.repeated-item.ng-enter .repeated-item.ng-move .tweet-balloon .fa-caret-left {
+    -webkit-transition: 0.8s linear all;
+    -moz-transition: 0.8s linear all;
+    -o-transition: 0.8s linear all;
+    transition: 0.8s linear all;
+    opacity: 0;
+    color: $official_green;
+}
+
+.repeated-item.ng-enter.ng-enter-active .tweet-balloon .fa-caret-left,
+.repeated-item.ng-move.ng-move-active .tweet-balloon .fa-caret-left {
+    -webkit-transition: 1.2s linear all;
+    -moz-transition: 1.2s linear all;
+    -o-transition: 1.2s linear all;
+    transition: 1.2s linear all;
+    opacity: .5;
+    color: $official_green;
+}
+
+.repeated-item.ng-leave .tweet-balloon,
+.repeated-item.ng-leave .tweet-balloon .fa-caret-left,
+.panel-food-feed .list-group-item.repeated-item.ng-leave {
+    -webkit-animation: 0.8s my_animation;
+    -moz-animation: 0.8s my_animation;
+    -o-animation: 0.8s my_animation;
+    animation: 0.8s my_animation;
+}
+
+@keyframes my_animation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+/*
+  Unfortunately each browser vendor requires
+  its own definition of keyframe animation code...
+*/
+
+@-webkit-keyframes my_animation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes my_animation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes my_animation {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.tweet-balloon {
+    background: #fff;
+    margin-left: 63px;
+    position: relative;
+    padding: 10px;
+    box-shadow: 2px 2px 1px #eee;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    @media(min-width: 768px) {
+        padding: 15px 20px 20px 20px;
+    }
+    .fa-caret-left {
+        position: absolute;
+        left: -9px;
+        top: 10px;
+        color: #fff;
+    }
+}
+
+.table-wrap h5 {
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    @media(min-width: 768px) {
+        padding-top: 2px;
+        float: left;
+        font-size: 13px;
+    }
+}
+
+.table.tweet-foods {
+    width: auto !important;
+    margin-bottom: 10px;
+    @media(min-width: 768px) {
+        margin-bottom: 0;
+    }
+    td,
+    th {
+        border: none !important;
+        padding: 0 15px 3px 0;
+        color: #999;
+        font-size: 11px;
+        @media(min-width: 768px) {
+            font-size: 13px;
+            padding: 0 0 3px 15px;
+        }
+    }
+}
+
+.calories-wrap {
+    width: 100px;
+    margin: 0 auto;
+    @media(min-width: 768px) {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        margin-top: -37px;
+        width: 120px;
+    }
+    .buttons {
+        padding-top: 0;
+        float: right;
+        @media(min-width: 768px) {
+            padding-top: 6px;
+        }
+        a {
+            display: block;
+            margin-bottom: 6px;
+            color: #ccc;
+            &:hover {
+                color: $official_green;
+            }
+        }
+    }
+}
+
+.calories-count {
+    border: 1px solid #5BC0DE;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    text-align: center;
+    color: #5BC0DE;
+    height: 60px;
+    width: 60px;
+    @media(min-width: 768px) {
+        height: 75px;
+        width: 75px;
+    }
+    p {
+        padding: 10px 0 0 0;
+        margin: 0;
+        line-height: normal;
+        font-size: 16px;
+        @media(min-width: 768px) {
+            line-height: 18px;
+            padding-top: 20px;
+            font-size: 20px;
+        }
+    }
+    span {
+        display: block;
+        text-transform: uppercase;
+        font-size: 10px;
+        @media(min-width: 768px) {
+          font-size: 11px;
+        }
+    }
+    &.sm {
+        height: 60px;
+        width: 60px;
+        p {
+            padding-top: 10px;
+             font-size: 16px;
+             line-height: normal
+        }
+        span {
+            font-size: 10px;
+        }
+    }
+}
+
+.title-xs {
+    font-size: 26px;
+    @media (min-width: 768px) {
+        font-size: 36px;
+    }
+}
+.tweets-footer {
+    padding-left: 63px;
+}
+
+.highlighted {
+    font-weight: bold;
+}
+
+.twitter-timeline-wrap {
+
+    h4 {
+        margin: 0;
+        padding: 0 0 6px 0;
+    }
+}
+.panel-food-feed {
+    &.widget {
+      @media(min-width: 992px) {
+        margin: 0 0 0 20px;
+      }
+      .calories-count {
+        height: 46px;
+        width: 46px;
+        border-color: $track_green;
+        p {
+          font-size: 12px;
+          padding-top: 8px;
+          color: $track_green;
+        }
+        span {
+          font-size: 9px;
+          color: $track_green;
+        }
+      }
+      .table-food-feed {
+        margin-bottom: 6px;
+      }
+      .note {
+        font-size: 11px;
+      }
+    }
+    @media(min-width: 992px) {
+        margin: 0 60px;
+    }
+}
+.table-food-feed {
+    tr {
+        td {
+            padding-right: 30px;
+            font-size: 13px !important;
+        }
+    }
+    margin-bottom: 10px;
+}

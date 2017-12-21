@@ -1,0 +1,217 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.preferences" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h3 class="text-center">
+      My Track Account
+    </h3>
+
+    <form novalidate ng-submit="vm.submit()" name="form">
+      <div class="form-group" ng-class="{'has-error': form.firstName.$dirty && !(form.firstName.$error | isEmptyObject)}">
+        <label for="firstName">First Name</label>
+        <input id="firstName" type="text" name="firstName"
+               placeholder="e.g. Sam" class="form-control"
+               ng-model="vm.profile.first_name" required>
+
+        <div ng-show="form.firstName.$dirty && !(form.firstName.$error | isEmptyObject)"
+             ng-messages="form.firstName.$error" class="text-danger" role="alert">
+          <div ng-message="required">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{'has-error': form.lastName.$dirty && !(form.lastName.$error | isEmptyObject)}">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" type="text" name="lastName"
+               placeholder="e.g. Sam" class="form-control"
+               ng-model="vm.profile.last_name">
+
+        <div ng-show="form.lastName.$dirty && !(form.lastName.$error | isEmptyObject)"
+             ng-messages="form.lastName.$error" class="text-danger" role="alert">
+          <div ng-message="required">Lat Name is required</div>
+        </div>
+      </div>
+      <div class="form-group" ng-if="false"
+           ng-class="{'has-error': form.password.$dirty && !(form.password.$error | isEmptyObject)}">
+        <label for="password">
+          Update Password
+        </label>
+
+        <div class="input-group">
+          <input id="password" type="{{vm.showPassword ? 'text' : 'password'}}" name="password" placeholder="Password"
+                 class="form-control" ng-minlength="6"
+                 ng-model="vm.profile.password"
+                 ng-focus="form.password.$blur = false"
+                 ng-blur="form.password.$blur = true">
+          <a href tooltip="show password" ng-show="!vm.showPassword" class="input-group-addon"
+             ng-click="vm.showPassword = true">
+            <i class="fa fa-eye"></i>
+          </a>
+          <a href tooltip="hide password" ng-show="vm.showPassword" class="input-group-addon"
+             ng-click="vm.showPassword = false">
+            <i class="fa fa-eye-slash"></i>
+          </a>
+        </div>
+
+        <div ng-show="form.password.$dirty && !(form.password.$error | isEmptyObject)"
+             ng-messages="form.password.$error" class="text-danger" role="alert">
+          <div ng-message="minlength">Password must be longer than 6 characters</div>
+        </div>
+      </div>
+      <div class="form-group" ng-if="vm.profile.password"
+           ng-class="{'has-error': form.currentPassword.$dirty && !(form.currentPassword.$error | isEmptyObject)}">
+        <label for="currentPassword">
+          Current Password <br>
+          <small>use "Reset Password" button below if you don't have/know your current password</small>
+        </label>
+
+        <div class="input-group">
+          <input id="currentPassword" type="{{vm.showCurrentPassword ? 'text' : 'password'}}" name="currentPassword"
+                 placeholder="Current Password"
+                 class="form-control"
+                 ng-model="vm.profile.oldPassword"
+                 required>
+          <a href tooltip="show password" ng-show="!vm.showCurrentPassword" class="input-group-addon"
+             ng-click="vm.showCurrentPassword = true">
+            <i class="fa fa-eye"></i>
+          </a>
+          <a href tooltip="hide password" ng-show="vm.showCurrentPassword" class="input-group-addon"
+             ng-click="vm.showCurrentPassword = false">
+            <i class="fa fa-eye-slash"></i>
+          </a>
+        </div>
+      </div>
+      <div class="form-group" ng-class="{
+       'has-error': form.timezone.$dirty && !(form.timezone.$error | isEmptyObject)
+      }">
+        <label for="timezone">Timezone</label>
+
+        <select name="timezone" id="timezone" class="form-control"
+        ng-model="vm.profile.timezone"
+        ng-options="timezone as timezone for timezone in vm.timezones"></select>
+
+      </div>
+
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label class="col-xs-3 col-sm-2 control-label">Units</label>
+          <div class="col-xs-5 col-sm-4">
+            <div class="radio">
+              <label>
+                <input type="radio" name="unit" value="imperial" ng-model="vm.unitSystem">Imperial
+                (US)
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4">
+            <div class="radio">
+              <label>
+                <input type="radio" name="unit" value="metric" ng-model="vm.unitSystem"> Metric
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-3 col-sm-2 control-label">Gender</label>
+          <div class="col-xs-5 col-sm-4">
+            <div class="radio">
+              <label>
+                <input type="radio" name="gender" value="female" ng-model="vm.gender"> Female
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4">
+            <div class="radio">
+              <label>
+                <input name="gender" type="radio" value="male" ng-model="vm.gender"> Male
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-3 col-sm-2 control-label">Weight</label>
+          <div class="col-xs-4 has-helper-text">
+            <div ng-if="vm.unitSystem == 'metric'">
+              <input type="text" class="form-control"
+                     ng-model="vm.weight.kg"
+                     ng-change="vm.calculateWeights()"
+                     placeholder="kg">
+              <span class="help-text help-text-right">kg</span>
+            </div>
+            <div ng-if="vm.unitSystem == 'imperial'">
+              <input type="text" class="form-control"
+                     ng-model="vm.weight.lb"
+                     ng-change="vm.calculateWeights()"
+                     placeholder="lb">
+              <span class="help-text help-text-right">lb</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="height" class="col-xs-3 col-sm-2 control-label">Height</label>
+          <div ng-if="vm.unitSystem == 'metric'" class="col-xs-4 has-helper-text">
+            <input type="text" ng-model="vm.height.cm" ng-change="vm.calculateHeights()" class="form-control"
+                   id="height"
+                   placeholder="cm">
+            <span class="help-text help-text-right">cm</span>
+          </div>
+          <div ng-if="vm.unitSystem == 'imperial'" class="col-xs-3 us-height">
+            <input type="text" ng-model="vm.height.ft" ng-change="vm.calculateHeights()" name="feet"
+                   class="form-control" id="feet" placeholder="5">
+            <span class="help-text help-text-right">ft</span>
+          </div>
+          <div ng-if="vm.unitSystem == 'imperial'" class="col-xs-3 us-height">
+            <input type="text" ng-model="vm.height.inch" ng-change="vm.calculateHeights()" name="inch"
+                   class="form-control" id="inch" placeholder="6">
+            <span class="help-text help-text-right">inch</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="age" class="col-xs-3 col-sm-2 control-label">Age</label>
+          <div class="col-xs-4">
+            <input ng-model="vm.age" type="text" class="form-control" id="age" placeholder="30">
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="form-group">
+        <button ng-disabled="form.$invalid" type="submit" class="btn btn-success btn-lg btn-block">
+          Update Account Settings
+        </button>
+
+        <alert class="submit-alert" type="success" ng-if="vm.submit.$success">
+          Profile info has been updated
+        </alert>
+
+        <alert class="submit-alert" type="danger" ng-if="vm.submit.$error && vm.submit.$error.code != 409 && vm.submit.$error.message != 'invalid credentials'">
+          <span ng-if="vm.submit.$error.message">{{vm.submit.$error.message}}</span>
+          <span ng-if="!vm.submit.$error.message">An unexpected server error has occurred.</span>
+          <br>
+          <small>
+            Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+        <span ng-if="vm.submit.$error.id">
+            and reference the reference code: {{vm.submit.$error.id}}
+        </span>
+          </small>
+
+        </alert>
+
+        <alert class="submit-alert" type="danger" ng-if="vm.submit.$error.message == 'invalid credentials'">
+          Current password you've entered does not match our database. Please check if it's correct and try again.
+
+        </alert>
+
+        <alert class="submit-alert" type="warning" ng-if="vm.submit.$error && vm.submit.$error.code == 409">
+          An account with this email already exists. To reset your password,
+          <a ui-sref="account.auth.forgotPassword({email: vm.email})">click here</a>
+        </alert>
+      </div>
+    </form>
+    <div class="form-group">
+      <a ui-sref="account.auth.forgotPassword" class="btn btn-success">Reset Password</a>
+    </div>
+
+
+  </div>
+</div>
+

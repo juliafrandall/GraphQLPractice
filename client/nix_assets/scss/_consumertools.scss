@@ -1,0 +1,354 @@
+
+.title-section{
+  text-align: center;
+  padding: 30px;
+}
+.products-section-title{
+  font-size: 30px;
+  line-height: 1em;
+  color: #3c763d;
+}
+.products-subtitle{
+  font-size: 14px;
+  color: #999;
+  font-weight: 300;
+}
+
+.container-calc-brands {
+}
+
+
+
+.container-calc-brands > .row {
+	margin-bottom: 30px;
+}
+.col-calc-brand {
+	background: #fff;
+	border: 1px solid #eee;
+	text-align: center;
+	height: 110px;
+	margin-top: -1px;
+	margin-left: -1px;
+	&:nth-child(1), &:nth-child(4), &:nth-child(7),
+	&:nth-child(10), &:nth-child(13), &:nth-child(16),
+	&:nth-child(19), &:nth-child(22), &:nth-child(25),
+	&:nth-child(28), &:nth-child(31), &:nth-child(34) {
+		margin-left: 1px;
+	}
+	@media (min-width: 768px) {
+		height: 200px;
+		&:nth-child(1), &:nth-child(4), &:nth-child(7),
+		&:nth-child(10), &:nth-child(13), &:nth-child(16),
+		&:nth-child(19), &:nth-child(22), &:nth-child(25),
+		&:nth-child(28), &:nth-child(31), &:nth-child(34) {
+			margin-left: -1px;
+		}
+	}
+
+}
+
+.col-calc-brand > a  {
+	display: block;
+}
+
+.col-calc-brand > a .brand-logo {
+	width: 75px;
+	height: 75px;
+	line-height: 75px;
+	@media (min-width: 768px) {
+		width: 160px;
+		height: 160px;
+		line-height: 	160px;
+	}
+}
+
+.col-calc-brand > a > span {
+	display: block;
+	margin: 0 auto;
+	font-size: 11px;
+	@media (min-width: 768px) {
+		font-size: 14px;
+	}
+}
+.col-calc-brand > a > span > img {
+		max-width: 75px;
+		max-height: 55px;
+	@media (min-width: 768px) {
+		max-width: 160px;
+		max-height: 130px;
+	}
+}
+
+.bordered-box {
+	 border: 1px solid rgba(19, 19, 19, .1);
+	 background-color: #fff;
+	 margin-bottom: 15px;
+
+	 &.consumer {
+			@media(min-width: 768px) {
+				min-height: 340px;
+			}
+			@media(min-width: 992px) {
+				min-height: 305px;
+			}
+	 }
+}
+
+.your-daily-calorie {
+  margin-bottom: 0;
+	dt{
+	float: left;
+	font-size: 25px;
+	width: 80px;
+	}
+	dd {
+		padding: 8px 0 10px  0;
+	}
+}
+
+.us-height {
+	.help-text-right {
+		position: absolute;
+		right: 0;
+		top: 6px;
+	}
+	&:last-child .help-text-right {
+		right: -18px;
+	}
+}
+.has-helper-text {
+	.help-text-right {
+		position: absolute;
+		right: -21px;
+		top: 6px;
+		width: 30px;
+		display: block;
+	}
+}
+
+.form-daily-calorie .radio {
+	padding-top: 0;
+	@media(min-width: 768px) {
+		padding-top: 7px;
+	}
+}
+.container-daily-calories h3 {
+	font-size: 22px;
+	@media(min-width: 768px) {
+		font-size: 24px;
+	}
+}
+
+.disclaimer {
+	color: #888;
+}
+.form-recommended-calorie {
+  @media (min-width: 786px) {
+    width: 270px;
+    margin: 0 auto;
+  }
+  .form-group {
+    display: inline-block !important;
+    padding-right: 8px;
+    margin-bottom: 0 !important;
+  }
+  label {
+    padding-right: 8px;
+  }
+  .form-control {
+    width: 60px !important;
+    display: inline-block !important;
+    @media(min-width: 768px) {
+      width: 80px !important;
+    }
+  }
+
+  .alert {
+    width: 250px;
+  }
+
+}
+
+
+.iphone {
+  background: transparent url('/nix_assets/images/iphone.png') no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+  width: 201px;
+  height: 384px;
+  @media(min-width: 768px) {
+    width: 283px;
+    height: 542px;
+  }
+
+  .slider {
+    padding-top:62px;
+    @media(min-width: 768px) {
+      padding-top:87px;
+    }
+
+    ul {
+      margin: 0 auto;
+      width: 169px;
+      height: 263px;
+
+      @media(min-width:768px) {
+        width: 237px;
+        height: 371px;
+      }
+
+      li {
+        text-align: center;
+        img {
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+.rn-carousel-controls {
+  @media(min-width: 992px) {
+    position: absolute;
+    display: block;
+
+
+    width: 285px;
+    top: -56px;
+  }
+}
+.rn-carousel-control.rn-carousel-control-prev:before ,
+.rn-carousel-control.rn-carousel-control-next:before {
+  background-color: #ddd;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: #999;
+  font-weight: bold;
+  display: inline-block;
+  @media(min-width: 768px) {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+.panel-send-sms {
+  max-width: 335px;
+  text-align: left;
+  margin: 0 auto;
+
+  input#mobile {
+    // width: 146px;
+  }
+}
+
+.slideCount {
+  font-size: 16px;
+  text-align: center;
+  padding: 10px 0;
+  color: #999;
+  @media (min-width: 768px) {
+    font-size: 18px;
+    padding: 25px 0;
+  }
+  @media (min-width: 992px) {
+
+  }
+}
+
+.slideText {
+  text-align: center;
+
+  font-size: 16px;
+  @media (min-width: 768px) {
+    font-size: 20px;
+
+  }
+  @media(min-width: 992px) {
+    font-size: 24px;
+
+
+    margin: 0 auto;
+  }
+}
+
+.app-text {
+  font-size: 16px;
+  margin-bottom: 30px;
+  font-weight: 300;
+  text-align: center;
+  padding-top: 15px;
+  @media(min-width: 768px) {
+    padding-top: 0;
+    font-size: 20px;
+    line-height: normal;
+  }
+  @media(min-width: 992px) {
+
+    margin-bottom: 50px;
+  }
+}
+
+.btn-web-app {
+  width: 135px;
+  height: 40px;
+  font-size: 18px;
+}
+
+.app-testimonial {
+  max-width: 300px;
+  margin: 0 auto 20px auto;
+  border: 2px solid $track-green;
+  border-radius: 10px;
+  padding: 15px 20px 18px 20px;
+  font-family: Georgia, 'Times New Roman';
+  text-align: center;
+  font-style: italic;
+  position: relative;
+  background: #ffffff;
+  @media(min-width:768px) {
+    font-size: 16px;
+    max-width: 400px;
+  }
+  &:after, &:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #ffffff;
+    border-width: 12px;
+    margin-left: -12px;
+  }
+  &:before {
+    border-color: rgba(40, 165, 76, 0);
+    border-top-color: #28A54C;
+    border-width: 15px;
+    margin-left: -15px;
+  }
+}
+.app-testimonial-author {
+  font-family: Georgia, 'Times New Roman';
+  font-style: italic;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  @media(min-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.app-link > a {
+  display: inline-block;
+}

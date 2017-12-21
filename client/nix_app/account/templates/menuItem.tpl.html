@@ -1,0 +1,8 @@
+<a class="typeahead-menu-item">
+  <span class="badge badge-success pull-right">
+    <span class="typeahead-menu-item-calorie">{{match.model.nf_calories}}</span>
+  </span>
+  <span class="typeahead-menu-item-name" ng-bind-html="match.model.item_name | typeaheadHighlight:query"></span>
+  <span class="typeahead-menu-item-brand">{{match.model.brand_name}}</span><span ng-if="match.model.nf_serving_size_qty || match.model.nf_serving_size_unit">,</span>
+  <span class="typeahead-menu-item-serving">{{match.model.nf_serving_size_qty}} {{match.model.nf_serving_size_unit}}</span>
+</a>

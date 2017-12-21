@@ -1,0 +1,27 @@
+# ---
+# Host Name for app server
+- hosts: "{{ hosts }}"
+  user: "{{ user }}"
+  tasks:
+
+    - name: Pulling repo
+      git: repo={{ git_repo }} dest={{ repo_root_path }} force=True version={{ branch }} accept_hostkey=True
+
+    - name: Clean the app directory
+      command: git checkout -- . chdir={{repo_root_path}}
+
+    - name: Updating Dependencies if needed
+      command: npm install chdir={{repo_root_path}}
+      environment:
+        CI: true
+
+    - name: Run Pre-production script
+      command: npm run pre-prod chdir={{repo_root_path}}
+      environment:
+        NODE_ENV: production
+
+    - name: Ensure application tmp dir exists
+      file: path={{ repo_root_path }}/server/tmp state=directory
+
+    - name: Restart Application
+      file: name={{ repo_root_path }}/server/tmp/restart.txt state=touch

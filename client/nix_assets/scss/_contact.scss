@@ -1,0 +1,27 @@
+.row-contact {
+    padding: 30px 0px 40px 0;
+    @media(min-width: 768px) {
+        padding: 0 0px 40px 0;
+    }
+}
+
+.contact-header {
+    font-family: Roboto Slab, sans-serif;
+    font-size: 24px;
+}
+
+.note {
+    font-size: 12px;
+}
+
+.contact-map {
+    min-height: 300px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#contact-form label {
+    margin-bottom: 10px;
+}

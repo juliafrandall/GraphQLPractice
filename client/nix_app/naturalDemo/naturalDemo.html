@@ -1,0 +1,213 @@
+<div class="grey-background page-natural-demo">
+  <div class="page-banner basil-bucket">
+    <div class="overlay-300"></div>
+    <div class="overlay-text">
+      <h1>Natural Language API Demo - Foods</h1>
+    </div>
+  </div>
+  <ol class="breadcrumb">
+    <li>
+      <a href="/business/natural-language" ui-sref="site.naturalLanguage">Natural Language</a>
+    </li>
+    <li>></li>
+    <li><a href="/natural-demo" ui-sref="site.naturalDemo">Demo</a></li>
+    <li>></li>
+    <li class="active">Foods</li>
+  </ol>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+          <ul class="nav nav-tabs nav-tabs-natural-demo">
+            <li class="active">
+              <a href="/natural-demo" role="tab">Food</a>
+            </li>
+            <li>
+              <a href="/natural-demo/exercise" role="tab">
+                Exercise
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content tab-content-natural-demo">
+                <div class="row">
+                    <div class="col-md-12">
+                      <p class="page-description">
+                        Enter a query like
+                        "<a ng-href="/natural-demo?q={{'1 cup mashed potatoes and 2 tbsp gravy'}}">
+                          1 cup mashed potatoes and 2 tbsp gravy
+                        </a>"
+                        to see how it works. We support tens of thousands of foods, including international dishes.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div>
+                      <textarea name="" id="" cols="30" rows="5" class="form-control"
+                                ng-model="vm.input" style="font-size:24px">
+                      </textarea>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ng-model="vm.line_delimited"> Check for only one food per line
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ng-model="vm.use_raw_foods"> Check to use raw foods
+                          </label>
+                        </div>
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" ng-model="vm.use_branded_foods"> Check to use branded foods
+                          </label>
+                        </div>
+                      </div>
+                      <div class="padding-top margin-bottom row">
+                        <div class="col-xs-6">
+                          <button class="btn btn-lg btn-success" ng-click="vm.process()" ng-disabled="!vm.input">Calculate Foods</button>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                          <a ng-href="{{vm.getQ2Link()}}">
+                            <i class="fa fa-qrcode" aria-hidden="true"></i>
+                            QR Code
+                            </a>
+                        </div>
+                      </div>
+                      <alert type="danger" ng-if="vm.error">
+                        An unexpected server error has occurred.
+                        <br> Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+                        <span ng-if="vm.error.id">and reference the reference code: {{vm.error.id}}</span>
+                      </alert>
+                      <alert type="warning" ng-if="vm.notFound">
+                        No foods were recognized in your request.
+                        <br> If you believe this is an error, please email
+                        <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+                        with the problematic query
+                        <span ng-if="vm.notFound.id">and reference the reference code: <b>{{vm.notFound.id}}</b></span>
+                      </alert>
+                      <alert type="warning" ng-if="vm.errors.length">
+                        <ul>
+                          <li ng-repeat="error in vm.errors">
+                            {{error.warning}}: "{{error.original_text}}"
+                          </li>
+                        </ul>
+                      </alert>
+
+                      <div ng-show="vm.foods.length">
+                        <!--<h4>Results</h4>-->
+                        <div class="table-responsive">
+                          <table class="table results">
+                            <thead>
+                            <tr>
+                              <th></th>
+                              <th>Qty</th>
+                              <th>Unit</th>
+                              <th>Food</th>
+                              <th>Calories</th>
+                              <th>Weight</th>
+                              <th>Food Group</th>
+                              <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="food in vm.foods">
+                              <td class="tag-thumbnail">
+                                <a ng-href="{{food.photo.highres}}" target="_blank">
+                                  <img ng-src="{{food.photo.thumb}}"
+                                       alt="{{food.food_name}}"
+                                       title="{{food.food_name}}"
+                                  >
+                                </a>
+                              </td>
+                              <td>{{food.serving_qty || 1}}</td>
+                              <td><span style="font-size:12px">{{food.serving_unit}}</span></td>
+                              <td>
+                                <a ng-href="{{food | foodLink}}" style="font-size:18px">
+                                  {{food.food_name}}
+                                </a>
+                              </td>
+                              <td>
+                                {{food.nf_calories}} kcal
+                              </td>
+                              <td>{{food.serving_weight_grams}} g</td>
+                              <td>
+                                {{vm.foodGroups.byId[food.tags.food_group]}}
+                              </td>
+                              <td>
+                                <i class="fa fa-info clickable"
+                                   tooltip="Consumed at {{food.consumed_at | amDateFormat:'MM/DD/YYYY hh:mm A'}}"
+                                ></i>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="small grey margin-bottom" ng-if="vm.process.$request.duration">
+                        API response time: {{vm.process.$request.duration}}ms
+                      </div>
+                      <br>
+                      <p>
+                        <div banner></div>
+                      </p>
+                      <br>
+                    </div>
+                    <div class="col-md-4" ng-show="vm.total">
+                      <div class="form-inline">
+                        <div class="form-group form-group-serving">
+                          <input type="number" class="form-control input-sm" id="serving"
+                                 min="1"
+                                 ng-model="vm.servingsQty"
+                                 ng-change="vm.changeServingsQty()">
+                          <label for="serving">Servings</label>
+                        </div>
+                      </div>
+
+                      <div id="nutrition-label" nutrition-label="vm.total"></div>
+
+                      <h4>Micronutrients</h4>
+                      <table id="micronutrients" class="table table-striped table-fluid">
+                        <tbody>
+                        <tr ng-repeat="nutrient in vm.total.micronutrients"
+                            ng-show="$index < 3 || vm.total.micronutrients.showAll">
+                          <td>
+                            <strong>{{nutrient.name}}</strong>
+                          </td>
+                          <td class="nobr">
+                            {{nutrient.value | number : nutrient.value
+                            < 0.5 ? 2 : 1}} {{nutrient.unit}}
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <div>
+                        <button class="btn btn-success" type="button"
+                                ng-click="vm.total.micronutrients.showAll = !vm.total.micronutrients.showAll">
+                          <span ng-hide="vm.total.micronutrients.showAll">View All Micronutrients</span>
+                          <span ng-show="vm.total.micronutrients.showAll">View Less Micronutrients</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <a href="https://developer.nutritionix.com/docs/v2" target="_blank">
+                        <i class="fa fa-file-text"></i>
+                        Natural Language API Documentation
+                      </a>
+
+
+                    </div>
+                  </div>
+          </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- end container fluid -->
+</div>
+<br /><br />&nbsp;<br />
+<div mini inquiry="api"></div>

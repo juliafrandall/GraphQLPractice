@@ -1,0 +1,40 @@
+<div class="locate-marker">
+  <div class="panel panel-default panel-popular-track-items">
+    <div class="panel-heading">
+      <div>
+        <div class="logo" ng-if="brand.logo">
+          <img ng-src="{{brand.logo}}" alt="">
+        </div>
+        <h3 class="panel-title">
+          <span ng-bind-html="(l.name | ucwords) || brand.name"></span>
+          <div class="address">{{l.address}}, {{l.city}}, {{l.country}}</div>
+        </h3>
+        <a ui-sref='site.brandsDetail({brand_name: ((l.name || brand.name) | cleanurl), id: l.brand_id})'
+           target='_blank'>
+          View Menu
+        </a>
+      </div>
+    </div>
+    <div class="panel-body" ng-if="brand && brand.popularTrackItems.length > 0">
+      What are <a target="_blank" ui-sref="site.trackApp">Nutritionix Track</a> users eating here?
+
+      <table class="table">
+        <tbody>
+        <tr ng-repeat="food in brand.popularTrackItems | limitTo: 5">
+          <td>
+            <span ng-if="!food.nix_item_id" ng-bind-html="food.food_name"></span>
+            <a ng-if="food.nix_item_id" target="_blank" ui-sref="site.itemsDetail({
+                                                        brand: (brand.name | cleanurl),
+                                                        item_name: (food.food_name | cleanurl),
+                                                        item_id: food.nix_item_id
+                                                     })"
+               ng-bind-html="food.food_name">
+            </a>
+          </td>
+          <td class="text-right nowrap">{{food.nf_calories | fdaRound: 'calories'}} cal</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

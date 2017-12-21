@@ -1,0 +1,212 @@
+<form novalidate name="vm.form">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="border-box">
+        <div class="row">
+          <div class="col-sm-5 col-md-5">
+            <a href="#" ui-sref="account.cabinet.lists.list" class="btn btn-default btn-sm pull-left btn-back">
+              <i class="fa fa-chevron-left"></i>
+            </a>
+            <h1>
+              {{vm.isNew ? 'Create' : 'Edit'}} List
+            </h1>
+          </div>
+          <div class="col-sm-7 col-md-7 hidden-xs text-right">
+            <div class="btn-group btn-sharing">
+              <label class="btn btn-default active"
+                     ng-model="vm.list.is_published"
+                     btn-radio="0">Draft</label>
+              <label class="btn btn-default"
+                     ng-model="vm.list.is_published"
+                     btn-radio="1">Published</label>
+            </div>
+            <button class="btn btn-success" ng-click="vm.save()" ng-disabled="vm.form.$invalid || vm.save.$busy">
+              Save
+            </button>
+
+            <button class="btn btn-info" ng-click="vm.duplicateList()" ng-if="!vm.isNew">
+              Duplicate list
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control input-lg input-list-name" name="name" autocomplete="off"
+                 placeholder="List Name" ng-model="vm.list.name" required>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control input-list-description" name="description" placeholder="Description"
+                 ng-model="vm.list.description">
+        </div>
+        <div class="form-group">
+          <tags-input ng-model="vm.list.labels"
+                      display-property="name"
+                      key-property="id"
+                      add-from-autocomplete-only="true"
+                      min-length="1"
+                      placeholder="Add Labels"
+          >
+            <auto-complete source="vm.labels | filter: $query"
+                           min-length="1"></auto-complete>
+          </tags-input>
+        </div>
+        <div ng-if="vm.list.id && vm.list.is_published">
+          <a href ui-sref="site.listDetail({id: vm.list.id, name: (vm.list.name | cleanurl)})" target="_blank">
+            Public Page
+          </a>
+        </div>
+        <div class="hidden-sm hidden-md hidden-lg">
+          <div class="btn-group btn-sharing">
+            <label class="btn btn-default active"
+                   ng-model="vm.list.is_published"
+                   btn-radio="0">Draft</label>
+            <label class="btn btn-default"
+                   ng-model="vm.list.is_published"
+                   btn-radio="1">Published</label>
+          </div>
+          <button class="btn btn-success" ng-click="vm.save()" ng-disabled="vm.form.$invalid || vm.save.$busy">
+            Save
+          </button>
+
+          <button class="btn btn-info" ng-click="vm.duplicateList()" ng-if="!vm.isNew">
+            Duplicate list
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row custom-colswrap">
+    <div class="col-md-8 col-lg-8">
+      <div class="border-box">
+        <div class="list-filter">
+          <div class="form-group">
+            <label>
+              Sort:
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="sort" id="gram" value="ASC" ng-model="vm.list.sort"> ASC
+              <i class="fa fa-chevron-up"></i>
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="sort" id="custom" value="DESC" ng-model="vm.list.sort"> DESC
+              <i class="fa fa-chevron-down"></i>
+            </label>
+            <div class="filter-nutrient">
+              <label for="nutrient-focus">
+                Nutrient Focus:
+              </label>
+              <select name="nutrient-focus" id="nutrient-focus"
+                      class="form-control form-control-nutrient"
+                      ng-model="vm.list.nutrient_focus"
+                      ng-options="o.id as o.label for o in vm.nutrients">
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-box">
+        <div class="margin-bottom">
+          <div class="table-search">
+            <div instant-smart-search="vm.instantSmartSearch"></div>
+          </div>
+          <div class="table-search-filter">
+            <label class="radio-inline">
+              <input type="radio" name="search-filter" id="inlineRadio1"
+                     ng-model="vm.instantSmartSearch.source"
+                     value="all"> All Foods
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="search-filter" id="inlineRadio2"
+                     ng-model="vm.instantSmartSearch.source"
+                     value="common"> Common Foods Only
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="search-filter" id="inlineRadio3"
+                     ng-model="vm.instantSmartSearch.source"
+                     value="branded"> Branded Food Only
+            </label>
+          </div>
+        </div>
+
+        <table class="table table-border-top table-food-list">
+          <thead>
+          <tr>
+            <th></th>
+            <th>Food Name and Description</th>
+            <th>Measure</th>
+            <th>
+              {{vm.nutrients.byId[vm.list.nutrient_focus].label}}
+              ({{vm.nutrientDefinitions[vm.list.nutrient_focus === -205 ? 205 : vm.list.nutrient_focus].unit || 'g'}})
+            </th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in vm.list.items">
+            <td><img ng-src="{{item.photo.thumb}}" alt="{{item.food_name}}"></td>
+            <td>
+              <p>
+                <!--<input type="text"
+                       ng-model="item.food_name"
+                       placeholder="food name"
+                       typeahead="food_name for food_name in vm.suggestFoodName($viewValue)"
+                       class="form-control">-->
+                {{item.food_name}}
+                <small ng-if="item.brand_name">- {{item.brand_name}}</small>
+                <br>
+                <a class="nobr" ng-href="{{
+                  item.nix_item_id ?
+                  'https://hive2.nutritionix.com/#/admin/items/' + item.nix_item_id :
+                  'https://hive2.nutritionix.com/#/tags/edit/' + item.tags.tag_id}}" target="_blank">
+                  <i class="fa fa-edit"></i>
+                  Edit name
+                </a>
+              </p>
+              <textarea class="form-control"
+                     ng-model="item.description"
+                     placeholder="{{item.food_name}} description"
+              ></textarea>
+            </td>
+            <td>
+              <div ng-if="item.alt_measures.length" class="list-measure form-inline">
+                <input type="text" class="form-control"
+                       ng-model="item.$measure.$user_qty"
+                       ng-model-options="{debounce: 500}"
+                       ng-change="vm.setFoodMeasure(item)"
+                       placeholder="quantity">
+                <select class="form-control"
+                        ng-model="item.$measure"
+                        ng-options="measure as measure.measure for measure in item.alt_measures"
+                        ng-change="vm.setFoodMeasure(item)"></select>
+              </div>
+              <div ng-if="!item.alt_measures.length">
+                {{item.serving_qty}} {{item.serving_unit}}
+              </div>
+            </td>
+            <td>{{vm.nutrients.byId[vm.list.nutrient_focus].getValue(item) | smartNumber: false: false: 2: false}}
+            </td>
+            <td><a href ng-click="vm.removeItem(item)"><i class="fa fa-times delete-item"></i></a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-4 col-lg-4 text-center" ng-show="vm.list.items.length > 0">
+      <div class="border-box">
+        <div class="thumbnail" ng-if="vm.generateImage.response || vm.list.photo">
+          <img
+            ng-src="{{(vm.generateImage.response.data || vm.list.photo.thumb) | ngfDataUrl}}"
+               alt="{{vm.list.name}}">
+        </div>
+
+        <div>
+          <button class="btn btn-success" ng-click="vm.generateImage()">
+            <span ng-show="vm.generateImage.response || vm.list.photo">Regenerate</span>
+            <span ng-show="!(vm.generateImage.response || vm.list.photo)">Generate</span>
+            Image
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

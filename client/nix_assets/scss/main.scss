@@ -1,0 +1,513 @@
+@import "variables";
+//Original Bootstrap's CSS depends on empty href attributes to style cursors for several
+//components (pagination, tabs etc.). But in AngularJS adding empty href
+//attributes to link tags will cause unwanted route changes.
+.nav,
+.pagination,
+.carousel-control,
+.panel-title a {
+    cursor: pointer;
+}
+
+@import '../../nix_bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins';
+@import '../../nix_bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables';
+@import 'colors';
+@import 'landing';
+@import 'login';
+@import 'navbar';
+@import 'carousel';
+@import 'database';
+@import 'grocery';
+@import 'consumertools';
+@import 'business';
+@import 'contact';
+@import 'items';
+@import 'brands';
+@import 'about';
+@import 'modal';
+@import "naturalDemo";
+@import 'breadcrumbs';
+@import 'twitter';
+@import 'account/account';
+@import "track-widget";
+@import 'slideout';
+@import 'fda-compliance';
+@import 'dev/dev';
+@import 'recipes';
+@import 'labs';
+@import 'locate';
+@import 'restaurantsMap';
+@import 'diets';
+@import 'exercise';
+@import 'banner';
+@import "customer";
+@import "nixy";
+@import "list";
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+    src: url($icon-font-path + 'glyphicons-halflings-regular.eot');
+    src: url($icon-font-path + 'glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url($icon-font-path + 'glyphicons-halflings-regular.woff2') format('woff2'), url($icon-font-path + 'glyphicons-halflings-regular.woff') format('woff'), url($icon-font-path + 'glyphicons-halflings-regular.ttf') format('truetype'), url($icon-font-path + 'glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+*:focus {outline:none !important}
+html {
+    background-color: #f8f8f8;
+    @media (min-width: 992px) {
+        min-height: 100%;
+        position: relative;
+    }
+}
+body {
+
+    @media(min-width: 992px) {
+        margin-bottom: $footer-height;
+    }
+}
+body,
+html {
+    font-family: Open Sans, sans-serif;
+}
+
+html * {
+    -webkit-font-smoothing: antialiased;
+}
+.btn:focus,
+.btn:active:focus {
+    outline: none;
+}
+.navbar-brand img {
+    width: 120px;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+    margin-top: 0;
+    @media(min-width: 768px) {
+        margin-top: 20px;
+    }
+}
+
+h2 {
+  font-size: 28px;
+  @media(min-width: 768px) {
+    font-size: 30px;
+  }
+}
+h4 {
+    line-height: normal;
+}
+.subheading-highlight {
+  color: #d66f00;
+}
+.breadcrumb {
+    margin-bottom: 0;
+    background-color: transparent;
+    font-size: 11px;
+    text-align: right;
+}
+
+.overlay {
+    height: 500px;
+}
+
+.overlay-text h1 {
+    font-size: 26px;
+    margin: 0;
+    line-height: normal;
+    @media(min-width: 768px) {
+        font-size: 38px;
+    }
+    @media(min-width: 992px) {
+        font-size: 42px;
+    }
+
+}
+
+.overlay-300 {
+    position: absolute;
+    /*height: 120px;*/
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, .75), rgba(0, 0, 0, .25));
+    @media(min-width: 768px) {
+        /*height: 150px;*/
+    }
+}
+
+.page-banner {
+    position: relative;
+    height: 120px;
+    background-size: cover !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: table;
+    width: 100%;
+    &.basil-bucket {
+        background-image: url('https://s3.amazonaws.com/cdn4-nutritionix/images/basil_bucket.jpg');
+    }
+    &.database-server {
+        background-image: url('https://s3.amazonaws.com/cdn4-nutritionix/images/database_banner2.jpg');
+    }
+    &.spreadsheet {
+        background-image: url('/nix_assets/images/spreadsheet.jpg');
+    }
+    &.map {
+      background-image: url('/nix_assets/images/map.jpg');
+    }
+    @media(min-width: 768px) {
+        height: 150px;
+    }
+    &.has-statbar {
+      height: 155px;
+      @media(min-width: 768px) {
+        height: 185px;
+      }
+      .overlay-300 {
+        height: 155px;
+        @media(min-width: 768px) {
+          height: 185px;
+        }
+      }
+    }
+}
+
+.statbar-wrap {
+  min-height: 40px;
+  .statbar {
+    background-color: #222;
+  }
+}
+
+.block {
+    display: block;
+}
+
+.nf, .nutritionLabel {
+    width: auto !important;
+    @media(min-width: 450px) {
+        margin-left: auto;
+        margin-right: auto;
+        width: 300px !important;
+    }
+    @media(min-width: 768px) {
+        width: auto !important;
+    }
+}
+
+.nutritionLabel input.unitQuantityBox {
+    width: 32px !important;
+    height: 20px !important;
+}
+
+.fa-7x {
+    padding-top: 10px !important;
+}
+
+.nobr {
+    white-space: nowrap;
+}
+
+.nbsp:after {
+    display: inline-block;
+    content: "\00a0";
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.help-block {
+    font-size: 12px;
+    color: #999;
+    margin: 0 15px;
+    @media(min-width: 992px) {
+        margin: 0;
+    }
+}
+
+.content-404 {
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    @media(min-width: 768px) {
+        padding-top: 80px;
+        padding-bottom: 80px;
+    }
+    @media(min-width:992px) {
+        padding-top: 160px;
+        padding-bottom: 160px;
+    }
+}
+
+.error-page-message {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.bg-white {
+    background-color: #fff;
+    border: 1px solid #f4f4f4;
+}
+
+.padding {
+    padding: $padding 0;
+    @media(min-width: 768px) {
+        padding: 25px 10px;
+    }
+}
+
+.padding {
+    padding: $padding;
+}
+
+.padding-top {
+    padding-top: $padding;
+}
+
+.padding-right {
+    padding-right: $padding;
+}
+
+.padding-bottom {
+    padding-bottom: $padding;
+}
+
+.padding-left {
+    padding-left: $padding;
+}
+
+.row.padding {
+    padding-left: 0;
+    padding-right: 0;
+    @media (min-width: 768px) {
+        padding-left: $padding;
+        padding-right: $padding;
+    }
+}
+
+.snippet pre code {
+    color: #2f6f9f;
+}
+
+.na {
+    color: #4f9fcf;
+}
+
+.nv {
+    color: #d44950;
+}
+
+.as-table {
+    display: table;
+    .as-table-cell {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.subtext {
+    font-family: Open Sans, sans-serif;
+    font-size: 16px;
+    -webkit-filter: blur(0px);
+}
+
+.bordered-text {
+    border: 1px dotted #ccc;
+    padding: 6px 10px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.btn {
+    font-family: Quicksand, sans-serif;
+}
+
+.powered-by {
+    width: 140px;
+    display: inline-block;
+    color: #999;
+    text-decoration: none;
+    span {
+        font-size: 10px;
+        display: block;
+    }
+    &:hover {
+        text-decoration: none;
+        color: #999;
+    }
+}
+
+.table-fluid {
+    width: 100%;
+}
+#iubenda_policy {
+  h1 {
+    font-size: 32px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+}
+#iubenda_policy .for_boxes,
+#iubenda_policy .for_boxes > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.submit-alert {
+  margin: 10px 0;
+  &.inline {
+    margin-top: 0;
+  }
+}
+.error-404 {
+    margin-top: 150px;
+}
+
+
+.modal-footer {
+    text-align: center;
+    border: none;
+    padding-top: 0;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.m-b-none {
+  margin-bottom: 0;
+}
+
+.daily-calories-calculator .btn + .btn {
+  margin-left: 5px;
+  margin-bottom: 0;
+}
+
+.text-underline {
+  text-decoration: underline !important;
+}
+.w40 {
+  width: 40px !important;
+}
+.input-padding-top {
+  padding-top: 8px;
+}
+
+.nix-ad {
+  width: 100%;
+  height: 60px;
+  border: 0;
+  @media(min-width: 767px) {
+    width: 336px;
+    height: 280px;
+  }
+  @media(min-width: 992px) {
+
+  }
+  @media(min-width: 1200px) {
+    width: 728px;
+    height: 90px;
+  }
+}
+
+.square-ad {
+
+  @media(min-width: 767px) {
+    padding-top: 0;
+  }
+  .nix-ad {
+
+    @media(min-width: 767px) {
+      width: 336px;
+      height: 280px;
+    }
+    @media(min-width: 1200px) {
+      width: 336px;
+      height: 280px;
+    }
+  }
+}
+
+.desktop-only {
+  @media(max-width: 767px) {
+    display: none;
+  }
+}
+
+.mobile-only {
+  @media(min-width: 767px) {
+    display: none;
+  }
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+
+.fb-like {
+  padding-top: 15px;
+  display: block !important;
+}
+.fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
+  width: 100% !important;
+}
+.page-detail {
+  .fb-like {
+    @media(min-width: 992px) {
+      padding-top: 15px;
+      padding-bottom: 0;
+    }
+  }
+}
+
+.track-app {
+  .fb-like {
+    padding: 0 0 15px 30px;
+    width: 250px;
+    margin: 0 auto;
+  }
+}
+
+.modal-backdrop {
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+.modal-content .watermark_container {
+  display: block !important;
+}
+
+label.watermark {
+  color: rgb(204, 204, 204) !important;
+  opacity: 1 !important;
+}
+
+.nutrition-label {
+  margin-bottom: 10px;
+}
+
+
+.alert-text-danger {
+  color: #a94442;
+}
+
+tags-input .tags {
+  border-radius: 4px;
+  border-color: #ccc;
+}

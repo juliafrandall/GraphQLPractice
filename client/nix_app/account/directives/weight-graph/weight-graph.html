@@ -1,0 +1,105 @@
+<div class="weight-graph">
+  <div class="panel panel-default panel-chart">
+    <div class="panel-heading">
+      <div class="text-center">Weight history</div>
+      <form class="form">
+        <div class="row">
+          <div class="col-xs-12">
+            <label class="control-label">Interval</label>
+            {{vm.range}}
+            <select ng-model="vm.interval" class="form-control input-sm"
+                    ng-options="+index as label for (index, label) in vm.intervals"
+                    ng-change="vm.setInterval()"
+            >
+              <option value="">-- Set Interval --</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-6">
+            <label class="control-label">From</label>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control"
+                     placeholder="{{vm.begin.initialValue | amDateFormat: 'MM/DD/YYYY'}}"
+                     datepicker-popup="MM/dd/yyyy"
+                     max-date="vm.end.value"
+                     ng-model="vm.begin.value"
+                     ng-change="vm.setCustomInterval()"
+                     is-open="vm.begin.opened"
+                     show-button-bar="false"
+                     show-weeks="false"
+                     max-mode="'day'">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="vm.begin.opened = !vm.begin.opened">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <label class="control-label">To</label>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control"
+                     placeholder="{{vm.end.initialValue | amDateFormat: 'MM/DD/YYYY'}}"
+                     datepicker-popup="MM/dd/yyyy"
+                     min-date="vm.begin.value"
+                     max-date="vm.end.maxDate"
+                     ng-model="vm.end.value"
+                     ng-change="vm.setCustomInterval()"
+                     is-open="vm.end.opened"
+                     show-button-bar="false"
+                     show-weeks="false"
+                     max-mode="'day'">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="vm.end.opened = !vm.end.opened">
+                  <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="panel-body text-center" ng-if="!vm.chartLineLabels.length">
+      No data has been tracked for this period
+    </div>
+    <div class="panel-body" ng-if="vm.chartLineLabels.length">
+      <div class="status">
+        <div class="row">
+          <div class="col-xs-4 col-sm-4 col-md-4">
+            <strong>{{vm.stats.startValue | kgToUserUnits | number: 1}} {{vm.weightUnit}}</strong>
+            Start
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4">
+            <strong>{{vm.stats.endValue | kgToUserUnits | number: 1}} {{vm.weightUnit}}</strong>
+            {{vm.stats.endText}}
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4">
+            <strong class="weight-change">
+              <span class="glyphicon"
+                    ng-class="{
+                      'glyphicon-arrow-down': vm.stats.change < 0,
+                      'glyphicon-arrow-up': vm.stats.change > 0,
+                      'glyphicon-minus': vm.stats.change == 0
+                    }"
+                    aria-hidden="true"></span>
+              {{vm.stats.change | abs | kgToUserUnits | number: 1}} {{vm.weightUnit}}
+            </strong>
+            Change ({{vm.stats.changePercentage > 0 ? '+' : ''}}{{vm.stats.changePercentage | number: 0}}%)
+          </div>
+        </div>
+      </div>
+
+      <canvas class="chart chart-line"
+              chart-options="vm.chartLineOptions"
+              chart-data="vm.chartLineCharts"
+              chart-labels="vm.chartLineLabels"
+              chart-legend="false"
+              chart-series="vm.chartLineSeries"
+              chart-colours="vm.chartLineColours"
+              chart-click="vm.clickHandler"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>

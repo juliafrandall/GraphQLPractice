@@ -1,0 +1,948 @@
+.row-bg {
+    background-color: #fff;
+    border: 1px solid rgba(19, 19, 19, 0.1);
+}
+
+.api-package {
+    h2 {
+        font-weight: bold;
+        color: $official_green;
+        margin-top: 10px;
+    }
+    h3 {
+        color: $business-header-color;
+        font-size: 40px;
+        font-family: 'Quicksand', sans-serif;
+    }
+    .btn {
+        letter-spacing: -.05em;
+        font-size: 20px;
+        font-family: 'Quicksand', sans-serif;
+    }
+    .section-content {
+        font-size: 16px;
+        line-height: 26px;
+        min-height: auto;
+        @media(min-width: 768px) {
+            min-height: 300px;
+        }
+        ul {
+            padding-left: 0;
+            list-style: none;
+            @media(min-width: 992px) {
+                min-height: 195px;
+            }
+            li {
+                padding: 3px 0;
+            }
+        }
+    }
+}
+
+.list-features {
+    line-height: 26px;
+    font-size: 16px;
+    @media(min-width: 1200px) {
+        font-size: 18px;
+        line-height: 30px;
+    }
+}
+
+@media(min-width: 1200px) {
+    .api-package .section-content {
+        min-height: 160px;
+    }
+    .row-bg {
+        padding: 30px 0;
+    }
+}
+
+.list-restaurant-feature {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 10px;
+    li {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 10px 10px;
+        .fa {
+            margin-left: -17px;
+            color: #5cb85c;
+        }
+    }
+}
+
+.bordered-box.business {
+    position: relative;
+    @media(min-width: 768px) {
+        min-height: 325px;
+    }
+    @media(min-width: 992px) {
+        min-height: 304px;
+    }
+}
+
+.nutritionlink-features {
+    margin: 0 0 0 -15px;
+    padding: 0;
+    @media (min-width: 768px) {
+        margin-left: -20px;
+    }
+    li {
+        margin: 0;
+        padding: 0 0 15px 50px;
+        font-size: 18px;
+        @media (min-width: 768px) {
+            padding-left: 95px;
+            font-size: 22px;
+        }
+        .fa {
+            font-size: 50px;
+            color: $official_green;
+            @media (min-width: 768px) {
+                font-size: 80px;
+            }
+        }
+        h4 {
+            margin-bottom: 6px;
+            margin-left: 70px;
+            @media (min-width: 768px) {
+                margin-left: 105px;
+            }
+        }
+        p {
+            font-size: 14px;
+            margin-left: 0;
+            @media (min-width: 768px) {
+                margin-left: 105px;
+            }
+        }
+        span.pull-left {
+            width: 50px;
+            display: block;
+            @media (min-width: 768px) {
+                width: 80px;
+            }
+        }
+    }
+}
+
+.nutritionlink-brands {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    li {
+        padding: 15px;
+        display: block;
+        @media (min-width: 768px) {
+            display: inline-block;
+        }
+    }
+}
+
+.panel-submit-restaurant {
+    margin-top: 25px;
+}
+
+.nutrition-tool {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    min-height: 150px;
+    margin-bottom: 15px;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+    @media(min-width: 768px) {
+        min-height: 150px;
+    }
+    @media(min-width: 992px) {
+        min-height: 250px;
+    }
+    &.nutrition-calculator {
+        background-image: url("../nix_assets/images/nutrition_calculator.jpg");
+    }
+    &.allergen-wizard {
+        background-image: url("../nix_assets/images/allergen_wizard.jpg");
+    }
+    &.interactive-nutrition-menu {
+        background-image: url("../nix_assets/images/interactive_nutrition_menu.jpg");
+    }
+    &.fda-consulting {
+        background-image: url("../nix_assets/images/fda_consulting.jpg");
+    }
+    h3 {
+        background: #000;
+        color: #fff;
+        text-shadow: 2px 2px 2px #000;
+        text-align: center;
+        margin: 0;
+        padding: 10px 0;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        @media(min-width: 768px) {
+            font-size: 16px;
+        }
+        @media(min-width: 992px) {
+            font-size: 24px;
+        }
+    }
+    a {
+        display: block;
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        background: rgba(255, 255, 255, .4);
+        text-decoration: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        &:hover {
+            background: rgba(255, 255, 255, 0);
+        }
+    }
+}
+
+.section-description {
+    font-size: 12px;
+    margin-bottom: 0;
+    @media(min-width: 768px) {
+        font-size: 18px;
+        width: 520px;
+        margin: 0 auto;
+    }
+    @media(min-width: 992px) {}
+}
+
+.interactiveNutritionTools {
+    .overlay-text h1 {
+        font-size: 23px;
+    }
+    p.section-description {
+        line-height: 16px;
+    }
+    @media(min-width: 768px) {
+        .overlay-text h1 {
+            font-size: 38px;
+        }
+        p.section-description {
+            line-height: normal;
+        }
+    }
+    @media(min-width: 992px) {
+        .overlay-text h1 {
+            font-size: 42px;
+        }
+    }
+}
+
+.slider-brands {
+    margin-bottom: 15px;
+    a {
+        display: block;
+        margin: 5px 15px;
+        height: 45px !important;
+        line-height: 45px;
+        text-align: center;
+        img {
+            max-height: 45px !important;
+            max-width: 165px;
+            display: inline-block;
+            @media(min-width: 768px) {
+                max-width: 100px;
+            }
+            @media(min-width:992px) {
+                max-width: 165px;
+            }
+        }
+    }
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+
+.btn-success.active,
+.btn-success:active,
+.btn-success:hover,
+.open>.btn-success.dropdown-toggle {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.contact-free-consultation {
+    .contact-header {
+        font-size: 23px;
+    }
+}
+
+.slider-testimonials {
+    width: 680px;
+    margin: 15px auto 0 auto;
+}
+
+.testimonial-wrap {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.arrow_box {
+    position: relative;
+    background: #28A54C;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    font-family: Georgia;
+    font-style: italic;
+    color: #fff;
+    display: table;
+    width: 100%;
+    .arrow_box_content {
+        padding: 6px 10px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        height: 58px;
+    }
+    span {
+        font-weight: bold;
+        font-size: 14px;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: -10px;
+        z-index: 1000;
+        color: #000;
+        text-align: right;
+        margin-left: -70px;
+    }
+}
+
+.arrow_box:after {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(40, 165, 76, 0);
+    border-right-color: #28A54C;
+    border-width: 10px;
+    margin-top: -10px;
+}
+
+.nutrition-tool-widget {
+    display: table;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    line-height: 14px;
+    margin-bottom: 15px;
+    font-family: 'Open Sans';
+    &.center {
+        margin: 0 auto;
+        @media(min-width: 768px) {
+          margin: 0;
+        }
+    }
+    @media(min-width: 768px) {
+        font-size: 22px;
+        line-height: 22px;
+        zoom: 72%;
+    }
+    @media(min-width: 992px) {
+      zoom: 88%;
+    }
+    span {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    img {
+        max-width: 80px;
+        max-height: 40px;
+        margin-right: 15px;
+        @media(min-width: 768px) {
+            max-width: 200px;
+            max-height: 60px;
+        }
+    }
+    .sm {
+        display: block;
+        font-size: 11px;
+        @media(min-width: 768px) {
+            font-size: 18px;
+        }
+    }
+    .widget-text {
+        padding-right: 15px;
+    }
+    .fa {
+        color: #ccc;
+        &.fa-calculator {
+            color: $official_green;
+            margin-right: 6px;
+            @media(min-width: 768px) {
+                font-size: 2.4em;
+            }
+        }
+        &.fa-chevron-right {
+            vertical-align: middle;
+            margin-top: -10px;
+            @media(min-width: 768px) {
+                margin-top: -20px;
+            }
+        }
+    }
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
+        color: #333;
+    }
+}
+
+.panel-popular-track-items {
+    margin-bottom: 12px;
+    @media(min-width: 768px) {}
+    .panel-title {
+        a {
+            color: $official_green;
+        }
+    }
+    table {
+        tbody {
+            tr {
+                td {
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}
+
+.btn-call-to-action {
+    &.btn-api {
+        position: relative;
+        .fa-server {
+            margin-left: 0;
+            margin-right: 15px;
+            padding: 0;
+            float: left;
+            font-size: 3em;
+            @media(min-width: 768px) {
+                margin-left: 10px;
+                font-size: 7em;
+            }
+        }
+        .fa-chevron-right {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            font-size: 1.6em;
+            margin-top: -11px;
+            @media(min-width: 768px) {
+                font-size: 2.6em;
+                right: 30px;
+                margin-top: -18px;
+            }
+        }
+        h3 {
+            margin: 0 28px 6px 58px;
+            font-size: 16px;
+            @media(min-width: 768px) {
+                font-size: 24px;
+                margin-top: 6px;
+                margin-right: 90px;
+            }
+        }
+        h4 {
+            margin: 0 28px 0 58px;
+            font-size: 13px;
+            @media(min-width: 768px) {
+                font-size: 18px;
+                margin-right: 90px;
+            }
+        }
+    }
+}
+
+.custom-data-solutions {
+    font-size: 16px;
+}
+
+.page-natural-language {
+    .custom-contact {
+        .container {
+            width: auto !important;
+            .row-contact > div {
+                width: auto !important;
+                margin: 0 !important;
+            }
+        }
+    }
+}
+
+.product-box {
+    &.horizontal {
+        .bordered-box.business {
+            @media(min-width: 768px) {
+                min-height: auto;
+            }
+            @media(min-width: 992px) {
+                min-height: 304px;
+            }
+        }
+    }
+    .section-subtitle {
+      margin-top: 0;
+    }
+}
+
+.page-detail {
+    .item-title {
+        position: relative;
+        .btn-calc-wrap {
+            margin-bottom: 0;
+            @media(min-width: 768px) {
+                /*
+                position: absolute;
+                right: 30px;
+                top: 50%;
+                margin-top: -33px;
+                */
+            }
+        }
+    }
+}
+
+.track-app {
+    .navbar {
+        border-color: #fff;
+        @media(min-width: 992px) {
+            border-color: #e7e7e7;
+        }
+    }
+    .navbar-brand {
+        visibility: hidden;
+        @media(min-width: 992px) {
+            visibility: visible;
+        }
+    }
+}
+
+.track-logo {
+    margin: 0 auto;
+    width: 280px;
+    @media(min-width: 768px) {
+        width: 400px;
+    }
+}
+
+.track-app-landing {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+    @media(min-width: 1350px) {
+      width: 1340px;
+      border-left: 1px solid #eee;
+    }
+    .col {
+        padding-top: 30px;
+        padding-bottom: 12px;
+        @media(min-width: 992px) {
+            width: 50%;
+            float: left;
+            padding-top: 80px;
+            padding-bottom: 0;
+        }
+    }
+    .col1 {
+        text-align: center;
+        padding-top: 0;
+        @media(min-width: 768px) {
+            padding-top: 0;
+        }
+        @media(min-width: 992px) {
+            padding-top: 80px;
+        }
+        @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+            padding-top: 30px;
+        }
+        @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+            padding-top: 30px;
+        }
+        .colwrap {
+            @media(min-width: 992px) {
+                width: 640px;
+                float: right;
+            }
+            @media(min-width: 1024px) {
+                width: 512px;
+            }
+            @media(min-width: 1200px) {
+                width: 640px;
+            }
+           @media(min-width: 1200px) {
+                width: 640px;
+            }
+           @media(min-width: 1350px) {
+                width: 670px;
+            }
+        }
+    }
+    .col2 {
+        background: transparent url("https://d2eawub7utcl6.cloudfront.net/assets/basil_blurred.jpg") left center no-repeat;
+        @media(min-width: 768px) {
+            height: 620px;
+            overflow: hidden;
+        }
+        @media(min-width: 992px) {
+            height: 735px;
+        }
+        @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+            padding-top: 30px;
+            height: 615px;
+        }
+        @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+            padding-top: 30px;
+            height: 615px;
+        }
+    }
+    .col3 {
+      padding-bottom: 0;
+    }
+}
+
+.track-app-intro {
+    font-weight: 300;
+    font-size: 24px;
+    line-height: normal;
+    padding: 15px 30px 0 30px;
+    @media(min-width: 768px) {
+        padding: 30px 50px;
+        font-size: 30px;
+    }
+}
+
+.iphone6-wrap {
+    @media(min-width: 768px) {
+        float: left;
+        margin: 0 25px 0 90px;
+    }
+    @media(min-width: 992px) {
+        margin: 0 25px;
+    }
+    .iphone6 {
+        background: transparent url("https://d2eawub7utcl6.cloudfront.net/assets/iphone6.png") no-repeat;
+        width: 270px;
+        height: 550px;
+        margin: 0 auto 30px auto;
+        padding: 67px 0 0 18px;
+        box-sizing: border-box;
+        zoom: 75%;
+        @media(min-width: 768px) {
+            zoom: 100%;
+            margin-bottom: 0;
+        }
+        @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+            zoom: 75%;
+        }
+        @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+            zoom: 75%;
+        }
+        #screens {
+            width: 234px;
+            height: 422px;
+        }
+    }
+}
+
+.demo-wrap {
+    background-color: #f7f7f7;
+    border-radius: 4px;
+    padding: 8px;
+    border: 1px solid #e7e7e7;
+}
+
+#highlights {
+    position: relative;
+    @media(min-width: 768px) {
+        width: 280px;
+        margin-top: 66px;
+        float: left;
+    }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+        zoom: 77%;
+    }
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+        zoom: 77%;
+    }
+    .highlight {
+        opacity: 0.3;
+        padding-left: 17px;
+        padding-right: 17px;
+        @media (min-width: 768px) {
+            padding-right: 0;
+        }
+        h4 {
+            margin: 0;
+            padding: 0;
+            font-weight: 700;
+            font-size: 17px;
+        }
+        p {
+            margin-bottom: 4px;
+            font-weight: 300;
+        }
+        .as-table {
+            background-color: #fff;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            height: 150px;
+            margin-bottom: 20px;
+            display: table;
+            width: 100%;
+            position: relative;
+            &:before {
+                content: '';
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 20px;
+                color: #fff;
+                display: block;
+                height: 34px;
+                width: 34px;
+                text-align: center;
+                line-height: 34px;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                margin: -17px 0 0 -17px;
+            }
+            .as-table-cell {
+                display: table-cell;
+                vertical-align: middle;
+                padding: 0 15px 0 30px;
+            }
+        }
+        &.highlight0 > div:before {
+            background-color: #6DD900;
+            content: "\f0c2";
+        }
+        &.highlight1 > div:before {
+            background-color: #FFBF00;
+            content: "\f0e7";
+        }
+        &.highlight2 > div:before {
+            background-color: #00BFFF;
+            content: "\f075";
+        }
+        &.highlight3 > div:before {
+            background-color: #FF00FF;
+            content: "\f007";
+        }
+        &.highlight4 > div:before {
+            background-color: green;
+            content: "\f0ca";
+        }
+        &.highlight5 > div:before {
+            background-color: #FF7A4D;
+            content: "\f1d8";
+        }
+    }
+    .slick-dots {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        @media(min-width: 768px) {
+            position: absolute;
+            top: 15px;
+            right: -40px;
+        }
+        li {
+            margin: 0;
+            padding: 0 5px;
+            display: inline-block;
+            @media(min-width: 768px) {
+                display: block;
+                padding: 0;
+            }
+            button {
+                border: 1px solid #ddd;
+                background: transparent;
+                padding: 0;
+                margin: 0;
+                border-radius: 50%;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                height: 10px;
+                width: 10px;
+                text-indent: -9999px;
+            }
+            &.slick-active {
+                button {
+                    background-color: #ddd;
+                }
+            }
+        }
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0.3;
+        opacity: 0.3\9;
+        /* IE9 only */
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0.3;
+        opacity: 0.3\9;
+        /* IE9 only */
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0.3;
+        opacity: 0.3\9;
+        /* IE9 only */
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    opacity: 0.3;
+    -webkit-animation: fadeIn ease-in 1;
+    -moz-animation: fadeIn ease-in 1;
+    animation: fadeIn ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: .3s;
+    -moz-animation-duration: .3s;
+    animation-duration: .3s;
+}
+
+@-webkit-keyframes fadeOut {
+    from {
+        opacity: 1;
+        opacity: 1\9;
+        /* IE9 only */
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    from {
+        opacity: 1;
+        opacity: 1\9;
+        /* IE9 only */
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        opacity: 1\9;
+        /* IE9 only */
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+.fade-out {
+    opacity: 1;
+    -webkit-animation: fadeOut ease-in 1;
+    -moz-animation: fadeOut ease-in 1;
+    animation: fadeOut ease-in 1;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-duration: .3s;
+    -moz-animation-duration: .3s;
+    animation-duration: .3s;
+}
+
+.quotes-wrap {
+  min-height: 215px;
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+      min-height: 200px;
+  }
+  @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+      min-height: 200px;
+  }
+}
+
+.download-track-app {
+  background-color: #E5F1DC;
+  padding: 15px 0 20px 0;
+  @media(min-width:992px) {
+    padding: 37px 0 48px 0;
+  }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+      padding: 15px 0 15px 0;
+  }
+  @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+      padding: 15px 0 15px 0;
+  }
+  h4 {
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-left: 40px;
+    @media(min-width:768px) {
+      letter-spacing: 2px;
+    }
+    &:before {
+      font-family: FontAwesome;
+      content: "\f019";
+      color: #B5B3AB;
+      font-size: 30px;
+      float: left;
+      margin: -2px 0 0 -40px;
+    }
+  }
+
+  .promo-counter {
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+}

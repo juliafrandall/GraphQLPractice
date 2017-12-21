@@ -1,0 +1,137 @@
+<div ng-if="!vm.coachAccessCode">
+  <h1 class="text-center">
+    Signup
+  </h1>
+  <p class="text-center">
+    Create your free Track Account
+  </p>
+</div>
+
+<div ng-if="vm.coachAccessCode">
+  <h1 class="text-center">
+    Create your free Track Account
+  </h1>
+  <p class="text-center">
+    *If you already have a Track account, log in to enter your Access Code
+    <a href ui-sref="account.cabinet.coach-portal.enable-sharing">here</a>
+  </p>
+</div>
+
+<form novalidate ng-submit="vm.createAccount()" name="form">
+  <div class="form-group" ng-class="{'has-error': form.firstName.$dirty && !(form.firstName.$error | isEmptyObject)}">
+    <label for="firstName">First Name</label>
+    <input id="firstName" type="text" name="firstName"
+           placeholder="e.g. Sam" class="form-control"
+           ng-model="vm.signup.first_name" required>
+
+    <div ng-show="form.firstName.$dirty && !(form.firstName.$error | isEmptyObject)"
+         ng-messages="form.firstName.$error" class="text-danger" role="alert">
+      <div ng-message="required">First Name is required</div>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{
+   'has-error': form.email.$dirty && !(form.email.$error | isEmptyObject) && form.email.$blur
+  }">
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email"
+           placeholder="somebody@example.com"
+           class="form-control"
+           ng-model="vm.signup.email"
+           ng-focus="form.email.$blur = false"
+           ng-blur="form.email.$blur = true"
+           required>
+
+    <div ng-show="form.email.$dirty && !(form.email.$error | isEmptyObject) && form.email.$blur"
+         ng-messages="form.email.$error" class="text-danger" role="alert">
+      <div ng-message="required">Email is required</div>
+      <div ng-message="email">This is not a valid email</div>
+    </div>
+  </div>
+  <div class="form-group" ng-class="{
+   'has-error': form.email.$dirty && !(form.email.$error | isEmptyObject) && form.email.$blur
+  }">
+    <label for="emailRepeat">Repeat Email</label>
+    <input id="emailRepeat" type="email" name="emailRepeat" autocomplete="off"
+           placeholder="somebody@example.com"
+           class="form-control"
+           ng-model="vm.signup.emailRepeat"
+           equals-to="vm.signup.email"
+           ng-focus="form.emailRepeat.$blur = false"
+           ng-blur="form.emailRepeat.$blur = true"
+           required>
+
+    <div ng-show="form.emailRepeat.$dirty &&
+                  !(form.emailRepeat.$error | isEmptyObject) &&
+                  (form.emailRepeat.$blur || form.email.$blur && form.emailRepeat.$error.equalsTo)"
+         ng-messages="form.emailRepeat.$error" class="text-danger" role="alert">
+      <div ng-message="required">Email Repeat is required</div>
+      <div ng-message="email">This is not a valid email</div>
+      <div ng-message="equalsTo">Emails do not match.</div>
+    </div>
+  </div>
+  <div class="form-group"
+       ng-class="{'has-error': form.password.$dirty && !(form.password.$error | isEmptyObject)}">
+    <label for="password">Create a Password</label>
+
+    <div class="input-group">
+      <input id="password" type="{{vm.showPassword ? 'text' : 'password'}}" name="password"
+             autocomplete="off"
+             placeholder="Password"
+             class="form-control"
+             ng-model="vm.signup.password" required>
+      <a href tooltip="show password" ng-show="!vm.showPassword" class="input-group-addon"
+         ng-click="vm.showPassword = true">
+        <i class="fa fa-eye"></i>
+      </a>
+      <a href tooltip="hide password" ng-show="vm.showPassword" class="input-group-addon"
+         ng-click="vm.showPassword = false">
+        <i class="fa fa-eye-slash"></i>
+      </a>
+    </div>
+    <div ng-show="form.password.$dirty && !(form.password.$error | isEmptyObject)"
+         ng-messages="form.password.$error" class="text-danger" role="alert">
+      <div ng-message="required">Password is required</div>
+    </div>
+  </div>
+  <div class="form-group" ng-if="vm.coachAccessCode">
+    <label for="accessKey">Access Key</label>
+    <input id="accessKey" type="text" name="firstName"
+           class="form-control"
+           readonly
+           ng-model="vm.coachAccessCode">
+  </div>
+  <div class="form-group">
+    <div class="checkbox">
+      <label>
+        <input ng-model="vm.confirm.track" type="checkbox">
+        I agree to Nutritionix Track
+        <a href="https://www.iubenda.com/privacy-policy/7754814" target="_blank">terms of service</a>
+        and <a href="/privacy" target="_blank">Privacy Policy</a>.
+      </label>
+    </div>
+  </div>
+  <br>
+  <div class="form-group">
+    <button ng-disabled="form.$invalid || !vm.confirm.track" type="submit" class="btn btn-success btn-lg btn-block">
+      Create Account
+    </button>
+
+    <alert class="submit-alert" type="danger" ng-if="vm.createAccount.$error && vm.createAccount.$error.code != 409">
+      <span ng-if="vm.createAccount.$error.message">{{vm.createAccount.$error.message}}</span>
+      <span ng-if="!vm.createAccount.$error.message">An unexpected server error has occurred.</span>
+      <br>
+      <small>
+        Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+        <span ng-if="vm.createAccount.$error.id">
+            and reference the reference code: {{vm.createAccount.$error.id}}
+        </span>
+      </small>
+
+    </alert>
+
+    <alert class="submit-alert" type="warning" ng-if="vm.createAccount.$error && vm.createAccount.$error.code == 409">
+      An account with this email already exists. To reset your password,
+      <a ui-sref="account.auth.forgotPassword({email: vm.email})">click here</a>
+    </alert>
+  </div>
+</form>

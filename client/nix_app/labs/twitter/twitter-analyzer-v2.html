@@ -1,0 +1,35 @@
+
+<div class="container padding-top">
+
+
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+
+            <div class="panel panel-default panel-food-feed">
+              <div class="panel-heading">Real-time Food Feed</div>
+              <ul class="list-group">
+                <li class="list-group-item clearfix repeated-item"  ng-repeat="tweet in tweets">
+                    <div class="pull-right calories-count sm">
+                        <p>
+                            {{vm.calculateCalories(tweet) | fdaRound: 'calories' | smartNumber}}
+                        </p>
+                        <span>Calories</span>
+                    </div>
+                    <table class="table-food-feed">
+                        <tr ng-repeat="food in tweet.foods">
+                            <td>{{food.food_name}}, {{food.serving_qty || 1}} {{food.serving_unit || serving}}</td>
+                            <td class="table-cell-calories">{{food.nf_calories | fdaRound: 'calories' | smartNumber}} kcal</td>
+                        </tr>
+                    </table>
+                    <div class="note grey">
+                      <span class="nobr" am-time-ago="tweet.time | amUtc | noFutureDate"></span>
+                    </div>
+                </li>
+              </ul>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

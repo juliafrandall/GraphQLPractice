@@ -1,0 +1,27 @@
+{
+  "name": "nutritionix.com-workers",
+  "version": "1.0.0",
+  "description": "nutritionix.com JavaScript workers for Iron.io",
+  "main": "init.js",
+  "dependencies": {
+    "aws-sdk": "^2.7.26",
+    "bluebird": "^3.4.7",
+    "csv-parse": "^1.1.10",
+    "knex": "^0.12.7",
+    "lodash": "^4.17.4",
+    "moment": "^2.17.1",
+    "moment-timezone": "^0.5.11",
+    "mysql": "^2.13.0",
+    "nutritionix-api-data-utilities": "^1.6.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "yamljs": "^0.2.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yurko Fedoriv <yfedoriv@nutritionix.com>",
+  "license": "Unlicense",
+  "private": true
+}

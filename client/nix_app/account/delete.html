@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-xs-6">
+    <h1>Delete Nutritionix Track Account</h1>
+
+    <p>
+      Please enter your email address below to initiate the delete process of your Nutritionix Track account.
+      Please note that there is no way to undo this process once your account is deleted.
+    </p>
+
+    <div>
+      <form name="vm.form" novalidate>
+        <div class="form-group" ng-class="{'has-error': form.email.$dirty && !(form.email.$error | isEmptyObject)}">
+          <label for="email">Email</label>
+          <input id="email" type="email" name="email"
+                 placeholder="your@track.email" class="form-control"
+                 ng-model="vm.email"
+                 ng-change="vm.resetEmailValidity()"
+                 required>
+
+          <div ng-show="vm.form.email.$dirty && !(vm.form.email.$error | isEmptyObject)"
+               ng-messages="vm.form.email.$error" class="text-danger" role="alert">
+            <div ng-message="required">Email is required</div>
+            <div ng-message="ownEmail">You must enter your track email</div>
+          </div>
+        </div>
+
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="vm.agree">
+            I understand that there will be no way to recover my account data.
+          </label>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-block btn-lg btn-success"
+                  ng-disabled="vm.form.$invalid || !vm.agree"
+                  ng-click="vm.submit()"
+          >Submit
+          </button>
+
+          <alert class="submit-alert" type="success" ng-if="vm.submit.$success">
+            <b>Important Action:</b> We have sent an email to {{vm.profile.email}}
+            with a link that must be clicked to finalize the deletion of your account.
+            This link will be valid for 24 hours.
+            If you do not receive this email, please check your spam folder.
+            If you have any additional issues, please email us at
+            <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+          </alert>
+
+          <alert class="submit-alert" type="danger" ng-if="vm.submit.$error">
+            <span ng-if="vm.submit.$error.message">{{vm.submit.$error.message}}</span>
+            <span ng-if="!vm.submit.$error.message">An unexpected server error has occurred.</span>
+            <br>
+            <small>
+              Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+              <span ng-if="vm.submit.$error.id">
+              and reference the reference code: {{vm.submit.$error.id}}
+              </span>
+            </small>
+          </alert>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

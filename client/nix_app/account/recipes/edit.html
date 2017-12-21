@@ -1,0 +1,319 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="border-box">
+      <div class="row">
+        <div class="col-sm-7 col-md-7">
+          <div class="form-inline">
+            <h1 class="as-label">
+              Edit Recipe
+            </h1>
+            <div class="form-group">
+              <input type="text" class="form-control input-lg input-recipe-name" value="Sam's Recipe">
+            </div>
+            <a href="#" class="print-recipe">
+              <i class="fa fa-print" aria-hidden="true"></i>
+              Print
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-5 col-md-5 heading-buttons">
+          <div class="btn-group btn-sharing">
+              <label class="btn btn-default active" uib-btn-radio="'private'">Private</label>
+              <label class="btn btn-default" uib-btn-radio="'published'">Published</label>
+          </div>
+          <button class="btn btn-success">Save</button>
+          <button class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="border-box">
+      <div class="row">
+        <div class="col-sm-7 col-md-7">
+          <div class="form-inline form-recipe-timer">
+            <label for="preparation-time" class="control-label">Time</label>
+            <div class="form-group recipe-time">
+              <input type="text" id="preparation-time" class="form-control w70 text-center" value="15 mins">
+              <span class="time-label">Preparation</span>
+            </div>
+            <div class="form-group recipe-time">
+              <input type="text" id="cooking-time" class="form-control w70 text-center" value="35 mins">
+              <span class="time-label">Cooking</span>
+            </div>
+            <div class="total-time">
+              <i class="fa fa-2x fa-clock-o" aria-hidden="true"></i>
+              &nbsp; <strong>Total: 50 mins</strong>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5 col-md-5">
+          <div class="form-inline form-recipe-timer">
+            <div class="recipe-makes">
+              <label for="" class="control-label">Recipe makes</label>
+              <div class="form-group">
+                <input type="text" class="form-control w50 text-center" value="3">
+              </div>
+              <div class="form-group">
+                <label for="" class="sr-only"></label>
+                <input type="text" class="form-control w90" value="servings">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+    <div class="border-box">
+      <h3 class="underline">
+        Ingredients
+      </h3>
+
+
+
+      <table class="table table-ingredients">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Weight</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/1930_thumb.jpg" alt="Parsley" src="https://d2xdmhkmkbyw75.cloudfront.net/1930_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="1"></td>
+            <td><input type="text" class="form-control input-sm w70" value="tsp"></td>
+            <td><a href="#">parsley</a></td>
+            <td>1.46 kcal</td>
+            <td>0.5g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/1902_thumb.jpg" alt="Canned Tomato" src="https://d2xdmhkmkbyw75.cloudfront.net/1902_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="14"></td>
+            <td><input type="text" class="form-control input-sm w70" value="oz"></td>
+            <td><a href="#">canned tomatoes</a></td>
+            <td>63.5 kcal</td>
+            <td>396.9g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/717_thumb.jpg" alt="Yellow Onion" src="https://d2xdmhkmkbyw75.cloudfront.net/717_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="1"></td>
+            <td><input type="text" class="form-control input-sm w70" value="medium"></td>
+            <td><a href="#">yellow onion</a></td>
+            <td>44 kcal</td>
+            <td>110g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/5267_thumb.jpg" alt="Low Sodium Chicken Broth" src="https://d2xdmhkmkbyw75.cloudfront.net/5267_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="8"></td>
+            <td><input type="text" class="form-control input-sm w70" value="cups"></td>
+            <td><a href="#">low sodium chicken broth</a></td>
+            <td>307.2 kcal</td>
+            <td>1920g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/306_thumb.jpg" alt="Tomato Paste" src="https://d2xdmhkmkbyw75.cloudfront.net/306_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="2"></td>
+            <td><input type="text" class="form-control input-sm w70" value="tbsp"></td>
+            <td><a href="#">tomato paste</a></td>
+            <td>307.2 kcal</td>
+            <td>1920g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="#" ng-click="vm.addIngredientsModal();">+ Add Ingredients</a>
+      </p>
+      <h4 class="heading-ingredients-group">
+        For the Glaze
+      </h4>
+      <table class="table table-ingredients">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Weight</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/1930_thumb.jpg" alt="Parsley" src="https://d2xdmhkmkbyw75.cloudfront.net/1930_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="1"></td>
+            <td><input type="text" class="form-control input-sm w70" value="tsp"></td>
+            <td><a href="#">parsley</a></td>
+            <td>1.46 kcal</td>
+            <td>0.5g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/1902_thumb.jpg" alt="Canned Tomato" src="https://d2xdmhkmkbyw75.cloudfront.net/1902_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="14"></td>
+            <td><input type="text" class="form-control input-sm w70" value="oz"></td>
+            <td><a href="#">canned tomatoes</a></td>
+            <td>63.5 kcal</td>
+            <td>396.9g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/717_thumb.jpg" alt="Yellow Onion" src="https://d2xdmhkmkbyw75.cloudfront.net/717_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="1"></td>
+            <td><input type="text" class="form-control input-sm w70" value="medium"></td>
+            <td><a href="#">yellow onion</a></td>
+            <td>44 kcal</td>
+            <td>110g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/5267_thumb.jpg" alt="Low Sodium Chicken Broth" src="https://d2xdmhkmkbyw75.cloudfront.net/5267_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="8"></td>
+            <td><input type="text" class="form-control input-sm w70" value="cups"></td>
+            <td><a href="#">low sodium chicken broth</a></td>
+            <td>307.2 kcal</td>
+            <td>1920g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+          <tr>
+            <td><i class="fa fa-arrows move-ingredient" aria-hidden="true"></i></td>
+            <td><img class="common-food-image" ng-src="https://d2xdmhkmkbyw75.cloudfront.net/306_thumb.jpg" alt="Tomato Paste" src="https://d2xdmhkmkbyw75.cloudfront.net/306_thumb.jpg"></td>
+            <td><input type="text" class="form-control input-sm w50" value="2"></td>
+            <td><input type="text" class="form-control input-sm w70" value="tbsp"></td>
+            <td><a href="#">tomato paste</a></td>
+            <td>307.2 kcal</td>
+            <td>1920g</td>
+            <td><i class="fa fa-times delete-ingredient" aria-hidden="true"></i></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="#" ng-click="vm.addIngredientsModal();">+ Add Ingredients</a>
+      </p>
+      <div ng-if="vm.addSection">
+      <div class="form-group form-group-ingredient-search">
+          <button class="btn btn-success">Save</button>
+          <div class="form-control-wrap">
+            <input type="text" class="form-control" placeholder="Section Name (e.g. Dressing)">
+          </div>
+      </div>
+      <table class="table table-ingredients">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Qty</th>
+            <th>Unit</th>
+            <th>Food</th>
+            <th>Calories</th>
+            <th>Weight</th>
+            <th></th>
+          </tr>
+        </thead>
+        </table>
+        <p>
+          <a href="#" ng-click="vm.addIngredientsModal();">+ Add Ingredients</a>
+        </p>
+      </div>
+      <p>
+        <a href="#" ng-click="vm.addSection=true">+ New Section</a>
+      </p>
+
+    </div>
+    <div class="border-box">
+      <h3 class="underline">
+        Directions
+      </h3>
+      <div class="form-group">
+        <label for="directions" class="sr-only">Directions</label>
+        <textarea name="directions" id="directions" class="form-control" cols="30" rows="10">1. Prep all of the salad ingredients and toss them together in a large bowl.
+
+2. Prepare the chicken salad dressing in a separate smaller bowl. Mix together the mayonaisse, preserves,  and lemon juice.
+
+3. Gently stir the dressing in with the chicken salad ingredient.
+        </textarea>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-success">Save</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="row">
+      <div class="col-sm-6 col-md-12">
+        <div id="nutrition-label" nutrition-label="{}" ></div>
+      </div>
+      <div class="col-sm-6 col-md-12">
+        <div class="border-box">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add Food Tags">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </span>
+            </div>
+            <span class="recipe-tag">salad <i class="fa fa-times" aria-hidden="true"></i></span>
+            <span class="recipe-tag">chicken <i class="fa fa-times" aria-hidden="true"></i></span>
+            <span class="recipe-tag">chicken <i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Add Diet Types">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+              </span>
+            </div>
+            <span class="recipe-tag">vegan <i class="fa fa-times" aria-hidden="true"></i></span>
+            <span class="recipe-tag">vegetarian <i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <select name="" id="" class="form-control">
+            <option value="">Choose Meal Type</option>
+          </select>
+        </div>
+        <div class="border-box">
+          <h3 class="underline">
+            Photos
+          </h3>
+          <div class="form-group text-center">
+            <img src="http://placehold.it/210x120">
+          </div>
+          <div class="text-center">
+            <button class="btn btn-success">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

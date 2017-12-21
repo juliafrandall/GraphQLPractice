@@ -1,0 +1,70 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="vm.close()"><span aria-hidden="true">&times;</span></button>
+</div>
+ <div class="modal-body">
+    <p class="text-center">
+        <img src="/nix_assets/images/nix_track.png" alt="Nutritionix Track">
+    </p>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>
+                        Apple
+                    </h3>
+                    <h4>
+                        USDA
+                    </h4>
+                    <form role="form" action="#" method="POST" class="form-horizontal">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="push-unit">
+                                    <p>Calories</p>
+                                    <p id="calories">57 kcal</p>
+                                </div>
+                                <div class="wrap-serving cleafix">
+                                    <div class="col1">
+                                        <p>Qty </p>
+                                        <input id="serving" type="number" name="serving_qty" placeholder="1" value="1" min="0" step="any" required class="form-control">
+                                    </div>
+                                    <div class="col2">
+                                        <p>Unit</p>
+                                        <div class="unit-text">cup slices</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="date-option">
+                        <label>Meal</label>
+                        <div class="btn-group btn-group-sm btn-group-justified">
+                            <label class="btn btn-default" ng-model="vm.meal" btn-radio="'Breakfast'" uncheckable>Breakfast</label>
+                            <label class="btn btn-default" ng-model="vm.meal" btn-radio="'Lunch'" uncheckable>Lunch</label>
+                            <label class="btn btn-default active" btn-radio="'Dinner'" uncheckable="uncheckable">Dinner</label>
+                            <label class="btn btn-default" ng-model="vm.meal" btn-radio="'Snack'" uncheckable>Snack</label>
+                        </div>
+                        <br>
+                        <label>Date</label>
+                        <div class="btn-group btn-group-sm btn-group-justified">
+                            <label class="btn btn-default" ng-model="vm.date" btn-radio="'Today'" uncheckable>Today</label>
+                            <label class="btn btn-default" ng-model="vm.date" btn-radio="'Yesterday'" uncheckable>Yesterday</label>
+                            <label class="btn btn-default" ng-model="vm.date" btn-radio="'calendar'" ng-click="vm.calendarModal()" uncheckable>
+                                <i class="fa fa-calendar"></i>
+                                Choose Date
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- connect -->
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success">Add to My Food Log</button>
+  </div>
+
+
+

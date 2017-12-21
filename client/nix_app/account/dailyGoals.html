@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <a href="#" ui-sref="account.cabinet.dashboard" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      Edit Daily Goals
+      <a href="https://help.nutritionix.com/articles/11429-q-what-are-macro-goals-and-how-do-i-use-them-in-track"
+         target="_blank"
+         class="pull-right black-link">
+        <i class="fa fa-question-circle"></i>
+      </a>
+    </h1>
+
+    <div class="row">
+      <div class="col-md-4">
+        <alert class="submit-alert text-center" style="margin-top:-20px;" type="success" ng-if="vm.submit.$success">
+          Goals updated
+        </alert>
+      </div>
+    </div>
+
+    <form class="form-horizontal form-daily-goals" name="vm.form">
+      <div class="form-group"
+           ng-class="{'has-error': vm.form.daily_kcal.$invalid && vm.form.daily_kcal.$dirty}">
+        <label for="daily_kcal" class="col-xs-5 col-sm-2 control-label">Daily Calorie Goal</label>
+        <div class="col-xs-4 col-sm-2">
+          <input type="number" min="0" class="form-control" id="daily_kcal" name="daily_kcal"
+                 ng-model="vm.goals.daily_kcal"
+                 placeholder="">
+        </div>
+      </div>
+      <div class="form-group"
+           ng-class="{'has-error': vm.form.daily_protein_pct.$invalid && vm.form.daily_protein_pct.$dirty}">
+        <label for="daily_protein_pct" class="col-xs-5 col-sm-2 control-label">
+          <span>
+            % of Calories from
+          </span>
+          Protein
+        </label>
+        <div class="col-xs-4 col-sm-2">
+          <input type="number" min="0" max="100"
+                 class="form-control"
+                 id="daily_protein_pct"
+                 name="daily_protein_pct"
+                 ng-model="vm.goals.daily_protein_pct"
+                 ng-change="vm.validateGoalsSum()"
+                 placeholder="">
+        </div>
+      </div>
+      <div class="form-group"
+           ng-class="{'has-error': vm.form.daily_carbs_pct.$invalid && vm.form.daily_carbs_pct.$dirty}">
+        <label for="daily_carbs_pct" class="col-xs-5 col-sm-2 control-label">
+          <span>
+            % of Calories from
+          </span>
+          Carbohydrates
+        </label>
+        <div class="col-xs-4 col-sm-2">
+          <input type="number" min="0" max="100"
+                 class="form-control"
+                 id="daily_carbs_pct"
+                 name="daily_carbs_pct"
+                 ng-model="vm.goals.daily_carbs_pct"
+                 ng-change="vm.validateGoalsSum()"
+                 placeholder="">
+
+          <div ng-if="vm.showGoalsTotal" class="goal-sum" ng-class="{error:!vm.validGoalsSum}">
+            <span class="bracer">}</span>
+            <span class="sum">
+              = {{vm.goalsSum}}%
+            </span>
+            <span class="error" ng-if="!vm.validGoalsSum">(invalid: should be <= 100%)</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group"
+           ng-class="{'has-error': vm.form.daily_fat_pct.$invalid && vm.form.daily_fat_pct.$dirty}">
+        <label for="daily_fat_pct" class="col-xs-5 col-sm-2 control-label">
+          <span>
+            % of Calories from
+          </span>
+          Fat
+        </label>
+        <div class="col-xs-4 col-sm-2">
+          <input type="number" min="0"
+                 max="100"
+                 class="form-control"
+                 id="daily_fat_pct"
+                 name="daily_fat_pct"
+                 ng-model="vm.goals.daily_fat_pct"
+                 ng-change="vm.validateGoalsSum()"
+                 placeholder="">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-offset-5 col-sm-offset-2 col-sm-2">
+          <button class="btn btn-success" ng-click="vm.submit()"
+                  style="display: block; width: 100%"
+                  ng-disabled="vm.submit.$busy || vm.form.$invalid || !vm.validGoalsSum">
+            <span ng-hide="vm.submit.$busy">Save</span>
+            <span ng-show="vm.submit.$busy">Saving... <i class="fa fa-spin fa-spinner"></i></span>
+          </button>
+          <alert class="alert-danger submit-alert" ng-if="vm.submit.$error">
+            {{vm.submit.$error.message}}
+          </alert>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

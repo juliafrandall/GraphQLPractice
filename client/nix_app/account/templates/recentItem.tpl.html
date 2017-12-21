@@ -1,0 +1,17 @@
+<a class="typeahead-recent-foods">
+    <span class="pull-right text-center">
+        <span class="typeahead-recent-food-calorie" ng-bind-html="match.model.nf_calories"></span>
+        Cal
+    </span>
+    <i class="fa fa-2x fa-plus-circle pull-left" aria-hidden="true"></i>
+
+  <span class="typeahead-recent-food-name"
+        ng-bind-html="match.model.food_name | ucwords | typeaheadHighlight:query"></span>
+  <span class="typeahead-recent-food-brand"
+        ng-if="match.model.brand_name"
+        ng-bind-html="match.model.brand_name | typeaheadHighlight:query"></span><span
+  ng-if="match.model.brand_name && match.model.serving_qty">,</span>
+    <span class="typeahead-recent-food-serving">
+      {{match.model.serving_qty}} {{match.model.serving_unit}}
+    </span>
+</a>

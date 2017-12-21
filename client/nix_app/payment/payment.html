@@ -1,0 +1,119 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li class="active">Nutritionix API Pro Plan Signup</li>
+      </ol>
+    </div>
+  </div>
+  <div class="row bg-white padding">
+    <div class="col-md-offset-1 col-md-10">
+      <h1>
+        Nutritionix API Pro Plan Signup
+      </h1>
+      <p class="intro">
+        Please note, you must have a free developer account registered at <a href="mailto:developer.nutritionix.com">developer.nutritionix.com</a> before upgrading to the Pro Plan. If you have any issues or questions, please email us at <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>.
+      </p>
+      <br>
+      <form>
+        <div class="form-group">
+          <label for="plan">Select Plan</label>
+          <div class="row">
+            <div class="col-sm-4 col-md-4">
+              <select name="plan" id="plan" class="form-control">
+                <option value="">Pro Plan - $299/month</option>
+                <option value="">V2 Natural Plan - $499/month</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="appid">App ID <span class="required">*</span></label>
+          <div class="row">
+            <div class="col-sm-4 col-md-4">
+              <input type="text" name="appid" id="appid" class="form-control">
+            </div>
+            <div class="col-sm-8 col-md-6">
+              <p class="note">
+                Enter the Nutritionix API app ID which you want to upgrade.  You can find your APP ID on the <a href="https://developer.nutritionix.com/admin/access_details" target="_blank">Access Details</a> page of the Nutritionix Developer website.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="company">Company Name <span class="required">*</span></label>
+          <div class="row">
+            <div class="col-sm-8 col-md-8">
+              <input type="text" name="compant" id="company" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="billing-email">Billing Contact Email <span class="required">*</span></label>
+          <div class="row">
+            <div class="col-sm-8 col-md-8">
+              <input type="text" name="billing-email" id="billing-email" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="billing-firstname">Billing Contact Name <span class="required">*</span></label>
+          <div class="row">
+            <div class="col-sm-4 col-md-4">
+              <input type="text" name="billing-firstname" id="billing-firstname" class="form-control">
+              <div class="note">First</div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <input type="text" name="billing-lastname" id="billing-lastname" class="form-control">
+              <div class="note">Last</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="billing-phone">Billing Contact Phone Number <span class="required">*</span></label>
+          <div class="row">
+            <div class="col-sm-4 col-md-4">
+              <input type="text" name="billing-phone" id="billing-phone" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="interface">List interface(s) where you plan to use Nutritionix API <span class="required">*</span></label>
+          <div class="row">
+            <div class="col-sm-8 col-md-8">
+              <textarea name="interface" id="interface" cols="30" rows="5" class="form-control"></textarea>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <p class="note">
+                <strong> Examples:</strong><br>
+                - mydomain.com<br>
+                - MyCompany App on iOS<br>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="terms">API Terms and Conditions <span class="required">*</span></label>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="terms" id="terms">I have read and agree to the Nutritionix API <a href="" ui-sref="site.apiterms" target="_blank">terms and conditions.</a>
+            </label>
+          </div>
+        </div>
+        <br>
+        <div class="form-group">
+          <h4><strong>Continue to payment page</strong></h4>
+          <p>
+            After submitting this information, you will be redirected to our secure payment page.
+          </p>
+        </div>
+        <br>
+        <p class="text-center">
+          <button type="submit" class="btn btn-lg btn-success">Submit</button>
+        </p>
+      </form>
+    </div>
+  </div>
+  <br><br>
+</div>

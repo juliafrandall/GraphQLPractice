@@ -1,0 +1,33 @@
+/* App ad styles start */
+.app-ad {
+  display: block;
+  background-color: #fff;
+  padding: 6px 15px;
+  margin-bottom: 10px;
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  font-size: 14px;
+}
+
+.app-ad a,
+.app-ad a:link {
+  color: #333;
+}
+
+.app-ad a:hover,
+.app-ad a:active {
+  color: #000;
+}
+
+.app-ad .fa {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* END - App ad styles */
+
+@media (min-width: 768px) {
+  .app-ad {
+    display: inline-block;
+  }
+}

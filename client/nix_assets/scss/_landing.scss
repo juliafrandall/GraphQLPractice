@@ -1,0 +1,344 @@
+.icon-color-red {
+    color: $icon-color-red;
+}
+
+.icon-color-blue {
+    color: $icon-color-blue;
+}
+
+.icon-color-light-green {
+    color: $icon-color-light-green;
+}
+
+.body-helper {
+    //10% being the footer-height, but it won't take the variable.
+    min-height: calc(100% - 10%);
+    // margin-top: $navbar-height;
+    background-color: #f8f8f8;
+}
+
+.page-wrap {
+    min-height: 100%;
+    height: 100vh;
+}
+
+.page-wrap:after {
+    content: "";
+    display: block;
+    height: $footer-height;
+}
+
+a.no-text-decoration {
+    text-decoration: none;
+}
+
+.site-footer {
+    padding: 20px;
+    background-color: #111;
+    @media (min-width: 992px) {
+        position: absolute;
+        left:  auto;
+        bottom: 0;
+        width: 100%;
+        box-sizing: border-box;
+        height: $footer-height;
+    }
+}
+
+.footer-item {
+    a {
+        color: $light-grey;
+    }
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.subtitle {
+    font-family: Oswald;
+    text-transform: uppercase;
+}
+
+.grey-background {
+    background-color: $bootstrap_grey;
+    padding-bottom: 40px;
+}
+
+.landing-section-title {
+    font-family: Roboto Slab, sans-serif;
+    font-weight: 400;
+    font-size: 2em;
+    line-height: 1em;
+    margin: 20px;
+    text-align: center;
+    cursor: pointer;
+    a {
+        color: white;
+    }
+    a:hover {
+        color: white;
+        text-decoration: underline;
+    }
+}
+
+.recent-updates-section {
+    background-image: linear-gradient(35deg, rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 0.50)), url('http://d.fastcompany.net/multisite_files/fastcompany/imagecache/1280/poster/2015/02/3041752-poster-1280-munchery-nyc.jpg');
+    box-shadow: #222 1px 1px 4px;
+    color: #fff;
+    background-size: cover;
+    min-height: 500px;
+    text-align: center;
+}
+
+.food-lookup-section {
+    background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.90), rgba(0, 0, 0, 0.50)), url('../assets/images/food1.jpg');
+    box-shadow: #222 1px 1px 4px;
+    color: #fff;
+    text-shadow: #111 1px 1px;
+    background-size: cover;
+    height: 500px;
+    text-align: center;
+}
+
+.landing-image1 {
+    padding: 10px;
+    max-width: 125px;
+    margin: 0 auto;
+    @media (min-width: 1201px) {
+        max-width: 150px;
+        margin-right: 0px;
+    }
+}
+
+.landing-image {
+    padding: 10px;
+    max-width: 125px;
+    margin: 0 auto;
+    @media (min-width: 1201px) {
+        max-width: 150px;
+    }
+}
+
+.center-everything {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@-webkit-keyframes heartbeat {
+    0% {
+        -webkit-transform: (scale(1));
+    }
+    15% {
+        -webkit-transform: (scale(1.15));
+    }
+    30% {
+        -webkit-transform: (scale(1));
+    }
+    45% {
+        -webkit-transform: (scale(1.15));
+    }
+    70% {
+        -webkit-transform: (scale(1));
+    }
+}
+
+@keyframes heartbeat {
+    0% {
+        transform: (scale(1));
+    }
+    15% {
+        transform: (scale(1.15));
+    }
+    30% {
+        transform: (scale(1));
+    }
+    45% {
+        transform: (scale(1.15));
+    }
+    70% {
+        transform: (scale(1));
+    }
+}
+
+@-webkit-keyframes magnify-zoom {
+    0% {
+        -webkit-transform: (scale(1));
+    }
+    100% {
+        -webkit-transform: (scale(1.2));
+    }
+}
+
+.section-content {
+    min-height: 300px;
+}
+
+.section-content:hover {
+    cursor: pointer;
+    #heart-icon {
+        color: lighten($icon-color-red, 5%);
+        -webkit-animation: heartbeat 1s;
+        animation: heartbeat 1s;
+    }
+    #calculator {
+        color: lighten($icon-color-light-green, 5%);
+    }
+    #data-licensing {
+        color: lighten($icon-color-light-green, 5%);
+    }
+    #restaurant-platform {
+        color: lighten($icon-color-light-green, 5%);
+    }
+}
+
+.content-margin,
+.center-margin {
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid rgba(19, 19, 19, .1);
+    margin-bottom: 10px;
+    background-color: #FFF;
+    padding-top: 10px;
+}
+
+.center-margin {
+    position: relative;
+    min-height: 300px;
+}
+
+.content-margin {
+    text-align: left;
+    padding: 15px;
+    @media(min-width: 768px) {
+        padding: 30px 0;
+    }
+}
+
+.landing-center-margin {
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid rgba(19, 19, 19, .1);
+    margin-bottom: 10px;
+    background-color: #FFF;
+    position: relative;
+}
+
+.section {
+    display: table-cell;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-family: Open Sans, sans-serif;
+    font-size: 1.4em;
+    line-height: 1em;
+}
+
+.section-content {
+    font-family: Open Sans, sans-serif;
+    padding: 15px;
+    margin-top: 10px;
+    @media (max-width: 1200px) {
+        text-align: center;
+        margin-top: 0px;
+    }
+}
+
+.landing-body-text {
+    font-family: Open Sans, sans-serif;
+    color: $faded-text-grey;
+    padding: 5px;
+}
+
+.search-database-input {
+    font-size: 2em;
+}
+
+.search-database-button {
+    background-color: $official-green;
+    &:hover {
+        background-color: darken($official-green, 10%);
+    }
+}
+
+.consumer-tools-background {
+    // background-image: linear-gradient(rgba(124,103,153,.8), rgba(0,255,211,.3));
+    background-size: cover;
+}
+
+.business-solutions-background {
+    // background-image: linear-gradient(rgba(111, 124, 130, .9), rgba(215, 190, 120, .5));
+    background-size: cover;
+}
+
+.read-more {
+    color: $official-green;
+    &:hover {
+        color: darken($official-green, 10%);
+        text-decoration: underline;
+    }
+    @media (min-width: 1201px) {
+        font-size: 1em;
+    }
+}
+
+.fa-7x {
+    font-size: 7em !important;
+    padding: 20px;
+}
+#mobile.fa-mobile {
+  font-size: 9.8em !important;
+  padding-top: 0 !important;
+  padding-bottom: 8px !important;
+  line-height: 120px;
+}
+.top-landing-page-icons {
+    float: right;
+    @media(max-width: 1200px) {
+        float: none;
+    }
+}
+
+.view-all-container {
+    margin-bottom: 20px;
+}
+
+a.view-all {
+    font-size: 14px;
+    color: #fff;
+}
+
+a.view-all:hover {
+    color: #fff;
+}
+
+a {
+    color: $official-green;
+}
+
+a:hover {
+    color: darken($official-green, 10%);
+}
+
+hr {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #777 -moz-use-text-color #FFFFFF;
+    border-style: solid none;
+    border-width: 3px solid;
+    margin: 18px 0;
+}
+
+.block-link {
+    display: block;
+    position: absolute;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+}

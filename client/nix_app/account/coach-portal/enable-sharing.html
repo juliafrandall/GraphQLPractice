@@ -1,0 +1,126 @@
+<div class="row">
+  <div class="col-md-7 col-lg-7">
+    <a href="#" ui-sref="account.cabinet.labs" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      My Coach
+    </h1>
+    <p>
+      Please enter the Coach ID that you received from your coach:
+    </p>
+    <form class="form-horizontal form-enable-sharing">
+      <div class="form-group">
+        <label for="sharing-code" class="col-xs-3 col-sm-4 control-label">Coach ID:</label>
+        <div class="col-xs-5 col-sm-4 col-sharing-code" ng-class="{ 'has-error': vm.submitCoach.$error }">
+          <input type="text" class="form-control" id="sharing-code" autocomplete="off"
+                 maxlength="7"
+                 ng-model="vm.coachId"
+                 ng-change="vm.submitCoach()"
+                 access-code
+          >
+          <!--Block to show when coach was assigned to non-Pro user-->
+          <div class="alert-bubble" ng-if="vm.submitCoach.$coach && !vm.user.premium_user">
+            Get access to this feature and more with a TrackPro account! Upgrade now!
+          </div>
+        </div>
+        <div class="col-xs-4 col-sm-4">
+          <i ng-show="vm.submitCoach.$success" class="fa fa-check" aria-hidden="true"></i>
+          <span class="alert-text-danger alert-coach-id-error"
+                ng-show="vm.submitCoach.$error">{{vm.submitCoach.$error.message || 'Unknown error'}}</span>
+          <span ng-show="vm.submitCoach.$busy">
+            <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+          </span>
+        </div>
+      </div>
+    </form>
+
+    <div class="subscribe-now" ng-if="!vm.user.premium_user && vm.submitCoach.$coach">
+      <h4>
+        To share with {{vm.submitCoach.$coach.name}},
+        subscribe to Pro using the Track mobile app:
+      </h4>
+      <a ui-sref="site.trackApp" class="btn btn-info btn-block btn-lg">
+        Get the Mobile App Now
+      </a>
+    </div>
+
+
+    <div>
+      <p>
+        Or if you received an Access Key from your coach, enter your code here:
+      </p>
+      <form class="form-horizontal form-enable-sharing"
+            name="vm.submitAccessKey.$form"
+            ng-submit="vm.submitAccessKey()"
+      >
+        <div class="form-group">
+          <label for="sharing-code" class="col-xs-3 col-sm-4 control-label">Access key:</label>
+          <div class="col-xs-7 col-sm-6" ng-class="{ 'has-error': vm.submitAccessKey.$error }">
+            <div class="input-group">
+              <input type="text" class="form-control"
+                     id="access-key" autocomplete="off"
+                     maxlength="7"
+                     ng-model="vm.accessCode"
+                     access-code
+              >
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit"
+                        ng-disabled="vm.submitAccessKey.$busy || vm.submitAccessKey.$form.$invalid"
+                >Submit</button>
+              </span>
+            </div>
+
+            <alert type="danger" class="tidy-alert" ng-if="vm.submitAccessKey.$error">
+              Invalid code
+            </alert>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="panel panel-default" ng-if="vm.user.premium_user">
+      <!--Block to display list of currently assigned user's coaches-->
+      <div class="panel-heading">
+        <h3 class="panel-title">My Coaches</h3>
+      </div>
+      <div class="panel-body" ng-if="vm.coaches && !vm.coaches.length">
+        You are not currently sharing with any coaches.
+      </div>
+      <ul class="list-group list-group-coaches" ng-if="vm.coaches.length">
+        <li class="list-group-item" ng-repeat="coach in vm.coaches">
+          <div class="coach-photo">
+            <i class="fa fa-user"></i>
+
+            <!--<img src="https://s3.amazonaws.com/cdn4-nutritionix/images/sam.jpg" alt="{{vm.coach.name}}">-->
+          </div>
+          <button class="btn btn-default btn-sm btn-remove" ng-click="vm.removeCoach(coach)">Remove</button>
+          {{coach.name}}
+        </li>
+      </ul>
+    </div>
+
+
+    <div class="alert alert-info alert-coach-id" ng-if="!vm.user.coach">
+      <h4 class="alert-heading">Are you a Coach?</h4>
+      <p>
+        Using a Coach ID, other Track users can share their food logs with you in real time.
+      </p>
+      <p>
+        Grab your Coach ID <a href ng-click="vm.becomeCoach()">here</a>
+      </p>
+    </div>
+    <div class="alert alert-info alert-coach-id" ng-if="vm.user.get('coach')">
+      <p>
+        Your <b>Coach ID</b> is: <b>{{vm.user.get('coach').code}}</b>
+      </p>
+      <p>
+        View your Coach Portal <a ui-sref="account.cabinet.coach-portal.dashboard">here</a>
+      </p>
+      <p>
+        <button class="btn btn-default" ng-click="vm.stopCoaching()">Stop being a coach</button>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.dashboard" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      Preferences
+    </h1>
+
+    <div class="list-group list-group-preferences">
+      <a href="#" ui-sref="account.cabinet.profile" class="list-group-item">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          My Profile
+        </p>
+      </a>
+      <a href="#" ui-sref="account.cabinet.publicProfile" class="list-group-item" unreleased>
+        <i class="fa fa-chevron-right"></i>
+        <span class="badge pull-right">
+          Off
+        </span>
+        <p class="list-group-item-text">
+          Public Profile
+        </p>
+      </a>
+      <a href="#" ui-sref="account.cabinet.dailyCalories" class="list-group-item">
+        <i class="fa fa-chevron-right"></i>
+        <span class="badge badge-recommended-calorie">
+            {{vm.me.daily_kcal || 2000}}
+        </span>
+        <p class="list-group-item-text">
+          Daily Calorie Preferences
+        </p>
+      </a>
+      <a href="#" ui-sref="account.cabinet.connectedApps" class="list-group-item">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          Connected Apps
+        </p>
+      </a>
+      <a unreleased href="#" ui-sref="account.cabinet.smsReminders" class="list-group-item">
+        <i class="fa fa-chevron-right"></i>
+        <p class="list-group-item-text">
+          Reminders
+        </p>
+      </a>
+      <a href="#" ui-sref="account.cabinet.primaryNutrient" class="list-group-item"
+         ng-if="vm.me.default_nutrient && vm.me.default_nutrient != 208"
+      >
+        <i class="fa fa-chevron-right"></i>
+        <span class="badge badge-recommended-calorie">
+            {{vm.primaryNutrients[vm.me.default_nutrient]}}
+        </span>
+        <p class="list-group-item-text">
+          Primary Nutrient <sup class="beta"><span class="label label-info"> Beta </span></sup>
+        </p>
+      </a>
+    </div>
+  </div>
+</div>

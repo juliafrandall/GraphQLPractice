@@ -1,0 +1,58 @@
+.estimate-calories-burned {
+  background-color: #d9edf7;
+  border: 1px solid #bce8f1;
+  color: #31708f;
+  text-align: center;
+  margin: 0;
+  @media(min-width: 768px) {
+    display: table;
+    width: 100%;
+  }
+  .exercise-photo {
+    @extend %table-cell;
+    img {
+      width: 100%;
+    }
+  }
+  .calories-burned {
+    padding: 30px 0;
+    @extend %table-cell;
+    p {
+      font-size: 16px;
+      margin-bottom: 0;
+    }
+    strong {
+      display: block;
+      font-size: 30px;
+    }
+  }
+}
+
+
+.wrap-exercise-info {
+  border-bottom: 1px solid #dedede;
+  padding: 10px 0;
+  margin-bottom: 30px;
+  text-align: right;
+  @media(min-width: 768px) {
+    text-align: center;
+  }
+  .col-header {
+    text-transform: uppercase;
+    display: block;
+    color: #999;
+    float: left;
+    @media(min-width: 768px) {
+      font-size: 12px;
+      float: none;
+    }
+  }
+}
+
+%table-cell {
+  @media(min-width: 768px) {
+    width: 50%;
+    display: table-cell;
+    vertical-align: middle;
+  }
+}

@@ -1,0 +1,231 @@
+<div class="modal-header">
+  <span class="btn-modal-close" ng-click="vm.close();">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </span>
+  <h3 class="modal-title">Edit Food</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal form-edit-food">
+    <div class="form-group">
+      <div class="col-xs-12">
+        <div class="review-item-calorie padding-top">
+          <div class="green">{{vm.food.full_nutrients | nutrient: vm.user.default_nutrient: 'value' | number: 0}}</div>
+          <span class="note">{{vm.primaryNutrients[vm.user.default_nutrient].name}}</span>
+        </div>
+        <div class="review-item-photo">
+          <img ng-src="{{vm.food.photo.thumb || '//d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png'}}">
+        </div>
+        <div class="review-item-wrap">
+          <div class="review-item-serving-size">
+            <input type="text" class="form-control text-center"
+                   ng-model="vm.servingQty"
+                   ng-change="vm.updateFood(); vm.updateLabel()"
+                   select-on-click
+                   required>
+          </div>
+          <div class="review-item-serving-unit">
+            <div class="form-control-static">
+              {{vm.food.serving_unit}}
+            </div>
+          </div>
+          <div>
+            {{vm.food.food_name}}
+            <div class="review-item-brand">
+              {{vm.food.brand_name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<accordion class="accordion-modal-sections accordion-edit-food">
+  <!-- Consumed at -->
+  <accordion-group class="panel-consumed-at" is-open="false">
+    <accordion-heading>
+      Consumed At
+      <span class="pull-right">
+        {{vm.consumedAt.day || (vm.consumedAt.getValue(true) | amDateFormat:'ddd., MM/DD/YY')}},
+        {{vm.consumedAt.getMeal()}}
+      </span>
+    </accordion-heading>
+    <div class="accordion-content">
+      <label>Meal</label>
+      <div class="btn-group btn-group-sm btn-group-justified">
+        <label class="btn btn-default"
+               ng-model="vm.consumedAt.meal"
+               btn-radio="'Breakfast'" uncheckable>Breakfast</label>
+        <label class="btn btn-default"
+               ng-model="vm.consumedAt.meal"
+               btn-radio="'Lunch'" uncheckable>Lunch</label>
+        <label class="btn btn-default"
+               ng-model="vm.consumedAt.meal" btn-radio="'Dinner'"
+               uncheckable="uncheckable">Dinner</label>
+        <label class="btn btn-default"
+               ng-class="{active: vm.consumedAt.meal.indexOf('Snack') > -1}"
+               ng-click="vm.consumedAt.meal.indexOf('Snack') === -1 && (vm.consumedAt.meal = 'Morning Snack')"
+        >Snack</label>
+      </div>
+      <div class="btn-group btn-group-sm btn-group-justified" ng-show="vm.consumedAt.meal.indexOf('Snack') > -1">
+        <label class="btn btn-default"
+               ng-model="vm.consumedAt.meal"
+               btn-radio="'AM Snack'" uncheckable>AM Snack</label>
+        <label class="btn btn-default"
+               ng-model="vm.consumedAt.meal"
+               btn-radio="'PM Snack'" uncheckable>PM Snack</label>
+        <label class="btn btn-default"
+               ng-model="vm.consumedAt.meal"
+               btn-radio="'Late Snack'" uncheckable>Late Snack</label>
+      </div>
+      <br>
+      <label>Date</label>
+      <div class="datepicker-wrap">
+        <div class="btn-group btn-group-sm btn-group-justified">
+          <label class="btn btn-default"
+                 ng-model="vm.consumedAt.day"
+                 btn-radio="'Today'" uncheckable>
+            Today
+          </label>
+          <label class="btn btn-default"
+                 ng-model="vm.consumedAt.day"
+                 btn-radio="'Yesterday'" uncheckable>
+            Yesterday
+          </label>
+          <label class="btn btn-default"
+                 ng-model="vm.consumedAt.day"
+                 ng-click="vm.showDatePicker = !vm.showDatePicker"
+                 btn-radio="null" uncheckable>
+            <i class="fa fa-calendar"></i>
+            Choose Date
+          </label>
+        </div>
+        <div class="datepicker-holder ng-hide" ng-show="vm.consumedAt.showDatePicker && vm.showDatePicker">
+          <datepicker
+            class="date-picker"
+            ng-model="vm.consumedAt.datePicker"
+            ng-change="vm.showDatePicker=false"
+            show-weeks="false"
+          ></datepicker>
+        </div>
+      </div>
+    </div>
+  </accordion-group>
+
+  <!-- Full Nutrition Info -->
+  <accordion-group class="panel-nutrition-info panel-open" is-open="true">
+    <accordion-heading>
+      Full Nutrition Info
+    </accordion-heading>
+    <div class="accordion-content">
+      <div class="nutrition-label" nutrition-label="vm.labelData"></div>
+
+      <ul class="nutrition-label-attr">
+        <li>
+          Vitamin D<span class="note">**</span> : {{(vm.labelData.vitamin_d || 0) | number: 0}} IU
+        </li>
+        <li>
+          Phosphorus<span class="note">**</span> : {{(vm.labelData.valuePhosphorus || 0) | number: 0}} mg
+        </li>
+        <li>
+          Potassium<span class="note">**</span> : {{(vm.labelData.valuePotassium || 0) | number: 0}} mg
+        </li>
+      </ul>
+      <p class="note">
+        ** Please note that our restaurant and branded grocery food database does not have these attributes
+        available, and if your food log contains restaurant or branded grocery foods, these totals may be incorrect.
+        The data from these these attributes is for reference purpose only, and should not be used for any chronic
+        disease management.
+      </p>
+    </div>
+  </accordion-group>
+
+  <!-- Notes -->
+  <accordion-group class="panel-notes" is-open="false">
+    <accordion-heading>
+      Notes
+    </accordion-heading>
+    <div class="accordion-content">
+      <textarea class="form-control"
+                ng-model="vm.food.note"
+                placeholder="Add notes to this food"
+      ></textarea>
+    </div>
+  </accordion-group>
+
+  <!-- Photos -->
+  <accordion-group class="panel-photo" is-open="false">
+    <accordion-heading>
+      Photo
+    </accordion-heading>
+    <div class="accordion-content" ng-form="vm.photoForm">
+      <div class="text-center thumbnail recipe-photo"
+           ng-class="{uploading: vm.imageUpload.$busy}"
+           ng-if="vm.imageUpload.file || vm.imageUpload.backupFile || vm.food.photo.thumb"
+
+           ngf-select ngf-drop
+           ng-model="vm.imageUpload.file"
+           name="photo"
+           ngf-model-invalid="vm.imageUpload.invalidFile"
+           ngf-model-options="{allowInvalid: false, updateOn: 'change drop dropUrl paste'}"
+           ngf-fix-orientation="true"
+           ngf-accept="'image/*'"
+           ngf-pattern="'image/*'"
+           ngf-drag-over-class="{pattern: 'image/*', accept:'btn-success', reject:'btn-danger', delay:100}"
+           ngf-change="vm.imageUpload.onChange()"
+           ngf-before-model-change="vm.imageUpload.beforeChange()"
+           ngf-max-size="'10MB'"
+      >
+        <button class="btn-delete-recipe-photo"
+                ng-click="$event.stopPropagation(); vm.imageUpload.clearUpload()"
+        ></button>
+
+        <img ng-src="{{(vm.imageUpload.file || vm.imageUpload.backupFile || vm.food.photo.thumb) | ngfDataUrl}}"
+             alt="">
+      </div>
+
+      <div class="text-center">
+        <div class="margin-bottom">
+          <button class="btn btn-default"
+                  ng-if="!(vm.imageUpload.file || vm.imageUpload.backupFile || vm.food.photo.thumb)"
+
+                  ngf-select ngf-drop
+                  ng-model="vm.imageUpload.file"
+                  ng-disabled="vm.imageUpload.$busy"
+                  name="photo"
+
+                  ngf-model-invalid="vm.imageUpload.invalidFile"
+                  ngf-model-options="{allowInvalid: false, updateOn: 'change drop dropUrl paste'}"
+                  ngf-fix-orientation="true"
+                  ngf-accept="'image/*'"
+                  ngf-pattern="'image/*'"
+                  ngf-drag-over-class="{pattern: 'image/*', accept:'btn-success', reject:'btn-danger', delay:100}"
+                  ngf-change="vm.imageUpload.onChange()"
+                  ngf-before-model-change="vm.imageUpload.beforeChange()"
+                  ngf-max-size="'10MB'"
+                  ng-click="vm.imageUpload.blur($event)">
+            <span ng-hide="vm.imageUpload.$busy">Pick photo</span>
+            <span ng-show="vm.imageUpload.$busy">Saving photo <i class="fa fa-spinner fa-spin"></i></span>
+          </button>
+        </div>
+
+        <alert type="danger" class="tidy-alert" ng-if="vm.photoForm.photo.$error.maxSize">
+          Max file size is 10MB. Please choose a smaller image.
+        </alert>
+
+        <alert type="danger" class="tidy-alert" ng-if="vm.imageUpload.$error">
+          Image upload failed: {{vm.imageUpload.$error.message}}
+        </alert>
+      </div>
+    </div>
+  </accordion-group>
+</accordion>
+
+<div class="modal-footer">
+  <div class="text-center padding-bottom">
+    <button class="btn btn-success" type="button" ng-click="vm.update()"><i class="fa fa-pencil"></i> Update</button>
+  </div>
+  <button class="btn btn-default" type="button" ng-click="vm.delete()"><i class="fa fa-trash"></i> Delete</button>
+  <button class="btn btn-default" type="button" ng-click="vm.copy()"><i class="fa fa-files-o"></i> Copy</button>
+  <button class="btn btn-default" type="button" ng-click="vm.close()"><i class="fa fa-times"></i> Cancel</button>
+</div>

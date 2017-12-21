@@ -1,0 +1,193 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.createFood" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      {{vm.edit ? 'Edit' : 'Create'}} Custom Food
+    </h1>
+
+
+    <form name="form" novalidate>
+      <div class="form-group">
+        <label>Food Name <span class="required">*</span></label>
+        <input type="text" class="form-control" ng-model="vm.food.food_name" required>
+      </div>
+      <div class="form-group">
+        <label>Serving Info <span class="required">*</span></label>
+        <div class="form-inline">
+          <input type="text" class="form-control input-serving-qty" ng-model="vm.food.serving_qty" required>
+          <input type="text" class="form-control input-serving-unit" ng-model="vm.food.serving_unit" required>
+        </div>
+      </div>
+
+      <table class="table table-striped table-nutrition-inputs">
+        <tr>
+          <td>
+            Calories <span class="required">*</span>
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_calories">&nbsp;kcal
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total Fat
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_total_fat">&nbsp;g
+          </td>
+        </tr>
+        <tr>
+          <td class="indent">
+            Saturated Fat
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_saturated_fat">&nbsp;g
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Cholesterol
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_cholesterol">&nbsp;mg
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Sodium
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_sodium">&nbsp;mg
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Total Carbohydrate
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_total_carbohydrate">&nbsp;g
+          </td>
+        </tr>
+        <tr>
+          <td class="indent">
+            Dietary Fiber
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_dietary_fiber">&nbsp;g
+          </td>
+        </tr>
+        <tr>
+          <td class="indent">
+            Sugars
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_sugars">&nbsp;g
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Protein
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_protein">&nbsp;g
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Vitamin A
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_vitamin_a_dv">&nbsp;%dv
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Vitamin C
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_vitamin_c_dv">&nbsp;%dv
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Vitamin D
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_vitamin_d_dv">&nbsp;%dv
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Calcium
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_calcium_dv">&nbsp;%dv
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Iron
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_iron_dv">&nbsp;%dv
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Phosphorus
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_p">&nbsp;mg
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Potassium
+          </td>
+          <td>
+            <input type="text" class="form-control input-serving-qty" ng-model="vm.food.nf_potassium">&nbsp;mg
+          </td>
+        </tr>
+      </table>
+      <p>
+        <span class="required">*</span> denotes required fields.
+      </p>
+
+      <div class="row" ng-if="vm.edit">
+        <div class="col-xs-4 text-center">
+          <button class="btn btn-success" ng-click="vm.addToFoodLog()">
+            Add to Food Log
+          </button>
+        </div>
+        <div class="col-xs-4 text-center">
+          <button class="btn btn-danger" ng-click="vm.deleteFood()">Delete Food</button>
+        </div>
+        <div class="col-xs-4">
+          <button class="btn btn-success" ng-click="vm.submit()" ng-disabled="form.$invalid">
+            <span ng-hide="vm.submit.$busy">Save</span>
+            <span ng-show="vm.submit.$busy">Saving... <i class="fa fa-spin fa-spinner"></i></span>
+
+          </button>
+          <alert class="alert-danger submit-alert" ng-if="vm.submit.$error">
+            {{vm.submit.$error.message}}
+          </alert>
+        </div>
+      </div>
+      <div class="row" ng-if="!vm.edit">
+        <div class="col-xs-12 text-center">
+          <button class="btn btn-success" ng-click="vm.submit()" ng-disabled="form.$invalid">
+            <span ng-hide="vm.submit.$busy">Submit</span>
+            <span ng-show="vm.submit.$busy">Submitting... <i class="fa fa-spin fa-spinner"></i></span>
+
+          </button>
+          <alert class="alert-danger submit-alert" ng-if="vm.submit.$error">
+            {{vm.submit.$error.message}}
+          </alert>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>

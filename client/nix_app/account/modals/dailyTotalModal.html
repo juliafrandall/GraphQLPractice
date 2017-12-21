@@ -1,0 +1,151 @@
+<div class="modal-header">
+  <h3 class="modal-title">
+    <div class="pull-right" ng-if="vm.modalTitle == 'Daily Total'">{{ vm.modalDate }}</div>
+    {{ vm.modalTitle }}
+  </h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="nutrition-label" ng-if="vm.labelData.valueCalories > 0" nutrition-label="vm.labelData"></div>
+      <ul class="nutrition-label-attr">
+        <li><strong>Net Carbs:</strong> {{ vm.netCarbs }}g</li>
+        <li>Phosphorus<span class="note">**</span> : {{vm.labelData.phosphorus || 0 | number: 0}} mg</li>
+        <li>Caffeine<span class="note">**</span> : {{vm.labelData.caffeine || 0 | number: 0}} mg</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <div class="rounded-box" ng-if="vm.labelData.valueCalories > 0">
+        <div class="box-title">
+          Source of Calories
+        </div>
+        <div class="box-content">
+          <div class="macronutrients-goals"
+               ng-if="vm.goals.daily_protein_pct === null && vm.goals.daily_carbs_pct === null && vm.goals.daily_fat_pct === null">
+            <div class="goal-not-set">
+              <i>You haven't set any nutrient goals yet.</i>
+              <a class="btn btn-success" ui-sref="account.cabinet.dailyGoals" ng-click="vm.close()">Edit Goals</a>
+            </div>
+          </div>
+
+          <div class="macronutrients-goals"
+               ng-if="vm.goals.daily_protein_pct !== null || vm.goals.daily_carbs_pct !== null || vm.goals.daily_fat_pct !== null">
+            <p class="progress-header">
+              Actual / Goal
+            </p>
+            <p class="progress-protein"
+               ng-if="vm.goals.daily_protein_pct !== null"
+               ng-class="{'over-target': vm.pieChart.data[0] > vm.goals.daily_protein_pct}">
+              <span class="value">
+                <span class="actual">{{vm.pieChart.data[0]}}%</span> / {{vm.goals.daily_protein_pct}}%
+              </span>
+              <span class="nutrient">Protein</span>
+              <progressbar value="vm.pieChart.data[0] / vm.goals.daily_protein_pct * 100"></progressbar>
+            </p>
+            <p class="progress-carb"
+               ng-if="vm.goals.daily_carbs_pct !== null"
+               ng-class="{'over-target': vm.pieChart.data[1] > vm.goals.daily_carbs_pct}">
+              <span class="value">
+                <span class="actual">{{vm.pieChart.data[1]}}%</span> / {{vm.goals.daily_carbs_pct}}%
+              </span>
+              <span class="nutrient">Carbohydrate</span>
+              <progressbar value="vm.pieChart.data[1] / vm.goals.daily_carbs_pct * 100"></progressbar>
+            </p>
+            <p class="progress-fat"
+               ng-if="vm.goals.daily_fat_pct !== null"
+               ng-class="{'over-target': vm.pieChart.data[2] > vm.goals.daily_fat_pct}">
+              <span class="value">
+                <span class="actual">{{vm.pieChart.data[2]}}%</span> / {{vm.goals.daily_fat_pct}}%
+              </span>
+              <span class="nutrient">Fat</span>
+              <progressbar value="vm.pieChart.data[2] / vm.goals.daily_fat_pct * 100"></progressbar>
+            </p>
+          </div>
+          <div style="height:110px;">
+            <canvas class="chart chart-pie"
+                    chart-data="vm.pieChart.data"
+                    chart-labels="vm.pieChart.labels"
+                    chart-legend="true"
+                    chart-colors="['#1AA6B7', '#F0AB00', '#b3217c', '#808080']" chart-options="{
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    display: true,
+                    position: 'right',
+                    fullWidth: true,
+                    labels: {
+                      generateLabels: vm.pieChart.generateLabels,
+                      boxWidth: 15
+                    },
+                    onClick: null
+                },
+                tooltips: {
+                  callbacks: {
+                    label: vm.pieChart.label
+                  }
+                }
+              }">
+            </canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-box">
+        <div class="box-content">
+          <form class="form-inline daily-total-calorie-form" name="vm.calorieForm">
+            <div class="form-group" ng-class="{'has-error': vm.calorieForm.$dirty && vm.calorieForm.$invalid}">
+              <label for="calorie_limit">Today's Calorie Limit</label>
+              <input type="text" number="integer"
+                     class="form-control"
+                     id="calorie_limit"
+                     placeholder="2000"
+                     ng-model="vm.daily_kcal" required>
+            </div>
+            <button type="submit" class="btn btn-default"
+                    ng-disabled="vm.calorieForm.$invalid || vm.saveDailyKCal.$busy"
+                    ng-click="vm.saveDailyKCal()">
+              <span ng-hide="vm.saveDailyKCal.$busy || vm.saveDailyKCal.$saved">Save</span>
+              <span ng-if="vm.saveDailyKCal.$busy">Saving... <i class="fa fa-spin fa-spinner"></i></span>
+              <span ng-if="vm.saveDailyKCal.$saved">Saved <i class="fa fa-check"></i></span>
+            </button>
+          </form>
+          <alert class="tidy-alert" type="danger" ng-if="vm.saveDailyKCal.$error">
+            Could not update daily calories :(
+          </alert>
+        </div>
+      </div>
+
+      <div class="rounded-box">
+        <div class="box-title">
+          Notes for this day
+        </div>
+        <div class="box-content">
+          <textarea class="form-control" rows="5" ng-model="vm.notes"></textarea>
+          <div class="text-center margin-top">
+            <button class="btn btn-success" ng-click="vm.saveNotes()">
+              <span ng-hide="vm.saveNotes.$busy">Save</span>
+              <span ng-show="vm.saveNotes.$busy">Saving... <i class="fa fa-spin fa-spinner"></i></span>
+            </button>
+
+            <alert class="tidy-alert" type="danger" ng-if="vm.saveNotes.$error">
+              Could not save the note :(
+            </alert>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+
+    </div>
+  </div>
+  <div class="label-note">
+    ** Please note that our restaurant and branded grocery food database does not have these attributes available, and
+    if your food log contains restaurant or branded grocery foods, these totals may be incorrect. The data from these
+    these attributes is for reference purpose only, and should not be used for any chronic disease management.
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" type="button" ng-click="vm.close()">Close</button>
+</div>

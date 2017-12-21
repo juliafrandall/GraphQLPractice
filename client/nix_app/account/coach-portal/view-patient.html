@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.coach-portal.dashboard" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      View Client
+    </h1>
+
+    <div ng-show="!vm.patient" class="text-center">
+      <i class="fa fa-spinner fa-spin fa-5x"></i>
+    </div>
+
+    <div ng-show="vm.patient">
+      <a href="#" class="send-mail pull-right">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+      </a>
+
+      <h4>
+        <strong>{{vm.patient.name}}</strong> &nbsp; {{vm.patient.age}}, {{vm.patient.gender[0] | uppercase}}
+      </h4>
+      <p>
+        <strong>Days Tracked in last week:</strong> &nbsp; {{vm.weekDaysTracked}}
+      </p>
+      <br>
+
+      <div ng-repeat="date in vm.dates"
+           ui-sref="account.cabinet.coach-portal.view-patient-day({
+                        patient_id: vm.patient.id, date: (date | amDateFormat: 'YYYY-MM-DD')
+                    })">
+        {{date | amDateFormat: 'dddd, MMMM Do YYYY'}}
+        <div class="panel panel-default panel-patient-log">
+          <div class="panel-heading">
+            <div class="angle-right">
+              <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </div>
+            <div class="progress-wrap">
+              <div class="target-calories">
+              <span
+                class="hidden-sm hidden-md hidden-lg"> {{vm.totals[date].remaining_calories | abs | number: 0}}</span>
+                {{vm.totals[date].remaining_calories >= 0 ? 'remaining' : 'over'}}
+                <span class="hidden-xs"> {{vm.totals[date].remaining_calories | abs | number: 0}}</span>
+              </div>
+              <div class="burned-calories">
+                <span>{{vm.totals[date].total_cal_burned | number: 0}}</span> Cal burned
+              </div>
+              <div class="current-calories">
+                <span>{{vm.totals[date].nf_calories | number: 0}}</span> Cal intake
+              </div>
+              <progressbar type="{{vm.totals[date].progressColor}}" value="vm.totals[date].progress"></progressbar>
+            </div>
+          </div>
+          <div class="row macronutrients">
+            <div class="col protein">
+              {{vm.totals[date].nf_protein | number: 0}}g
+              <span>Protein</span>
+            </div>
+            <div class="col carb">
+              {{vm.totals[date].nf_total_carbohydrate | number: 0}}g
+              <span>Carbs</span>
+            </div>
+            <div class="col fat">
+              {{vm.totals[date].nf_total_fat | number: 0}}g
+              <span>Fat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

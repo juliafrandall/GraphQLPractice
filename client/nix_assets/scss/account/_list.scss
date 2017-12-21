@@ -1,0 +1,52 @@
+.list-filter {
+  .form-group {
+    label {
+      padding-right: 8px;
+      margin-bottom: 4px;
+    }
+    .form-control-custom-serving {
+      width: 130px;
+      display: inline-block;
+    }
+    .form-control-nutrient {
+      width: 160px;
+      display: inline-block;
+    }
+    &:first-child {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      label:nth-child(1),
+      label:nth-child(2) {
+        display: block;
+        @media(min-width: 600px) {
+          display: inline-block;
+        }
+      }
+      label:nth-child(3) {
+        margin-left: 0;
+        @media(min-width: 768px) {
+          margin-left: 10px;
+        }
+      }
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    .filter-nutrient {
+      margin-top: 5px;
+      @media(min-width: 600px) {
+        margin-top: 0;
+        margin-left: 30px;
+        display: inline-block;
+      }
+    }
+  }
+}
+
+.table-search {
+  padding-bottom: 15px;
+  @media(min-width: 768px) {
+    width: 350px;
+  }
+}
+

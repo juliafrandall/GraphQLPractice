@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <span class="btn-modal-close" ng-click="vm.close();">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </span>
+  <h3 class="modal-title">Log Water</h3>
+</div>
+<div class="modal-body">
+  <form class="form-horizontal" name="vm.form">
+    <div class="form-group">
+      <label class="col-md-12">
+        Common measures:
+        <span class="note"> (tap to add instantly)</span>
+      </label>
+      <div class="col-md-12">
+        <span ng-repeat="volume in vm.volumes">
+          <button class="btn btn-default"
+                  ng-click="vm.submit(volume)"
+                  ng-disabled="vm.$busy"
+          >{{volume}} {{vm.unit}}
+        </button>
+        &nbsp;
+        </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="customValue" class="col-xs-12 col-sm-12 col-md-12">Custom Measure:</label>
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="label-oz">
+          <input id="customValue" name="customValue" type="text" class="form-control"
+                 min="0"
+                 ng-model="vm.customValue"
+          >
+
+
+          <span>{{vm.unit}}</span>
+        </div>
+      </div>
+      <div class="col-xs-8 col-sm-8 col-md-7">
+        <button class="btn btn-success"
+                ng-click="vm.submit(vm.customValue)"
+                ng-disabled="vm.$busy || !vm.customValue || vm.form.customValue.$invalid">Add
+        </button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="totalValue" class="col-xs-12 col-sm-12 col-md-12">Total water consumed today:</label>
+      <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="label-oz">
+          <input id="totalValue" name="totalValue" type="number" class="form-control"
+                 min="0"
+                 ng-model="vm.totalValue"
+          >
+          <span>{{vm.unit}}</span>
+        </div>
+      </div>
+      <div class="col-xs-8 col-sm-8 col-md-7">
+        <button class="btn btn-success"
+                ng-click="vm.submit(vm.totalValue, true)"
+                ng-disabled="vm.$busy || vm.totalValue === null || vm.form.totalValue.$invalid"
+        >Update
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" type="button" ng-click="vm.close()">Close</button>
+</div>

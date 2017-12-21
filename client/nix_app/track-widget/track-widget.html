@@ -1,0 +1,144 @@
+<div class="track-log-widget">
+  <div class="modal-header">
+    <button type="button" class="close" ng-click="vm.close()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="modal-body">
+    <p class="text-center">
+      <img src="/nix_assets/images/nix_track.png" alt="Nutritionix Track">
+    </p>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3>
+              {{vm.food.food_name}}
+            </h3>
+            <h4 ng-if="vm.food.brand_name">
+              {{vm.food.brand_name}}
+            </h4>
+            <form role="form" action="#" method="POST" class="form-horizontal">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="push-unit">
+                    <p>Calories</p>
+                    <p id="calories">{{vm.getCalories() | number : 0}} kcal</p>
+                  </div>
+                  <div class="wrap-serving cleafix" ng-if="!vm.multipleMeasures">
+                    <div class="col1">
+                      <p>Qty </p>
+                      <input class="qty form-control"
+                             type="number"
+                             min="0"
+                             ng-model="vm.servingQty"
+                             select-on-click required>
+                    </div>
+                    <div class="col2">
+                      <p>Unit</p>
+                      <div class="unit-text">{{vm.food.serving_unit}}</div>
+                    </div>
+                  </div>
+                  <div class="wrap-serving cleafix" ng-if="vm.multipleMeasures">
+                    <div class="col1">
+                      <p>Qty </p>
+                      <input class="qty form-control"
+                             type="number"
+                             min="0"
+                             ng-model="vm.servingQty"
+                             select-on-click>
+                    </div>
+                    <div class="col2">
+                      <p>Unit</p>
+                      <select class="measure form-control"
+                              ng-model="vm.measure"
+                              ng-options="m as m.measure for m in vm.food.alt_measures"
+                              ng-change="vm.changeMeasure()"
+                      >
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div>
+              <div class="consumed-at" ng-click="vm.consumedAt.toggle()" style="margin-bottom: 0px;">
+              <span class="btn-now pull-right">
+                  Now
+                <i ng-show="vm.consumedAt.useNow" class="fa fa-chevron-right"></i>
+                <i ng-show="!vm.consumedAt.useNow" class="fa fa-chevron-down"></i>
+              </span>
+                <strong>When:</strong> {{vm.consumedAt.getValue(true) | amDateFormat:'MM/DD/YY [at] h:mm a'}}
+              </div>
+              <div class="date-option" ng-show="!vm.consumedAt.useNow">
+                <label>Meal</label>
+                <div class="btn-group btn-group-sm btn-group-justified">
+                  <label class="btn btn-default"
+                         ng-model="vm.consumedAt.meal"
+                         btn-radio="'Breakfast'" uncheckable>Breakfast</label>
+                  <label class="btn btn-default"
+                         ng-model="vm.consumedAt.meal"
+                         btn-radio="'Lunch'" uncheckable>Lunch</label>
+                  <label class="btn btn-default"
+                         ng-model="vm.consumedAt.meal" btn-radio="null"
+                         uncheckable="uncheckable">Dinner</label>
+                  <label class="btn btn-default"
+                         ng-model="vm.consumedAt.meal"
+                         btn-radio="'Snack'" uncheckable>Snack</label>
+                </div>
+                <label>Date</label>
+                <div class="btn-group btn-group-sm btn-group-justified">
+                  <label class="btn btn-default"
+                         ng-model="vm.consumedAt.day"
+                         btn-radio="'Today'" uncheckable>
+                    Today
+                  </label>
+                  <label class="btn btn-default"
+                         ng-model="vm.consumedAt.day"
+                         btn-radio="'Yesterday'" uncheckable>
+                    Yesterday
+                  </label>
+                  <label class="btn btn-default"
+                         ng-model="vm.consumedAt.day"
+                         btn-radio="null" uncheckable>
+                    <i class="fa fa-calendar"></i>
+                    Choose Date
+                  </label>
+                </div>
+                <div ng-show="vm.consumedAt.showDatePicker">
+                  <br>
+                  <datepicker
+                    class="date-picker"
+                    ng-model="vm.consumedAt.datePicker"
+                    show-weeks="false"
+                    max-date="vm.consumedAt.maxDate"
+                  ></datepicker>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- connect -->
+  </div>
+  <div class="modal-footer">
+    <button
+      type="submit"
+      class="btn btn-success"
+      ng-click="vm.submit()"
+
+    >Add to My Food Log
+    </button>
+
+    <alert class="tidy-alert" type="success" ng-if="vm.submit.$success">
+      {{vm.food.food_name}} has been added to your
+      <a href="/dashboard" target="_blank" class="text-underline">food log</a>
+    </alert>
+
+    <alert class="tidy-alert" type="danger" ng-if="vm.submit.$error">
+      Unexpected error. Please
+      <a href="/contact" class="text-underline" target="_blank">contact support</a>
+    </alert>
+  </div>
+</div>
+

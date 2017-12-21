@@ -1,0 +1,127 @@
+.page-restaurant-map {
+  .col-item-search,
+  .col-item-results,
+  .col-restaurant-map,
+  .col-disqus {
+    margin-bottom: 15px;
+  }
+  @media(min-width: 992px) {
+    .col-item-search,
+    .col-item-results {
+      float: left;
+      width: 400px;
+      margin-bottom: 30px;
+    }
+    .col-restaurant-map,
+    .col-disqus {
+      float: right;
+      width: 510px;
+      margin-bottom: 30px;
+    }
+  }
+  @media(min-width: 1200px) {
+    .col-item-search,
+    .col-item-results {
+      width: 460px;
+    }
+    .col-restaurant-map,
+    .col-disqus {
+      width: 650px;
+    }
+  }
+}
+.location-map-wrap {
+  position: relative;
+  .alert-overlay {
+    position: absolute;
+    background-color: rgba(0,0,0, .7);
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    .alert {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      margin: -70px 0 0 -150px;
+      p {
+        margin-left: 30px;
+      }
+      .fa {
+        float: left;
+        margin-left: -30px;
+        font-size: 18px;
+      }
+      @media(min-width:992px) {
+        width: 360px;
+        margin: -50px 0 0 -180px;
+        .fa {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+
+.leaflet-marker-icon {
+  outline: 1px solid transparent;
+}
+
+.locate-marker {
+  width: 300px;
+
+  .panel-heading {
+    height: 65px;
+  }
+
+  .panel-body, .panel-heading {
+    padding: 5px;
+  }
+
+  .panel-body {
+    padding-bottom: 0;
+  }
+
+  table > tbody > tr > td {
+    padding: 2px;
+  }
+
+  .table {
+    margin-bottom: 0;
+  }
+
+  .logo {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    margin-right: 10px;
+    img {
+      vertical-align: middle;
+      max-width: 100px !important;
+      max-height: 50px;
+    }
+  }
+
+  .address {
+    font-size: 10px;
+    font-style: italic;
+    font-weight: normal;
+    margin-top: 2px;
+    margin-bottom: 3px;
+  }
+}
+
+.restaurant-map-item-search {
+  .ui-select-match, input {
+    outline: none;
+  }
+
+  .ui-select-choices-group {
+    div:nth-of-type(3) {
+      display: none;
+    }
+  }
+
+
+
+}

@@ -1,0 +1,137 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <h1>
+      Calorie Count CSV Import
+    </h1>
+    <p>
+      Welcome, CalorieCount users! We developed this tool to make it easy to import your
+      CalorieCount data into Nutritionix.
+    </p>
+    <p>
+      If importing multiple types or records such as weigh-ins AND foods,
+      please submit this page once for each type.
+    </p>
+    <br>
+
+    <h4>
+      Select record type
+    </h4>
+    <div class="row">
+      <div class="col-md-2">
+        <label for="foods" class="radio-inline">
+          <input type="radio" name="record-type" id="foods"
+                 value="foods"
+                 ng-model="vm.importType"> Foods
+        </label>
+      </div>
+      <div class="col-md-2">
+        <label for="weighins" class="radio-inline">
+          <input type="radio" name="record-type" id="weighins"
+                 value="weightIns"
+                 ng-model="vm.importType"> Weigh-Ins
+        </label>
+      </div>
+    </div>
+
+    <div ng-if="vm.importType === 'weightIns'">
+      <h4>
+        Select Units
+      </h4>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="lbs" class="radio-inline">
+            <input type="radio" name="weight-units" id="lbs"
+                   value="lbs"
+                   ng-model="vm.options.weightIns.units"> lbs
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label for="kg" class="radio-inline">
+            <input type="radio" name="weight-units" id="kg"
+                   value="kg"
+                   ng-model="vm.options.weightIns.units"> kg
+          </label>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <h4>
+      Select CSV file of {{ vm.importTypeLabels[vm.importType] }}
+    </h4>
+    <div class="limitation-hint">
+      * Recipe and Activity data not supported.
+    </div>
+    <form ng-submit="vm.submit()" name="vm.form">
+      <button class="btn btn-default" ngf-select ngf-drop
+              ng-model="vm.file"
+              ngf-model-invalid="vm.invalidFile"
+              name="file"
+              ngf-validate-async-fn="vm.validate($file)"
+              required="">Select <b>*.csv</b> File
+      </button>
+      <div class="filename" ng-show="vm.file">
+        {{vm.file.name}} &nbsp;
+        <span class="success">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+      </div>
+
+      <div class="filename" ng-show="vm.invalidFile">
+        {{vm.invalidFile.name}} &nbsp;
+        <span class="error">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{vm.invalidFile.$errorMessage}}
+        </span>
+      </div>
+
+      <br>
+
+      <div ng-show="vm.file">
+        <h4>
+          Ready to upload? Click below:
+        </h4>
+        <p>
+          <button type="submit" class="btn btn-success"
+                  ng-disabled="vm.form.$invalid || vm.submit.$busy"
+          >
+            Submit
+
+            <span ng-show="vm.submit.$progress">
+            {{vm.submit.$progress}}%
+          </span>
+          </button>
+        </p>
+      </div>
+    </form>
+    <br>
+    <alert type="info" ng-if="vm.submit.$success">
+      Your {{vm.importType === 'foods' ? 'food' : 'weigh-in'}} log import is being processed.
+      You will receive an email at {{vm.userProfile.email}} when it is complete. Thank you!
+    </alert>
+    <alert type="danger" ng-if="vm.submit.$error">
+      Sorry, your upload failed. Please contact
+      <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+      for the assistance
+    </alert>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="alert alert-info">
+          Need help? Please reference the CSV Import instructions here:
+          <a
+            href="https://help.nutritionix.com/articles/6750-im-a-calorie-count-user-transitioning-to-nutritionix-track-how-do-i-import-my-data"
+            target="_blank">
+            help.nutritionix.com
+          </a>
+
+          For additional support, email us at <a href="mailto:support@nutritionix.com">support@nutritionix.com</a> and
+          attach the
+          file you are trying to import. Thank you!
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

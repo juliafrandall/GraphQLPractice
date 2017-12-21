@@ -1,0 +1,177 @@
+<div class="page-banner map">
+  <div class="overlay-300"> </div>
+  <div class="overlay-text">
+    <article>
+      <h1>Restaurant Nutrition Map <sup class="beta"><span class="label label-info">beta</span></sup></h1>
+    </article>
+  </div>
+</div>
+
+<div class="container padding-top padding-bottom">
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- item search -->
+      <div class="col-item-search">
+        <div class="restaurant-map-item-search">
+          <ui-select ng-model="vm.searchItem"
+                     theme="bootstrap"
+                     ng-change="vm.processLocations(true)"
+                     reset-search-input="false">
+            <ui-select-match
+              allow-clear="true"
+              placeholder="Search menu items">{{$select.selected}}
+            </ui-select-match>
+            <ui-select-choices repeat="food in vm.itemSuggestions"
+                               refresh="vm.refreshItemSuggestions($select)"
+                               refresh-delay="0"
+                               minimum-input-length="0">
+              <div ng-bind-html="food"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <!-- restaurant map -->
+      <div class="col-restaurant-map">
+        <div class="location-search-bar">
+          <div class="row">
+            <div class="col-sm-10 col-md-10">
+              <div class="input-group">
+                <input class="form-control"
+                       ng-model="vm.currentLocation"
+                       placeholder="Search by zip code, city, or address"
+                       ng-keyup="$event.which === 13 &&  vm.searchLocation()"
+                >
+                <div class="input-group-btn">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                  <button type="button" class="btn btn-default" ng-click="vm.centerOnUserLocation()">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  </button>
+                  <button unreleased type="button" class="btn btn-default" ng-click="vm.locationFilter = !vm.locationFilter">
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4" ng-show="vm.locationFilter" unreleased>
+              <div class="location-filters">
+                <label>kcal</label>
+                <div range-slider min="100" max="500" model-min="100" model-max="500" attach-handle-values="true"
+                     show-values="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" ng-if="vm.searchLocation.$error">
+            <div class="col-sm-6 col-md-5">
+              <alert type="danger" class="tidy-alert">
+                can't geolocate this search
+              </alert>
+            </div>
+          </div>
+
+          <alert type="success" class="tidy-alert" ng-if="vm.searchLocation.$result">
+            {{vm.searchLocation.$result.display_name}}
+          </alert>
+
+        </div>
+
+        <div class="location-map-wrap">
+          <div class="alert-overlay" ng-if="vm.unsupportedLocation">
+            <div class="alert alert-warning">
+              <p>
+                <i class="fa fa-exclamation-circle"></i>  Only locations within the US are supported.
+              </p>
+            </div>
+          </div>
+        <div class="location-map" tabindex="0">
+          <leaflet lf-center="vm.center"
+                   markers="vm.markers"
+                   bounds="vm.bounds"
+                   id="restMap"
+                   url-hash-center="yes"
+                   height="500px" width="100%"></leaflet>
+        </div>
+        </div>
+
+          <div ng-if="vm.geolocating">
+            <alert type="info" ng-if="vm.geolocating === true">
+              Detecting your location
+              <i class="fa fa-spinner fa-spin"></i>
+            </alert>
+
+            <alert type="danger" ng-if="vm.geolocating === 'error'">
+              Could not detect your location :(
+            </alert>
+          </div>
+      </div>
+
+      <!-- item results -->
+      <div class="col-item-results">
+        <div ng-repeat="location in vm.results">
+          <div class="panel panel-default location-group">
+            <div class="panel-heading clickable" ng-click="vm.showOnMap(location)">
+              <div class="location-logo" ng-if="location.brand.logo">
+                <img ng-src="{{location.brand.logo}}"
+                     alt="{{location.brand.name}}"
+                     title="{{location.brand.name}}">
+              </div>
+              {{location.brand.name}}
+              <div class="distance">
+                {{location.distance_km * 0.621371192 | number: 2}} miles
+              </div>
+
+              <div class="address">{{location.address}}, {{location.city}}, {{location.country}}</div>
+            </div>
+            <ul class="list-group map-items">
+              <li class="list-group-item"
+                  ng-repeat="food in location.items | limitTo : (more ? 100 : 2)">
+                <span ng-if="!food.nix_item_id" ng-bind-html="food.food_name"></span>
+
+                <a ng-if="food.nix_item_id" target="_blank" ui-sref="site.itemsDetail({
+                                              brand: (vm.brandInfoCache[location.brand_id].name | cleanurl),
+                                              item_name: (food.food_name | cleanurl),
+                                              item_id: food.nix_item_id
+                                           })"
+                   ng-bind-html="food.food_name">
+                </a>
+                <!--<div class="tags">low carb, gluten free</div>-->
+                <div class="cal">
+                  {{food.nf_calories | fdaRound: 'calories'}}
+                  <span>cal</span>
+                </div>
+              </li>
+            </ul>
+            <a href ng-class="{more: !more, less: more}"
+               ng-show="location.items.length > 2"
+               ng-click="more = !more"></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- disqus -->
+      <div class="col-disqus">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Have any suggestions on how to improve the Restaurant Location Map? Please comment below!
+          </div>
+          <div class="panel-body">
+            <div disqus="'restaurant-map'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="locate-attribution">
+        <div>Powered by</div>
+        <a href="https://developer.nutritionix.com/"><img src="/nix_assets/images/powered_by_api.png" alt="Nutritionix API"></a>
+        &amp;
+        <a href="https://foursquare.com/" target="_blank"><img src="/nix_assets/images/foursquare.png" class="foursquare" alt="Foursquare"></a>
+      </div>
+    </div>
+  </div>
+</div>

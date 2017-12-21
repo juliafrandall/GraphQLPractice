@@ -1,0 +1,188 @@
+<div class="modal-header">
+  <div class="row">
+    <div class="col-xs-6">
+      <h3 class="modal-title">Add Food</h3>
+    </div>
+    <div class="col-xs-6 text-right">
+      <span class="btn-modal-close" ng-click="vm.close();">
+        &nbsp; <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+      <review-foods-basket-button animation="false"></review-foods-basket-button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal-body">
+  <div class="smart-search-wrap">
+    <div instant-smart-search="vm.instantSmartSearch"></div>
+  </div>
+  <div class="review-foods-basket-notification">
+    <review-foods-basket-notification show-review-link="true"></review-foods-basket-notification>
+  </div>
+  <tabset class="tabset-addfood">
+    <tab index="0" heading="Freeform" active="vm.tabs[0].active" select="vm.setTab('smart')">
+      <form name="smartForm">
+        <div class="form-group">
+          <label for="query">What did you eat?</label>
+          <textarea rows="10" cols="100"
+                    name="query" id="query" class="form-control"
+                    placeholder="Eg: Turkey Club Sandwich and a 12 oz coke"
+                    ng-model="vm.query"
+                    focus-if="vm.focus.smart" focus-delay="vm.focusDelay"></textarea>
+        </div>
+      </form>
+    </tab>
+
+    <tab index="1" heading="Restaurants" active="vm.tabs[1].active" select="vm.setTab('restaurants')" unreleased>
+      <form name="restaurantsForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Brand</label>
+              <input name="restaurants" id="restaurants" type="text" class="form-control"
+                     autocomplete="off"
+                     placeholder="Search restaurants"
+                     focus-if="vm.focus.restaurant" focus-delay="vm.focusDelay"
+                     ng-model="vm.restaurantSelected"
+                     typeahead="restaurant.name for restaurant in vm.restaurants | filter:{name: $viewValue} | limitTo:5"
+                     typeahead-on-select="vm.selectRestaurant($item)">
+            </div>
+
+            <div class="panel panel-default" ng-if="vm.recentRestaurants.length">
+              <div class="panel-heading">Recently visited restaurants</div>
+              <ul class="list-group">
+                <li class="list-group-item clickable"
+                    ng-click="vm.selectRestaurant(restaurant)"
+                    ng-repeat="restaurant in vm.recentRestaurants">
+                  {{restaurant.name}}
+                  <span class="last-visited">
+                    Last visited on {{restaurant.lastVisited | amDateFormat: 'DD/MM/YY'}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6" ng-if="vm.restaurant">
+            <i class="fa fa-chevron-right chevron-menu-pointer hidden-xs"></i>
+            <p class="text-center hidden-sm hidden-md hidden-lg">
+              <i class="fa fa-chevron-down"></i>
+            </p>
+            <label>{{vm.restaurant.name}} Menu</label>
+            <input name="menus" id="menus" type="text" placeholder="Search {{vm.restaurant.name}} menu"
+                   autocomplete="off"
+                   ng-model="vm.menuItemSelected"
+                   ng-model-options="{debounce: 500}"
+                   typeahead="menu as menu.item_name for menu in vm.getMenus($viewValue)"
+                   class="form-control"
+                   typeahead-template-url="/nix_app/account/templates/menuItem.tpl.html"
+                   focus-if="vm.focus.item" focus-delay="vm.focusDelay"
+                   typeahead-on-select="vm.selectItem($item)">
+          </div>
+        </div>
+      </form>
+    </tab>
+
+    <tab index="2" heading="Grocery" active="vm.tabs[2].active" select="vm.setTab('grocery')" unreleased>
+      <form name="groceriesForm">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="form-group">
+              <input name="groceries" id="groceries" type="text" placeholder="Search grocery foods"
+                     autocomplete="off"
+                     ng-model="vm.groceryItemSelected"
+                     ng-model-options="{debounce: 500}"
+                     typeahead="item as item.item_name for item in vm.searchGroceryFoods($viewValue)"
+                     class="form-control"
+                     focus-if="vm.focus.groceries" focus-delay="vm.focusDelay"
+                     typeahead-template-url="/nix_app/account/templates/menuItem.tpl.html"
+                     typeahead-on-select="vm.selectItem($item)">
+            </div>
+          </div>
+        </div>
+      </form>
+    </tab>
+
+    <tab index="3" heading="History" active="vm.tabs[3].active" select="vm.setTab('history')">
+      <div class="text-center" ng-if="!vm.history.foods">
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
+
+      <div ng-if="vm.history.foods">
+        <input type="text"
+               ng-model="vm.history.search"
+               ng-change="vm.history.refresh()"
+               ng-model-options="{debounce: 300}"
+               class="form-control margin-bottom"
+               placeholder="Search Food History">
+
+        <ul class="list-group">
+          <li class="list-group-item history-item"
+              ng-repeat="food in vm.history.foods"
+              ng-click="vm.history.add(food)">
+
+            <span class="badge badge-calorie">
+              {{food.nf_calories | number: 0}}
+              <span class="block text-center grey note">Cal</span>
+            </span>
+            {{food.food_name | ucwords}}
+
+            <span class="item-serving">
+              <span ng-if="food.brand_name">{{food.brand_name}},</span>
+              {{food.serving_qty || 1}} {{food.serving_unit}}
+            </span>
+          </li>
+        </ul>
+
+        <div class="text-center"
+             ng-show="(vm.history.foods | filter: {food_name: vm.history.search}).length > vm.history.viewLimit">
+          <button class="btn btn-xs btn-success " type="button" ng-click="vm.history.showMore()">Show more</button>
+        </div>
+      </div>
+    </tab>
+  </tabset>
+
+  <div class="consumed-at">
+    <span class="btn-now pull-right" unreleased>
+      <i class="fa fa-pencil" aria-hidden="true"></i>
+    </span>
+    <strong>When:</strong>
+    <span ng-if="vm.consumedAt.useNow">Now</span>
+    <span ng-if="!vm.consumedAt.useNow">
+      {{vm.consumedAt.day || (vm.consumedAt.datePicker | amDateFormat: 'dddd, M/D')}},
+      {{vm.consumedAt.meal || 'Dinner'}}
+    </span>
+  </div>
+
+  <div ng-hide="vm.getTab() === 'history'">
+    <!-- review foods -->
+    <div class="btn btn-success review-foods-block"
+         ng-click="vm.submit()"
+         ng-disabled="vm.getTab() !== 'smart' && !vm.food || vm.getTab() === 'smart' && !vm.query">
+     <i class="fa fa-shopping-basket" aria-hidden="true"></i> Add to Basket
+    </div>
+  </div>
+  <div ng-show="vm.getTab() === 'smart'">
+    <h4>How does Natural Work?</h4>
+    <p class="note">
+      Type or speak freeform text in the box above and we use state-of-the-art natural language processing technology to accurately determine what you ate.
+    </p>
+    <p class="note">
+      After you add foods to the basket, you will have a chance to review the foods, change the time you ate them, and change serving sizes before adding to your food log.
+    </p>
+  </div>
+
+  <alert type="danger" ng-if="vm.error">
+    An unexpected server error has occurred.
+    <br> Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+    <span ng-if="vm.error.id">and reference the reference code: {{vm.error.id}}</span>
+  </alert>
+  <alert type="warning" ng-if="vm.notFound">
+    No foods were recognized in your request.
+    <br> If you believe this is an error, please email
+    <a href="mailto:support@nutritionix.com">support@nutritionix.com</a> with the problematic query
+    <span ng-if="vm.notFound.id">and reference the reference code: <b>{{vm.notFound.id}}</b></span>
+  </alert>
+</div>

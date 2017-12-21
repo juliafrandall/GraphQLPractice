@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="#" ui-sref="site.diets">Popular Diets</a>  &gt;</li>
+        <li class="active">{{vm.diet.name}}</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row item-title bg-white padding">
+    <div class="col-sm-9 col-md-9 col-lg-9 as-table">
+      <div class="as-table-cell text-center item-thumbnail">
+        <img ng-src="{{vm.diet.image || 'https://s3.amazonaws.com/cdn4-nutritionix/images/gray_nix_apple_small.png'}}"
+             alt="{{vm.diet.name}}">
+      </div>
+      <div class="as-table-cell">
+        <h1 class="food-item-name">{{vm.diet.name}}</h1>
+        <p>
+          {{vm.diet.description_short}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row bg-white padding">
+
+    <!-- col1 -->
+    <div class="col-md-7" marked="vm.diet.description"></div>
+
+    <!-- col2 -->
+    <div class="col-md-offset-1 col-md-4">
+      <p>
+        <img ng-src="{{vm.diet.image_highres}}" class="img-responsive center-block" alt="{{vm.diet.name}}">
+      </p>
+      <br>
+      <p class="text-center">
+        <div ads></div>
+      </p>
+    </div>
+  </div>
+
+</div>

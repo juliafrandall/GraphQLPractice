@@ -1,0 +1,215 @@
+<div class="col-lg-12 daily-calories-calculator">
+  <div class="row bg-white padding">
+    <div class="col-md-6 col-daily-calories">
+      <a class="btn btn-default btn-sm pull-left btn-back"
+         ng-href="{{vm.backButtonUrl}}"
+         ng-if="vm.backButtonUrl">
+        <i class="fa fa-chevron-left"></i>
+      </a>
+
+      <h3>
+        Calculate Daily Calories
+        <sup>
+          <a href="https://help.nutritionix.com/articles/6153-setting-understanding-your-daily-calorie-limit" target="_blank">
+            <i class="fa fa-question-circle" style="color:black;"></i>
+          </a>
+        </sup>
+      </h3>
+      <form class="form-horizontal form-daily-calorie">
+        <div class="form-group">
+          <label class="col-xs-3 col-sm-2 control-label">Units</label>
+          <div class="col-xs-5 col-sm-4">
+            <div class="radio">
+              <label>
+                <input type="radio" name="unit" value="imperial" ng-model="vm.unitSystem">Imperial
+                (US)
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4">
+            <div class="radio">
+              <label>
+                <input type="radio" name="unit" value="metric" ng-model="vm.unitSystem"> Metric
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-3 col-sm-2 control-label">Gender</label>
+          <div class="col-xs-5 col-sm-4">
+            <div class="radio">
+              <label>
+                <input type="radio" name="gender" value="female" ng-model="vm.gender"> Female
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-4 col-sm-4">
+            <div class="radio">
+              <label>
+                <input name="gender" type="radio" value="male" ng-model="vm.gender"> Male
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-3 col-sm-2 control-label">Weight</label>
+          <div class="col-xs-4 has-helper-text">
+            <div ng-if="vm.unitSystem == 'metric'">
+              <input type="text" class="form-control"
+                     ng-model="vm.weight.kg"
+                     ng-change="vm.calculateWeights()"
+                     placeholder="kg">
+              <span class="help-text help-text-right">kg</span>
+            </div>
+            <div ng-if="vm.unitSystem == 'imperial'">
+              <input type="text" class="form-control"
+                     ng-model="vm.weight.lb"
+                     ng-change="vm.calculateWeights()"
+                     placeholder="lb">
+              <span class="help-text help-text-right">lb</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="height" class="col-xs-3 col-sm-2 control-label">Height</label>
+          <div ng-if="vm.unitSystem == 'metric'" class="col-xs-4 has-helper-text">
+            <input type="text" ng-model="vm.height.cm" ng-change="vm.calculateHeights()" class="form-control"
+                   id="height"
+                   placeholder="cm">
+            <span class="help-text help-text-right">cm</span>
+          </div>
+          <div ng-if="vm.unitSystem == 'imperial'" class="col-xs-3 us-height">
+            <input type="text" ng-model="vm.height.ft" ng-change="vm.calculateHeights()" name="feet"
+                   class="form-control" id="feet" placeholder="5">
+            <span class="help-text help-text-right">ft</span>
+          </div>
+          <div ng-if="vm.unitSystem == 'imperial'" class="col-xs-3 us-height">
+            <input type="text" ng-model="vm.height.inch" ng-change="vm.calculateHeights()" name="inch"
+                   class="form-control" id="inch" placeholder="6">
+            <span class="help-text help-text-right">inch</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="age" class="col-xs-3 col-sm-2 control-label">Age</label>
+          <div class="col-xs-4">
+            <input ng-model="vm.age" type="text" class="form-control" id="age" placeholder="30">
+          </div>
+        </div>
+        <div ng-if="vm.enableExerciseLevel">
+          <h5>
+            <strong>Exercise Level (optional)</strong>
+          </h5>
+          <div class="form-group">
+            <div class="col-sm-8">
+              <select ng-model="vm.exerciseLevel" class="form-control"
+                      ng-options="idx*1 as level.title for (idx, level) in vm.exerciseLevels">
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    </div>
+    <div class="col-md-6">
+      <div class="panel panel-default" ng-show="vm.getRecommendedCalories()">
+        <div class="panel-heading">
+          <h3 class="panel-title">Recommended Calories</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-md-offset-1 col-md-11">
+            <dl class="your-daily-calorie">
+              <dt>{{vm.getRecommendedCalories(true)}}</dt>
+              <dd>
+                Maintain Current Weight
+
+                <button class="btn btn-default btn-xs"
+                        ng-if="vm.enableUserCaloriesWidget"
+                        ng-click="vm.userDailyCalories = (vm.getRecommendedCalories(true))">
+                  Use This
+                </button>
+              </dd>
+              <dt>{{vm.getRecommendedCalories() - 500 | fdaRound: 'calories'}}</dt>
+              <dd>Lose
+                <span ng-if="vm.unitSystem === 'metric'">~0.5 kg</span>
+                <span ng-if="vm.unitSystem === 'imperial'">~1 lb</span>
+                per week
+
+                <button class="btn btn-default btn-xs"
+                        ng-if="vm.enableUserCaloriesWidget"
+                        ng-click="vm.userDailyCalories = (vm.getRecommendedCalories() - 500 | fdaRound: 'calories')">
+                  Use This
+                </button>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default" ng-if="vm.enableUserCaloriesWidget">
+        <div class="panel-heading">
+          <h3 class="panel-title">Enter daily calorie limit:</h3>
+        </div>
+        <div class="panel-body">
+          <form class="form-inline form-recommended-calorie nobr">
+            <div class="form-group">
+              <label for="calorie-diet">My Daily Calorie Limit</label>
+              <input type="text" class="form-control" id="calorie-diet" ng-model="vm.userDailyCalories">
+            </div>
+
+            <button type="submit" class="btn btn-default"
+                    ng-if="vm.enableSaveUserCalories"
+                    ng-click="vm.saveDailyCalories()">
+              <span ng-show="vm.saveDailyCalories.$busy"><i class="fa fa-spinner fa-spin"></i> Saving</span>
+              <span ng-hide="vm.saveDailyCalories.$busy">Save</span>
+            </button>
+
+            <button class="btn" type="button"
+                    ng-repeat="button in vm.widgetControlButtons"
+                    ng-class="button.class || 'btn-default'"
+                    ng-click="button.action()">
+              {{button.label}}
+            </button>
+
+            <alert class="submit-alert" type="success" ng-if="vm.saveDailyCalories.$success">
+              Daily calories value updated
+            </alert>
+
+            <alert class="submit-alert" type="danger" ng-if="vm.saveDailyCalories.$error">
+              <span ng-if="vm.saveDailyCalories.$error.message">{{vm.saveDailyCalories.$error.message}}</span>
+              <span ng-if="!vm.saveDailyCalories.$error.message">An unexpected server error has occurred.</span>
+              <br>
+              <small>
+                Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+              <span ng-if="vm.saveDailyCalories.$error.id">
+                  and reference the reference code: {{vm.saveDailyCalories.$error.id}}
+              </span>
+              </small>
+
+            </alert>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 text-center" ng-if="vm.controlButtons">
+      <button class="btn" type="button"
+              ng-repeat="button in vm.controlButtons"
+              ng-class="button.class || 'btn-default'"
+              ng-click="button.action()">
+        {{button.label}}
+      </button>
+    </div>
+
+    <div class="col-md-12 padding-top">
+
+      <p class="disclaimer">
+        <strong>Disclaimer:</strong> This information is for use in adults defined as individuals 18 years of age or
+        older and not by younger people, or pregnant or breastfeeding women. This information is not intended to provide
+        medical advice. A health care provider who has examined you and knows your medical history is the best person to
+        diagnose and treat your health problem. If you have specific health questions, please consult your health care
+        provider.
+      </p>
+
+    </div>
+  </div>
+</div>

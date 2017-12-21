@@ -1,0 +1,136 @@
+<div>
+  <alert type="info" ng-if="vm.ref == 'amazonAlexa'">
+    Welcome, Amazon Alexa user!
+    <br><br>
+    If you want to try our skill without creating a Nutritionix account,
+    hit the "X" icon at the top right of your screen.
+    <br><br>
+    If you want to create a Nutritionix account,
+    and link it to your Amazon Alexa account,
+    please <a ui-sref="account.auth.create.step1">click here</a>.
+  </alert>
+  <alert type="info" ng-if="vm.ref == 'calorieCount'">
+    Welcome CalorieCount user!
+    <br><br>
+    Please create a Nutritionix account by logging in with Facebook,
+    or tapping the "Create Account" button below.
+    <br><br>
+    You will then be automatically redirected to the CSV import page.
+  </alert>
+  <p>
+    <img alt="Nutritionix" class="img-responsive center-block" ng-src="https://d2eawub7utcl6.cloudfront.net/assets/nix_track2.png" alt="Nutritionix Track">
+  </p>
+  <h1 class="text-center">
+    Dashboard
+  </h1>
+  <p class="text-sm">
+    In the dashboard, you can view your food log, add foods to your log, and change your app preferences.
+    Looking for the <a href="/app">Track mobile app</a>?
+  </p>
+</div>
+
+
+<form ng-submit="vm.signIn()" name="form" class="form-login" novalidate>
+  <div class="margin-bottom">
+    <ul class="form-list">
+      <li>
+        <label for="email" class="sr-only">Email</label>
+        <div ng-class="{'has-error': form.email.$dirty && !(form.email.$error | isEmptyObject) && form.email.$blur}">
+          <input id="email" type="email" name="email" placeholder="Email"
+                 class="form-control"
+                 ng-model="vm.credentials.email"
+                 ng-focus="form.email.$blur = false"
+                 ng-blur="form.email.$blur = true"
+                 required>
+
+          <div ng-show="form.email.$dirty && !(form.email.$error | isEmptyObject) && form.email.$blur"
+               ng-messages="form.email.$error" class="form-error-message text-danger" role="alert">
+            <div ng-message="required">Email is required</div>
+            <div ng-message="email">This is not a valid email</div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div ng-class="{'has-error': form.password.$dirty && !(form.password.$error | isEmptyObject)}">
+          <label for="password" class="sr-only">Password</label>
+          <div class="input-group">
+            <input id="password" type="{{vm.showPassword ? 'text' : 'password'}}" name="password"
+                   placeholder="Password"
+                   class="form-control"
+                   ng-model="vm.credentials.password" required>
+            <a href tooltip="show password" ng-show="!vm.showPassword" class="input-group-addon"
+               ng-click="vm.showPassword = true">
+              <i class="fa fa-eye"></i>
+            </a>
+            <a href tooltip="hide password" ng-show="vm.showPassword" class="input-group-addon show-password"
+               ng-click="vm.showPassword = false">
+              <i class="fa fa-eye-slash"></i>
+            </a>
+          </div>
+          <div ng-show="form.password.$dirty && !(form.password.$error | isEmptyObject)"
+               ng-messages="form.password.$error" class="form-error-message text-danger"
+               role="alert">
+            <div ng-message="required">Password is required</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <p class="text-right note">
+      <a ui-sref="account.auth.forgotPassword">Forgot your password?</a>
+    </p>
+  </div>
+  <div class="form-group">
+    <p>
+      <button type="submit" class="btn btn-block btn-lg btn-success" ng-disabled="form.$invalid">
+        Login
+      </button>
+
+      <alert class="submit-alert" type="danger"
+             ng-if="vm.signIn.$error && vm.signIn.$error.type === 'INVALID_PASSWORD'">
+        Your email or password is not correct.
+        Please double check the entered values,
+        or <a ui-sref="account.auth.forgotPassword">click here</a> to reset your password.
+      </alert>
+
+      <alert class="submit-alert" type="danger"
+             ng-if="vm.signIn.$error && vm.signIn.$error.type === 'ACCOUNT_DOES_NOT_EXIST'">
+        We did not find any matching accounts. Would you like to
+        <a ui-sref="account.auth.create.step1">create an account</a>?
+        <br>
+        <small>
+          If you believe you are seeing this message in error, please email
+          <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>.
+        </small>
+      </alert>
+
+      <alert class="submit-alert" type="danger" ng-if="vm.signIn.$error && !vm.signIn.$error.type">
+        <span ng-if="vm.signIn.$error.message">{{vm.signIn.$error.message}}</span>
+        <span ng-if="!vm.signIn.$error.message">An unexpected server error has occurred.</span>
+        <br>
+        <small>
+          Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+          <span ng-if="vm.signIn.$error.id">
+              and reference the reference code: {{vm.signIn.$error.id}}
+          </span>
+        </small>
+      </alert>
+    </p>
+    <p>
+      <a ui-sref="account.auth.create.step1" class="btn btn-block btn-lg btn-default">
+        Create Account
+      </a>
+    </p>
+  </div>
+</form>
+
+<div>
+  <a href ng-click="vm.loginWithFacebook()" class="btn btn-primary btn-lg btn-block">
+    <i class="fa fa-facebook">&nbsp;</i> Login With Facebook
+  </a>
+
+  <alert class="submit-alert" type="danger" ng-if="vm.loginWithFacebook.$error">
+    FB Login failed
+  </alert>
+</div>
+
+

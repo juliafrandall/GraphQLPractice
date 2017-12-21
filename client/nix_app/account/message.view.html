@@ -1,0 +1,32 @@
+<div class="row" ng-if="vm.message">
+  <div class="col-md-12 col-lg-12">
+
+    <div class="row">
+      <div class="col-md-2">
+        <p>
+            <a href ui-sref="account.cabinet.messages" class="btn btn-default btn-sm btn-block">
+              <i class="fa fa-chevron-left"></i>
+            </a>
+        </p>
+      </div>
+    </div>
+    <div class="message">
+      <div class="message-from">
+        From: Nutritionix Staff
+      </div>
+      <div class="message-header">
+        <h4 ng-if="vm.message.subject">{{vm.message.subject}}</h4>
+        <p>{{vm.message.created_at | amCalendar}}</p>
+      </div>
+      <div class="message-body">
+        {{vm.message.message}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-offset-4 col-md-4">
+        <a href class="btn btn-success btn-block" ng-click="vm.archive()">Archive Message</a>
+      </div>
+    </div>
+  </div>
+</div>

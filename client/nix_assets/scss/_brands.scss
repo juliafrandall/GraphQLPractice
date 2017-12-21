@@ -1,0 +1,190 @@
+.brand-container {
+    background-color: #f8f8f8;
+    margin: 0 0 15px 15px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #eee;
+    float: none;
+    height: 98px;
+    &:hover {
+        background-color: #ffc;
+    }
+    @media(min-width: 768px) {
+        height: 125px;
+    }
+}
+
+.brand-name-container {
+    height: 40px;
+    overflow: hidden;
+    padding-top: 5px;
+    font-size: 11px;
+    @media(min-width: 768px) {
+        font-size: 14px;
+    }
+}
+
+.brands-list-container {
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.brands-wrap {
+    padding-right: $padding;
+}
+.brand-grid {
+    float: left;
+    width: 20%;
+    @media(max-width: 1200px) {
+        width: 25%;
+    }
+    @media(max-width: 768px) {
+        width: 33.33333333333333%;
+    }
+}
+
+.brand-title {
+    font-family: Roboto Slab, sans-serif;
+    font-size: 36px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    @media(max-width: 1200px) {
+        font-size: 24px;
+    }
+}
+
+.brand-subtitle {
+    font-family: Open Sans, sans-serif;
+    font-size: 14px;
+    color: #999;
+}
+
+.item-row {
+    height: 60px;
+}
+
+.item-hover {
+    &:hover {
+        background-color: #ffc;
+        cursor: pointer;
+    }
+}
+
+.brands-detail-background {
+    background-color: #fff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    padding: $padding 0;
+    @media(min-width: 768px) {
+      padding: $padding;
+    }
+}
+
+.brand-logo {
+    height: 50px;
+    overflow: hidden;
+    @media (min-width: 768px) {
+        height: 75px;
+    }
+    img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+}
+.alert-dietitian-recommendation {
+    position: relative;
+    @media (min-width: 768px) {
+        display: table;
+    }
+    margin-bottom: 10px;
+}
+
+.dietitian,
+.dietitian-recommendation {
+    @media (min-width: 768px) {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+.dietitian {
+    margin-bottom: 20px;
+    @media (min-width: 768px) {
+        display: table-cell;
+        width: 180px;
+        margin-bottom: 0;
+    }
+    text-align: center;
+    a {
+        color: #31708f;
+    }
+}
+
+.dietitian-photo {
+    display: block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 100px;
+    width: 100px;
+    margin: 0 auto 5px auto;
+    img {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+.dietitian-recommendation {
+    vertical-align: middle;
+}
+.dietitian-info {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    font-size: 18px;
+    color: #31708f !important;
+}
+
+.table-brands-list tr td {
+    vertical-align: middle !important;
+    p {
+     margin-bottom: 0;
+    }
+}
+
+.nutrition-widget {
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.row-brand-info {
+  @media(min-width: 768px) {
+    margin: 0 -30px;
+  }
+}
+.page-detail {
+  .brands-detail-background,
+  .item-title {
+    margin-top: 0;
+  }
+  .breadcrumb {
+    padding-right:2px;
+  }
+}
+
+
+.row-ad {
+  padding-bottom: 6px;
+}
+
+.pagination-info {
+  pre {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    color: #666;
+  }
+}

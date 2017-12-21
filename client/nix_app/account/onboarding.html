@@ -1,0 +1,65 @@
+<h3>
+  Welcome to Nutritionix Track!
+</h3>
+<p>
+  Track was developed by a team of registered dietitians to make
+  tracking your food as easy as humanly possible.
+</p>
+<br>
+<div class="panel panel-default">
+  <div class="panel-heading">{{vm.name}}'s To-Do List</div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <i class="fa "
+         ng-class="{
+           'fa-check-square-o': vm.dailyKcal,
+           'fa-square-o': !vm.dailyKcal
+         }"
+      ></i>
+      <a href="#" ui-sref="account.cabinet.dailyCalories">
+        Calculate and save your daily calorie goal
+      </a>
+    </li>
+    <li class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <i class="fa"
+         ng-class="{
+           'fa-check-square-o': vm.fitbit,
+           'fa-square-o': !vm.fitbit
+         }"
+      ></i>
+      <a href="#" ui-sref="account.cabinet.connectedApps">
+        Consider Connecting your Fitbit account to Track.
+      </a>
+    </li>
+    <li class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <i class="fa"
+         ng-class="{
+           'fa-check-square-o': vm.sms,
+           'fa-square-o': !vm.sms
+         }"
+      ></i>
+      <a href="#" ui-sref="account.cabinet.smsReminders">
+        Consider enabling weekday SMS reminders.
+      </a>
+    </li>
+    <li class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <i class="fa"
+         ng-class="{
+           'fa-check-square-o': vm.log,
+           'fa-square-o': !vm.log
+         }"
+      ></i>
+      <a href ng-click="vm.addFoodModal()" ui-sref="account.cabinet.dashboard.addFood({tab: 'smart'})">
+        Log your first food by tapping the + button below!
+      </a>
+    </li>
+  </ul>
+</div>
+
+<p>
+  Happy Tracking!
+</p>

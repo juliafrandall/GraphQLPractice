@@ -1,0 +1,18 @@
+{
+  "name": "ansible-nix-natural",
+  "version": "1.0.0",
+  "description": "",
+  "main": "AWSInventory.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1.45",
+    "colors": "^1.1.2",
+    "optimist": "^0.6.1",
+    "string": "^3.3.1",
+    "underscore": "^1.8.3"
+  }
+}

@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-md-12 col-lg-12">
+    <a href="#" ui-sref="account.cabinet.dashboard" class="btn btn-default btn-sm pull-left btn-back" unreleased>
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <a ui-sref="account.cabinet.createFood" class="btn btn-track-food pull-right">
+      <i class="fa fa-plus"></i> &nbsp;
+      Create Food
+    </a>
+    <h1>
+      My Foods
+    </h1>
+
+    <div class="panel panel-default panel-log-food has-item-label panel-my-foods">
+      <div class="smart-search-bar">
+        <div class="form-group">
+          <label class="sr-only" for="search-my-foods">Search my foods</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="search-my-foods"
+                   ng-model="vm.search.food_name"
+                   placeholder="Search my foods">
+            <div class="input-group-addon">
+              <i class="fa fa-search"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="list-filter form-horizontal">
+        <div class="form-group">
+          <label class="col-xs-2 col-sm-2 col-md-1 col-lg-1 control-label">Show</label>
+          <div class="col-xs-8 col-sm-10 col-md-10 col-lg-10">
+            <label class="radio-inline">
+              <input type="radio" ng-model="vm.search.source" ng-value="4"> Recipes
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="vm.search.source" ng-value="9"> Custom Foods
+            </label>
+          </div>
+        </div>
+      </div>
+      <ul class="list-group">
+        <li ng-class="{'has-badge': recipe.source === 4}"
+            class="list-group-item"
+            ng-repeat="recipe in vm.recipes | filter: vm.search"
+            nix-href="vm.getItemLink(recipe)"
+        >
+          <div class="angle-right">
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </div>
+          <span class="badge badge-calorie">
+              {{recipe.full_nutrients | nutrient: 208: 'value' | number: 0}}
+              <span class="block text-right grey note">Cal</span>
+            </span>
+          <div class="item-photo">
+            <img ng-src="{{recipe.photo.thumb}}" alt="{{recipe.food_name}}">
+          </div>
+          <div class="item-details">
+            {{recipe.food_name}}
+            <a style="display: inline;"
+               no-propagation
+               ui-sref="account.cabinet.recipes.edit({id: recipe.id})"
+               ng-if="vm.user.grocery_agent && recipe.source === 4">
+              New edit page
+            </a>
+            <span class="item-serving">
+              {{recipe.serving_qty}} {{recipe.serving_unit}}
+            </span>
+            <div class="food-badge" ng-if="recipe.source === 4">
+              <span class="badge badge-info">Recipe</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

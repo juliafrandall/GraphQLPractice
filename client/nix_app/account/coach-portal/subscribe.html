@@ -1,0 +1,132 @@
+<div class="row" ng-if="!vm.user.premium_user">
+  <div class="col-md-7 col-lg-7">
+    <a href="#" ui-sref="account.cabinet.labs" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      Subscribe
+    </h1>
+    <p>
+      Subscribe to pro and get a ton of great features including: <br>
+      Fitbit Integration, Coach Sharing and more!
+    </p>
+    <br>
+
+    <!-- Subscription options -->
+    <div class="subscription-option">
+      <div class="item-subscription">
+        <span class="item-subscription-price">
+          <sup>$</sup>5.99
+          <sub>/mo</sub>
+        </span>
+        <span class="item-subscription-term">
+          Monthly Subscription
+        </span>
+        <span class="item-subscription-info">
+          1/10 the cost of gym membership!
+        </span>
+        <button class="btn btn-block btn-info btn-lg">
+          <strong>Sign up at $5.99 per month</strong>
+        </button>
+      </div>
+      <div class="item-subscription">
+        <span class="item-subscription-price">
+          <sup>$</sup>29
+          <sub>/year</sub>
+        </span>
+        <span class="item-subscription-term">
+          Annual Subscription
+        </span>
+        <span class="item-subscription-info">
+          50% savings!
+        </span>
+        <button class="btn btn-block btn-info btn-lg">
+          <strong>Sign up at $29 per year</strong>
+        </button>
+      </div>
+    </div>
+
+    <!-- Access Key Form -->
+    <form class="form-horizontal form-enable-sharing"
+          ng-submit="vm.submitAccessKey()"
+          name="vm.submitAccessKey.$form">
+      <div class="row">
+        <div class="col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-10">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Enter your access key here:</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10">
+                    <div class="input-group">
+                      <input name="accessCode" type="text" class="form-control"
+                             maxlength="7"
+                             ng-model="vm.accessCode" access-code required>
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"
+                                ng-disabled="vm.submitAccessKey.$busy || vm.submitAccessKey.$form.$invalid"
+                        >Submit</button>
+                      </span>
+                    </div>
+
+                    <alert type="danger" class="tidy-alert" ng-if="vm.submitAccessKey.$error">
+                      Invalid code
+                    </alert>
+                  <div class="note">
+                    Need help? Email <a href="mailto:suppot@nutritionix.com">support@nutritionix.com</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+<div class="row" ng-if="vm.user.premium_user">
+  <!-- Pro Welcome -->
+  <div class="pro-welcome">
+    <h2>
+      You're a <strong>Pro</strong> user!
+    </h2>
+    <p class="intro">
+      Ready to track like a pro? You now have access to awesome features like:
+    </p>
+  </div>
+
+  <!-- Pro Features -->
+  <div class="list-group list-group-pro">
+    <a ui-sref="account.cabinet.coach-portal.enable-sharing" class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <p class="list-group-item-text">
+        Coach Portal
+        <sup>Share your log with a coach now!</sup>
+      </p>
+    </a>
+    <a href="#" class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <p class="list-group-item-text">
+        Fitbit Integration
+      </p>
+    </a>
+    <a href="#" class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <p class="list-group-item-text">
+        iOS Health App Integration
+      </p>
+    </a>
+    <a href="#" class="list-group-item">
+      <i class="fa fa-chevron-right"></i>
+      <p class="list-group-item-text">
+        Export Your Data
+      </p>
+    </a>
+
+    <button class="btn btn-default unsubscribe" ng-click="vm.unsubscribe()">
+      Unsubscribe from Pro
+    </button>
+  </div>
+</div>

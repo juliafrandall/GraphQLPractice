@@ -1,0 +1,71 @@
+.customer {
+  background-color: #ffffff;
+  padding-top: 100px;
+  padding-bottom: 10px;
+  height: 500px;
+
+  h1 {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .card-form-wrapper {
+    background-color: #eee;
+    width: 600px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  form {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .stripe-card {
+      height: 35px;
+    }
+  }
+
+  .alert {
+    margin: 0;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .buttons {
+    text-align: right;
+  }
+
+  .StripeElement {
+    background-color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+  }
+
+  .StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+  }
+
+  .StripeElement--invalid {
+    border-color: #fa755a;
+  }
+
+  .StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+  }
+
+  .success-check {
+    position: absolute;
+    margin-left: -70px;
+    margin-top: -10px;
+    font-size: 50px;
+  }
+
+}

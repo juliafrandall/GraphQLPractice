@@ -1,0 +1,109 @@
+<div class="page-banner"
+     ng-style="{background: 'url(\'' + vm.backgroundImage + '\') center center no-repeat', 'background-size': 'cover'}">
+    <div class="overlay-300"></div>
+    <div class="overlay-text">
+        <h1>
+            Top 50 Scanned: <br/> {{vm.child_tag | ucwords}} <span class="label label-info">beta</span></h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li class="pull-left">
+                <button class="btn btn-default btn-sm" ui-sref="site.category"> Back to Categories</button>
+            </li>
+            <li class="active nobr">
+                <a ui-sref="site.category">Grocery Categories</a>
+                <span ng-if="vm.parent_tag"> > {{vm.parent_tag | ucwords}}</span>
+                <span ng-if="vm.child_tag"> > {{vm.child_tag | ucwords}}</span>
+            </li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-lg-8">
+            <div class="form-inline">
+                <select class="form-control input-small"
+                        ng-model="vm.chart.nutrient"
+                        ng-options="key as label + ' Density' for (key , label) in vm.chart.nutrients"
+                        ng-change="vm.chart.reset()">
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12 col-xs-12">
+          <canvas id="bar1" class="chart chart-bar block"
+                  chart-data="vm.chart.data"
+                  chart-labels="vm.chart.labels"
+                  chart-options="{
+                      animation: false,
+                      maintainAspectRatio: false,
+                      responsive: true,
+                      tooltips: {enabled: false},
+                      barValueSpacing: 0,
+                      scales: {xAxes: [{stacked: true, categoryPercentage: 1.0}]}
+                  }"
+
+                  height="200"
+            >
+            </canvas>
+            <div class="text-xs m-t-n-md">
+                {{vm.chart.getLegend(null, ' Per Gram')}}
+            </div>
+
+            <div range-slider
+                 filter="divide:1000"
+                 min="vm.chart.range.min" max="vm.chart.range.max"
+                 model-min="vm.chart.min" model-max="vm.chart.max"
+                 show-values="true"
+            ></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-items">
+                <thead>
+                <tr>
+                    <th colspan="10">Popularity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="(key, item) in vm.getItems()">
+                    <td>#{{key + 1}}</td>
+                    <td class="td-photo">
+                        <a ui-sref="site.itemsDetail({
+                                        brand: vm.services.cleanUrl(item.brand_name),
+                                        item_name: vm.services.cleanUrl(item.item_name),
+                                        item_id: item.item_id
+                                      })">
+                            <div class="item-package-photo">
+                                <img ng-src="{{item.package_url}}" alt="{{item.item_name}}">
+                            </div>
+                        </a>
+                    </td>
+                    <td class="text-left">
+                        <a class="block grocery-item-link"
+                           ui-sref="site.itemsDetail({
+                                        brand: vm.services.cleanUrl(item.brand_name),
+                                        item_name: vm.services.cleanUrl(item.item_name),
+                                        item_id: item.item_id
+                                    })">
+                            <h4 ng-bind-html="item.item_name"></h4>
+                            <p ng-bind-html="item.brand_name"></p>
+                        </a>
+                    </td>
+                    <td>
+                        <strong>{{item.nf_serving_size_qty | number}} {{item.nf_serving_size_unit}}</strong>
+                        <!-- <div>Serving</div> -->
+                    </td>
+                    <td>
+                        <strong>{{item.nf_calories | number}}</strong>
+                        <div>Calories</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

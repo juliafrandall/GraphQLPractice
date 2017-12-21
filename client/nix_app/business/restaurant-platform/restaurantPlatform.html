@@ -1,0 +1,209 @@
+<div class="grey-background">
+  <div class="page-banner has-statbar basil-bucket">
+    <div statbar> </div>
+    <div class="overlay-300"></div>
+    <div class="overlay-text">
+      <h1>Restaurant Platform</h1>
+    </div>
+  </div>
+  <ol class="breadcrumb">
+    <li><a href="#" ui-sref="site.business">Business Solutions</a> &gt;</li>
+    <li class="active">Restaurant Platform</li>
+  </ol>
+  <div class="container">
+    <div class="row" id="restaurantPlatform">
+      <div class="col-lg-12">
+        <div class="content-margin">
+          <div class="row">
+            <div class="col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+              <h2 class="text-center">Ready to take your restaurant's web site to the next level?</h2>
+              <h4 class="text-center">
+                Our fully customizable nutrition calculator
+                is exactly what customers have been asking for!
+              </h4>
+              <div class="row">
+                <div class="col-md-7 col-lg-7">
+                  <h3>Our Nutrition Calculator</h3>
+                  <p>
+                    Listing nutrition information on your restaurant's web site
+                    is critical for any restaurant, but most customers customize their meal
+                    so much that it is impossible to list the data they need one a single PDF file.
+                    This is the exact problem that the Nutritionix Calculator solves.
+                  </p>
+                  <p>
+                    <img ng-src="{{baseUrl}}/nix_assets/images/restaurant-feat1.png"
+                         class="img-responsive" alt="Nutrition Calculator">
+                  </p>
+                  <ul class="list-restaurant-feature">
+                    <li>
+                      <i class="fa fa-check-square-o"></i>
+                      Customers get the exact information they need.
+                    </li>
+                    <li>
+                      <i class="fa fa-check-square-o"></i>
+                      Restaurant management is able to easily
+                      update their nutrition calculator via our admin interface.
+                    </li>
+                    <li>
+                      <i class="fa fa-check-square-o"></i>
+                      Your restaurant locations are automatically listed
+                      on our healthy dining directory.
+                    </li>
+                  </ul>
+                  <p>
+                    <a ui-sref="site.calculators" class="btn btn-success">
+                      See Calculator Demo
+                    </a>
+                  </p>
+                  <br>
+
+                  <h3>FDA Regulation Compliance</h3>
+                  <p>
+                    We are constantly creating new tools to help your brand connect with customers
+                    and stay compliant with the FDA regulations.
+                  </p>
+                  <p>
+                    <img ng-src="{{baseUrl}}/nix_assets/images/restaurant-feat2.png"
+                         class="img-responsive" alt="Nutrition Facts">
+                  </p>
+                  <ul class="list-restaurant-feature">
+                    <li><i class="fa fa-check-square-o"></i> Interactive Nutrition Menus</li>
+                    <li><i class="fa fa-check-square-o"></i> Interactive Allergen Wizards</li>
+                    <li><i class="fa fa-check-square-o"></i> Mobile Nutrition Tools with QR Code
+                      Integration
+                    </li>
+                  </ul>
+
+                  <br>
+                  <h4>
+                    Please fill out our form and our experts will reach out to you to see which
+                    tools are the best fit for your brand.
+                  </h4>
+
+                  <h4>Ready to get started?</h4>
+                  <p>
+                    <a href="#" class="btn btn-success" ng-click="vm.jumpToForm()">
+                      Fill out our form <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                  </p>
+                </div>
+                <div class="col-md-5 col-lg-5">
+                  <div class="panel panel-success panel-submit-restaurant">
+                    <div class="panel-heading">
+                      <h3 class="panel-title text-center"> Submit your restaurant </h3>
+                    </div>
+                    <alert class="submit-alert" ng-if="vm.errorMessage"
+                           close="vm.closeAlertMessage()" type="danger">
+                      {{vm.errorMessage}}
+                    </alert>
+                    <alert class="submit-alert" ng-if="vm.successMessage"
+                           dismiss-on-timeout="3000"
+                           close="vm.closeSuccessAlertMessage()" type="info"> {{vm.successMessage}}
+                    </alert>
+                    <div class="panel-body">
+                      <form name="form" id="submitRestaurantForm" ng-submit="vm.sendMessage()"
+                            novalidate>
+                        <div class="form-group"
+                             ng-class="{
+                                                        'has-error': form.name.$dirty && !(form.name.$error | isEmptyObject),
+                                                        'has-success': form.name.$dirty && form.name.$valid
+                                                     }">
+                          <label for="username">Name *</label>
+                          <input type="text" class="form-control" id="username"
+                                 name="name"
+                                 ng-model="vm.message.name" placeholder="Name" required>
+
+                          <div ng-if="form.name.$dirty && !(form.name.$error | isEmptyObject)"
+                               ng-messages="form.name.$error" class="text-danger"
+                               role="alert">
+                            <div ng-message="required">Name is required</div>
+                          </div>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{
+                                                        'has-error': form.email.$dirty && !(form.email.$error | isEmptyObject),
+                                                        'has-success': form.email.$dirty && form.email.$valid
+                                                     }">
+                          <label for="email">Email *</label>
+                          <input type="email" class="form-control" id="email"
+                                 name="email"
+                                 ng-model="vm.message.email" placeholder="Email" required>
+
+                          <div ng-if="form.email.$dirty && !(form.email.$error | isEmptyObject)"
+                               ng-messages="form.email.$error" class="text-danger"
+                               role="alert">
+                            <div ng-message="required">Email is required</div>
+                            <div ng-message="email">This is not a valid email</div>
+                          </div>
+                        </div>
+                        <div class="form-group"
+                             ng-class="{
+                                                        'has-error': form.restaurant.$dirty && !(form.restaurant.$error | isEmptyObject),
+                                                        'has-success': form.restaurant.$dirty && form.restaurant.$valid
+                                                     }">
+                          <label for="restaurant">Restaurant Name</label>
+                          <input type="text" class="form-control" id="restaurant"
+                                 name="restaurant"
+                                 ng-model="vm.message.restaurant"
+                                 placeholder="Restaurant Name">
+                        </div>
+                        <div class="form-group"
+                             ng-class="{
+                                                        'has-error': form.restaurantWebsite.$dirty && !(form.restaurantWebsite.$error | isEmptyObject),
+                                                        'has-success': form.restaurantWebsite.$dirty && form.restaurantWebsite.$valid
+                                                     }">
+                          <label for="website">Restaurant Website</label>
+                          <input type="text" class="form-control" id="website"
+                                 name="restaurantWebsite"
+                                 ng-model="vm.message.restaurantWebsite"
+                                 placeholder="https://">
+                        </div>
+                        <div class="form-group"
+                             ng-class="{
+                                                        'has-error': form.locations.$dirty && !(form.locations.$error | isEmptyObject),
+                                                        'has-success': form.locations.$dirty && form.locations.$valid
+                                                     }">
+                          <label for="locations">Number of locations</label>
+                          <input type="text" class="form-control" id="locations"
+                                 name="locations"
+                                 ng-model="vm.message.locations"
+                                 placeholder="Number of locations">
+                        </div>
+                        <div class="form-group"
+                             ng-class="{
+                                                        'has-error': form.comments.$dirty && !(form.comments.$error | isEmptyObject),
+                                                        'has-success': form.comments.$dirty && form.comments.$valid
+                                                     }">
+                          <label for="comments">Comments</label>
+                          <textarea class="form-control" id="comments" name="comments"
+                                    ng-model="vm.message.comments" placeholder="Comments"></textarea>
+                        </div>
+                        <div class="form-group">
+                          <div vc-recaptcha
+                               ng-model="vm.recaptcha.response"
+                               on-create="vm.recaptcha.widgetId = widgetId"></div>
+
+                          <div ng-if="form.$submitted && form.$error.recaptcha"
+                               class="text-danger"
+                               role="alert">
+                            You need to pass recaptcha
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-success pull-right">
+                            Submit
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end container fluid -->
+</div>

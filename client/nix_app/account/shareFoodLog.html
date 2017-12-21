@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.dashboard" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      Share Food Log
+    </h1>
+
+
+    <form ng-submit="vm.submit()" name="form">
+      <div class="form-group">
+        <label>Email food log to:</label>
+        <input type="email" class="form-control" placeholder="Email" ng-model="vm.recipient" required>
+      </div>
+      <p>
+        Select date range to share (max 10 days):
+      </p>
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label class="col-xs-2 col-sm-2 control-label">Start</label>
+          <div class="col-xs-10 col-sm-8">
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="vm.begin.opened = !vm.begin.opened">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+              <input type="text" class="form-control"
+                     placeholder="{{vm.begin.initialValue | amDateFormat: 'MM/DD/YYYY'}}"
+                     datepicker-popup="MM/dd/yyyy"
+                     min-date="vm.begin.minDate"
+                     max-date="vm.end.value"
+                     ng-model="vm.begin.value"
+                     is-open="vm.begin.opened"
+                     show-button-bar="false"
+                     show-weeks="false"
+                     max-mode="'day'">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 col-sm-2 control-label">End</label>
+          <div class="col-xs-10 col-sm-8">
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="vm.end.opened = !vm.end.opened">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+              <input type="text" class="form-control"
+                     placeholder="{{vm.end.initialValue | amDateFormat: 'MM/DD/YYYY'}}"
+                     datepicker-popup="MM/dd/yyyy"
+                     min-date="vm.begin.value"
+                     max-date="vm.end.maxDate"
+                     ng-model="vm.end.value"
+                     is-open="vm.end.opened"
+                     show-button-bar="false"
+                     show-weeks="false"
+                     max-mode="'day'">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <p>
+          <strong>Confirmation</strong>
+        </p>
+        <div class="alert alert-info" ng-if="vm.submit.$busy">
+          <span ng-if="!vm.submit.$preview">Sending</span>
+          <span ng-if="vm.submit.$preview">Loading preview for</span>
+          {{vm.user.first_name| ucfirst}}'s food log
+          from {{vm.begin.value | amDateFormat: 'MM/DD/YYYY'}}
+          through {{vm.end.value | amDateFormat: 'MM/DD/YYYY'}}
+          to {{vm.recipient}}.
+        </div>
+        <div class="alert alert-success" ng-if="vm.submit.$success">
+          {{vm.user.first_name| ucfirst}}'s food log
+          from {{vm.begin.value | amDateFormat: 'MM/DD/YYYY'}}
+          through {{vm.end.value | amDateFormat: 'MM/DD/YYYY'}}
+          was successfully sent to {{vm.recipient}}.
+        </div>
+        <div class="alert alert-danger" ng-if="vm.submit.$error">
+          Food log sharing failed for unknown reason :(
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Send Email</button>
+        <!--<button type="button" class="btn btn-success" ng-click="vm.submit(true); $event.preventDefault()">-->
+          <!--Preview Email-->
+        <!--</button>-->
+      </div>
+    </form>
+
+
+  </div>
+</div>
+

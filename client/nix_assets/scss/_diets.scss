@@ -1,0 +1,24 @@
+.table-diet-basics {
+  thead>tr>th {
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    border-bottom-width: 0;
+    border-left:1px solid #ddd;
+    &:first-child {
+      background-color: #67B500;
+      border-left: none;
+    }
+    &:last-child {
+      background-color: #DB0000;
+    }
+  }
+  tbody>tr>td {
+    padding: 20px;
+    line-height: 20px;
+    border-left:1px solid #ddd;
+    &:first-child {
+      border-left: none;
+    }
+  }
+}

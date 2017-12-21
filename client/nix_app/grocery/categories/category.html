@@ -1,0 +1,31 @@
+<div class="page-banner basil-bucket">
+  <div class="overlay-300"> </div>
+  <div class="overlay-text">
+    <h1>  Grocery Categories <span class="label label-info">beta</span></h1>
+  </div>
+</div>
+
+<ol class="breadcrumb">
+  <li class="active">Consumer Tools</li>
+</ol>
+
+<div class="container">
+
+  <input class="form-control" ng-model="vm.search" placeholder="search for a category">
+  <table class="table table-striped table-hover">
+    <tr ng-repeat="category in vm.categories | filter: vm.search">
+      <td>
+        <a href="#" ui-sref="site.grocery({
+                                parent_tag: (category.parent_name | cleanurl),
+                                child_tag: (category.child_name | cleanurl),
+                                id: category.child_id
+                             })">
+          <span ng-bind-html="category.parent_name"></span>
+          <span ng-show="category.child_name"> &gt;
+               <span ng-bind-html="category.child_name"></span>
+          </span>
+        </a>
+      </td>
+    </tr>
+  </table>
+</div>

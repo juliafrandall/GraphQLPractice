@@ -1,0 +1,86 @@
+<ol class="breadcrumb">
+<li>
+    <a href="/business/natural-language" ui-sref="site.naturalLanguage">Natural Language</a>
+</li> >
+<li class="active">Twitter Diet Analyzer</li>
+</ol>
+<div class="container padding-top">
+
+    <h1 class="text-center  padding-bottom title-xs">
+      Real-Time Twitter Diet Analyzer <sup class="beta"><span class="label label-info"> Beta </span></sup>
+    </h1>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row tweet-container repeated-item" ng-repeat="tweet in tweets">
+                <div class="col-md-12">
+                    <div class="tweet-balloon">
+                        <i class="fa fa-caret-left fa-2x"></i>
+                        <div class="tweet-user-photo">
+                            <a ng-href="https://twitter.com/{{tweet.user}}" target="_blank">
+                                <img ng-src="https://twitter.com/{{ tweet.user }}/profile_image?size=normal" alt="{{tweet.user}}">
+                            </a>
+                        </div>
+                        <p class="tweet-wrap">
+                            <a ng-href="https://twitter.com/{{tweet.user}}" target="_blank" class="tweet-user">@{{tweet.user}}</a>:&nbsp;
+                            <span ng-bind-html="tweet.tweet | highlight: vm.getFoodsList(tweet)" class="tweet-text"></span>
+                            <a class="tweet-time" ui-sref="site.labs.twitter-analyzer.view({id: tweet.tweet_id})" target="_blank">
+                                <span class="nobr" am-time-ago="tweet.time | amUtc | noFutureDate"></span>
+                            </a>
+                        </p>
+                        <div class="table-wrap">
+                            <h5>
+                      Foods:
+                    </h5>
+                            <table class="table tweet-foods">
+                                <tr ng-repeat="food in tweet.foods">
+                                    <td>{{food.food_name}}, {{food.serving_qty || 1}} {{food.serving_unit || serving}}</td>
+                                    <td>{{food.nf_calories | fdaRound: 'calories' | smartNumber}} kcal</td>
+                                </tr>
+                            </table>
+                            <div class="clearfix"></div>
+                            <small>
+                        <a ui-sref="site.labs.twitter-analyzer.view({id: tweet.tweet_id})" target="_blank">permalink</a>
+                        <a tweet-reply="tweet"></a>
+                    </small>
+                        </div>
+                        <div class="calories-wrap">
+                            <div class="buttons">
+                                <a href>
+                                    <span class="fa-stack fa-sm" ng-click="deleteTweet(tweet)">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+                          </span>
+                                </a>
+                                <a ui-sref="site.labs.twitter-analyzer.view({id: tweet.tweet_id})" target="_blank">
+                                    <span class="fa-stack fa-sm">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-info fa-stack-1x fa-inverse"></i>
+                          </span>
+                                </a>
+                            </div>
+                            <div class="calories-count">
+                                <p>
+                                    {{vm.calculateCalories(tweet) | fdaRound: 'calories' | smartNumber}}
+                                </p>
+                                <span>Calories</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="twitter-timeline-wrap">
+                <div twitter-timeline="689820552505090048" auto-resize="true" data-tweet-limit="8">Tweets about nixtrack</div>
+            </div>
+        </div>
+    </div>
+    <div class="row padding-bottom tweets-footer">
+        <div class="col-md-12">
+            <a href="#" ui-sref="site.businessApi" class="powered-by">
+                <span>Powered by</span>
+                <img class="img-responsive" src="{{ baseUrl }}/nix_assets/images/powered_by_api.png" alt="Powered by Nutritionix API">
+            </a>
+        </div>
+    </div>
+</div>

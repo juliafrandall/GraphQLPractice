@@ -1,0 +1,130 @@
+<div class="modal-header">
+  <div class="row">
+    <div class="col-xs-12">
+      <span class="btn-modal-back" ng-click="vm.goBack();">
+        <i class="fa fa-2x fa-angle-left" aria-hidden="true"></i>
+        Basket
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="modal-body food-info-modal">
+  <div class="as-table margin-bottom">
+    <div class="as-table-cell text-center item-thumbnail" ng-if="vm.food.photo.thumb">
+      <img ng-src="{{vm.food.photo.thumb}}"
+           alt="{{vm.food.food_name + (vm.food.brand_name && ' by ' + vm.food.brand_name)}}"
+           title="{{vm.food.food_name + (vm.food.brand_name && ' by ' + vm.food.brand_name)}}">
+    </div>
+    <div class="as-table-cell">
+      <h1 class="food-item-name" ng-bind-html="vm.food.food_name"></h1>
+
+      <p class="food-item-brand">
+        <a ui-sref="site.brandsDetail.navigate({brand_name: (vm.item.brand_name | cleanurl), id: vm.item.brand_id})">
+          <span ng-bind-html="vm.item.brand_name"></span>
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-lg-6">
+      <div class="nutrition-label"
+           nutrition-label="vm.labelData"
+           nutrition-label-options="{userFunctionOnQuantityChange: vm.onQuantityChange}"></div>
+    </div>
+
+    <div class="col-sm-6 col-lg-6">
+      <div class="rounded-box" ng-if="vm.food.nf_calories > 10">
+        <div class="box-title">
+          Source of Calories
+        </div>
+        <div class="box-content">
+          <canvas class="chart chart-pie"
+                  height="355"
+                  chart-data="vm.pieChart.data"
+                  chart-labels="vm.pieChart.labels"
+                  chart-legend="true"
+                  chart-colors="['#1AA6B7', '#F0AB00', '#b3217c', '#808080']"
+                  chart-options="{
+                          responsive: true,
+                          maintainAspectRatio: true,
+                          legend: {
+                              display: true,
+                              position: 'bottom',
+                              fullWidth: true,
+                              labels: {
+                                usePointStyle: false,
+                                generateLabels: vm.pieChart.generateLabels
+                              },
+                              onClick: null
+                          },
+                          tooltips: {
+                            callbacks: {
+                              label: vm.pieChart.label
+                            }
+                          }
+                        }"
+          >
+          </canvas>
+
+          <div class="small grey" ng-if="vm.pieChart.showAlcohol">
+            * Calories from alcohol is an estimate, and may include artificial sweeteners and sugar alcohols.
+          </div>
+        </div>
+      </div>
+
+      <div class="padding-bottom">
+          <span>
+            <b>Region: </b> <span class="flag-icon flag-icon-us"></span> US
+          </span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="rounded-box burn-calories" ng-if="vm.food.nf_calories > 10">
+    <div class="box-title">
+      How long would it take to burn off {{vm.food.nf_calories | fdaRound: 'calories'}} KCal?
+    </div>
+    <div class="box-content">
+      <table class="table m-b-none">
+        <tbody>
+        <tr>
+          <td>Walking (3mph)</td>
+          <td>{{vm.getBurnTime(3.5) | number: 0}} minutes</td>
+        </tr>
+        <tr>
+          <td>Running (6mph)</td>
+          <td>{{vm.getBurnTime(9.8) | number: 0}} minutes</td>
+        </tr>
+        <tr>
+          <td>Bicycling (10mph)</td>
+          <td>{{vm.getBurnTime(6.8) | number: 0}} minutes</td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <small ng-if="!vm.user.weight_kg">
+          Values estimated based ​on​
+          <span ng-if="vm.user.measure_system != 1">
+                  140 lbs
+                </span>
+          <span ng-if="vm.user.measure_system == 1">
+                  63.64 kg
+                </span>
+          body weight.
+
+          Visit the <a ui-sref="account.cabinet.dailyCalories">Daily Calories</a> page
+          to personalize this measure.
+        </small>
+        <small ng-if="vm.user.weight_kg">
+          These figures are estimated based on the weight you saved into Nutritionix Track.
+
+          Visit the <a ui-sref="account.cabinet.dailyCalories">Daily Calories</a> page
+          to update your weight.
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

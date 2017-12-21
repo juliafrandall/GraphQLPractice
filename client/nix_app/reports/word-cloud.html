@@ -1,0 +1,29 @@
+<nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" ui-sref="site.landing"><img ng-src="//d2eawub7utcl6.cloudfront.net/images/nutritionix_logo_250px.png" style="width:120px;"  alt="Nutritionix"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a ui-sref="account.cabinet.labs">
+                <i class="fa fa-flask" aria-hidden="true"></i>
+                Labs
+                <sup class="beta"><span class="label label-info"> Beta </span></sup>
+              </a>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+<br>
+<h1 class="text-center">
+  Frequent Foods Cloud <sup class="beta"><span class="label label-info"> Beta </span></sup>
+</h1>
+<jqcloud words="vm.words" style="width: 100%; height: 500px"></jqcloud>

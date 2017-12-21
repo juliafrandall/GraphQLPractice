@@ -1,0 +1,167 @@
+<nav class="navbar navbar-default" ng-if="vm.showSiteMenu">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+
+        <button id="navmenu-toggle"
+                type="button"
+                class="navbar-toggle"
+                ng-if="vm.showSiteMenu || vm.showAccountMenu"
+                ng-class="{'toggle-active': !vm.navBarCollapsed, 'toggle-inactive': vm.navBarCollapsed}"
+                ng-click="vm.toggleNavBar()">
+          <span class="sr-only">Toggle navigation</span>
+          <i class="fa fa-bars"></i>
+          <span class="badge badge-alert" ng-if="vm.messages.getUnreadCount()" unreleased>
+            {{vm.messages.getUnreadCount()}}
+          </span>
+        </button>
+        <button
+                id="food-toggle"
+                type="button"
+                class="navbar-toggle"
+                ng-class="{'toggle-active': !vm.searchBarCollapsed, 'toggle-inactive': vm.searchBarCollapsed}"
+                ng-click="vm.toggleSearchBar()"
+                ng-if="vm.showSiteMenu">
+          <span class="sr-only">Toggle search bar</span>
+          <i class="fa fa-search"></i>
+        </button>
+        <a class="navbar-brand" href="#" ui-sref="site.landing">
+          <img ng-src="//d2eawub7utcl6.cloudfront.net/images/nutritionix_logo_250px.png" alt="Nutritionix">
+          <span ng-if="vm.showAccountMenu">Track</span>
+        </a>
+      </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" collapse="vm.navBarCollapsed" ng-if="vm.showSiteMenu || vm.showAccountMenu">
+        <ul id="nav-menu" class="nav navbar-nav navbar-right" ng-if="vm.showSiteMenu">
+          <li>
+          <a href="#" ui-sref="site.trackApp">
+            <i class="fa fa-mobile left fa-2x hidden-xs hidden-sm hidden-md" aria-hidden="true"></i>
+            App
+            <i class="fa fa-mobile right hidden-lg fa-2x" aria-hidden="true"></i>
+          </a>
+          </li>
+          <li><a href="#" ui-sref="site.database">Database</a></li>
+          <li><a href="#" ui-sref="site.consumerTools">Consumer Tools</a></li>
+          <li><a href="#" ui-sref="site.business">Business Solutions</a></li>
+          <li><a href="#" ui-sref="site.contact">Contact</a></li>
+          <li>
+            <a ng-if="!vm.user.getIsAuthenticated()" ui-sref="account.login.login">Login</a>
+            <a ng-if="vm.user.getIsAuthenticated()" ui-sref="account.cabinet.dashboard">Dashboard</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" ng-if="vm.showAccountMenu">
+          <li>
+            <a href ui-sref="account.cabinet.dashboard"><span class="hidden-lg">
+              <i class="fa fa-home"></i>&nbsp;</span> Food Log
+            </a>
+          </li>
+          <li unreleased>
+            <a href ui-sref="account.cabinet.messages"><span class="hidden-lg">
+              <i class="fa fa-envelope-o"></i>&nbsp;</span> Messages
+              <span class="badge badge-alert" ng-if="vm.messages.getUnreadCount()">
+                {{vm.messages.getUnreadCount()}}
+              </span>
+            </a>
+          </li>
+          <li unreleased>
+            <a href ui-sref="account.cabinet.shareFoodLog">
+              <span class="hidden-lg"><i class="fa fa-paper-plane"></i>&nbsp;</span> Share Food Log
+            </a>
+          </li>
+          <li>
+            <a href ui-sref="account.cabinet.preferences">
+              <span class="hidden-lg"><i class="fa fa-cog"></i>&nbsp;</span> Preferences
+            </a>
+          </li>
+          <li>
+            <a href ui-sref="account.cabinet.labs">
+              <i class="fa fa-flask" aria-hidden="true"></i>
+              Labs <sup class="beta"><span class="label label-info"> Beta </span></sup>
+            </a>
+          </li>
+          <li>
+            <a href ui-sref="site.contact">
+              <span class="hidden-lg"><i class="fa fa-envelope"></i>&nbsp;</span> Support
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    <div id="searchBar" class="navbar-collapse" collapse="vm.searchBarCollapsed" ng-if="vm.showSiteMenu">
+          <div instant-smart-search="vm.instantSmartSearch"
+               search-button-click="vm.searchButtonClick()"
+               placeholder="Search Food Database"></div>
+      </div><!-- /.navbar-collapse -->
+    <global-alert></global-alert>
+
+  </div><!-- /.container-fluid -->
+</nav>
+
+<nav class="slideout-nav" ng-if="vm.showAccountMenu">
+  <h2>
+    Track Web
+  </h2>
+  <ul>
+    <li>
+      <a href ui-sref="account.cabinet.dashboard">
+        <i class="fa fa-home"></i> Home
+      </a>
+    </li>
+    <li>
+        <a href ui-sref="account.cabinet.myFoods">
+          <i class="fa fa-list" aria-hidden="true"></i> My Foods
+        </a>
+    </li>
+    <li>
+      <a href ui-sref="account.cabinet.recipes.list" ng-if="vm.user.get('grocery_agent')">
+        <i class="fa fa-list" aria-hidden="true"></i> My Recipes (NEW)
+      </a>
+    </li>
+    <li>
+        <a href ui-sref="account.cabinet.preferences">
+          <i class="fa fa-cog"></i> Preferences
+        </a>
+    </li>
+    <li>
+        <a href ui-sref="account.cabinet.dailyGoals">
+          <i class="fa fa-bullseye"></i> Daily Goals
+        </a>
+    </li>
+    <li>
+      <a href ui-sref="account.cabinet.coach-portal.enable-sharing">
+        <i class="fa fa-users" aria-hidden="true"></i>
+        My Coach
+      </a>
+    </li>
+    <li ng-if="vm.user.get('isCoach')">
+      <a href ui-sref="account.cabinet.coach-portal.dashboard">
+        <i class="fa fa-play" aria-hidden="true"></i>
+        Coach Portal
+      </a>
+    </li>
+
+    <li>
+      <a href ui-sref="account.cabinet.labs">
+        <i class="fa fa-flask" aria-hidden="true"></i>
+        Labs <sup class="beta"><span class="label label-info"> Beta </span></sup>
+      </a>
+    </li>
+    <li>
+        <a href ui-sref="account.cabinet.help">
+          <i class="fa fa-question" aria-hidden="true"></i> Help
+        </a>
+    </li>
+    <li>
+      <a href ng-click="vm.user.logout()">
+        <i class="fa fa-sign-out"></i> Signout
+      </a>
+    </li>
+  </ul>
+  <div class="padding text-center">
+    <br>
+    <a href="#" ui-sref="site.trackApp" target="_blank" class="mobile-app-link"><i class="fa fa-2x fa-mobile" aria-hidden="true"></i> Download Mobile App</a>
+  </div>
+
+  <global-alert></global-alert>
+</nav>

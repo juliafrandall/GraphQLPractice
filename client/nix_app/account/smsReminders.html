@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6">
+    <a href="#" ui-sref="account.cabinet.preferences" class="btn btn-default btn-sm pull-left btn-back">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+    <h1>
+      SMS Reminders
+    </h1>
+
+    <ul class="list-group">
+      <li class="list-group-item">
+        <div class="clearfix">
+          <div class="pull-right ng-scope">
+            <input type="checkbox" toggle-checkbox
+                   ng-model="vm.toggle.state"
+                   ng-change="vm.toggle()">
+          </div>
+          <p>
+            SMS Reminders
+          </p>
+        </div>
+        <div class="note">
+          <p>
+            When enabled, Track will send you reminder text message at 9PM on any weekday(M-F) in which you have not
+            logged 50% of your daily calorie limit by 9PM.
+          </p>
+          <p>
+            Simply reply to the text message with the foods you have eaten to log them!
+          </p>
+          <p>
+            To disable SMS reminders, turn this switch off OR reply to any reminder text message with STOP.
+          </p>
+        </div>
+      </li>
+      <!--Verified -->
+      <li class="list-group-item" ng-if="vm.me.mobile_number">
+        <p>
+          Mobile Number
+        </p>
+        <p>
+          <span class="pull-right badge badge-success">
+             Verified
+          </span>
+          {{vm.me.mobile_number}}
+        </p>
+        <p class="note">
+          <a href ng-click="vm.unlink.confirm()">Delete mobile number</a>
+        </p>
+      </li>
+
+      <!--Unverified -->
+      <li class="list-group-item" ng-if="vm.link.$visible">
+        <p>
+          Mobile Number
+        </p>
+        <div class="note">
+          <p>
+            To use SMS reminders, please verify your mobile number below.
+            We will send a 6-digit verification code.
+          </p>
+          <p>
+            SMS in only available to users in the US at this time.
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 ">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="sr-only">Amount (in dollars)</label>
+                <div class="input-group">
+                  <div class="input-group-addon">+1</div>
+                  <input type="phone" class="form-control" placeholder="555-555-5555"
+                         ng-model="vm.link.phone">
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-block"
+                        ng-class="{
+                          'btn-default': !vm.link.$initiated,
+                          'btn-success': vm.link.$initiated,
+                        }"
+                        ng-disabled="!vm.link.phone || vm.link.$initiated"
+                        ng-click="vm.link()"
+                >
+                  <span ng-if="!vm.link.$initiated">Send Verification Code</span>
+                  <span ng-if="vm.link.$initiated">Verification Code Sent</span>
+                </button>
+
+                <alert ng-if="vm.link.message" class="tidy-alert"
+                       dismiss-on-timeout="5000"
+                       type="{{vm.link.messageType}}"
+                       close="vm.link.closeMessage()">
+                  {{vm.link.message}}
+                </alert>
+              </div>
+              <br>
+
+              <div class="text-center">
+                <h5>
+                  Enter Verification Code
+                </h5>
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control text-center"
+                       ng-model="vm.confirm.code">
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-block"
+                        ng-class="{
+                          'btn-default': !vm.confirm.$completed,
+                          'btn-success': vm.confirm.$completed,
+                        }"
+                        ng-disabled="!vm.confirm.code || vm.confirm.$completed"
+                        ng-click="vm.confirm()"
+                >
+                  <span ng-if="!vm.confirm.$completed">Submit</span>
+                  <span ng-if="vm.confirm.$completed">Confirmed</span>
+                </button>
+
+                <alert ng-if="vm.confirm.message" class="tidy-alert"
+                       dismiss-on-timeout="5000"
+                       type="danger"
+                       close="vm.confirm.closeMessage()">
+                  {{vm.confirm.message}}
+                </alert>
+              </div>
+            </form>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

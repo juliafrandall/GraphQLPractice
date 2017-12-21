@@ -1,0 +1,148 @@
+.about-subtitle{
+  margin: 0 auto;
+  font-size: 14px;
+  @media (min-width:768px){
+    width: 600px;
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+  @media(min-width:992px) {
+    width: 750px;
+    font-size: 18px;
+
+  }
+}
+.aboutPicture{
+  margin: 5px;
+  float: left;
+  top: 50%;
+  margin-top: 10px;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(1);
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+  @media(min-width: 768px) {
+    height: 90px;
+    width: 90px;
+  }
+  @media(min-width: 992px) {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+.employee-container{
+  border-radius: 4px;
+  height: 90px;
+  border: 1px solid #eee;
+  margin: 5px;
+  color: black;
+  box-shadow: 1px 1px 5px black;
+
+  &:hover .aboutPicture{
+    -webkit-filter: grayscale(0%);
+    filter: grayscale(0);
+    margin-top: 6px;
+  }
+  @media (min-width: 768px) {
+    height: 110px;
+  }
+  @media (min-width: 992px) {
+    height: 120px;
+  }
+}
+
+.overlay-text{
+  text-align: center;
+  position: relative;
+  /*top: 18%;*/
+  left: 0;
+  display: table-cell;
+  vertical-align: middle;
+  /*
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  */
+  color: white;
+  z-index: 1000;
+ /* width: 45%;*/
+ padding: 20px;
+  @media (min-width: 768px) {
+    /*
+    top: 18%;
+    left: 50%;
+    width: 600px;
+    margin-left: -300px;
+    */
+  }
+}
+.overlay-text .label-info {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 60%;
+  @media(min-width: 768px) {
+    margin-top: 0;
+    font-size: 75%;
+  }
+}
+.profile-pic {
+  margin-left: -8px;
+  @media(min-width: 768px) {
+    margin-left: 0;
+  }
+}
+.profile-pic-container{
+  float: left;
+  transform: translateY(35%);
+  -webkit-transform: translateY(35%);
+  margin-left: 6px;
+  @media(min-width: 768px) {
+    margin-left: 15px;
+  }
+}
+.profile-pic-container p {
+  margin-bottom: 2px;
+  @media(min-width: 768px) {
+    margin-bottom: 5px;
+  }
+}
+.bold-title{
+  font-family: Roboto Slab, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+
+  @media (min-width: 768px){
+    font-size: 15px;
+  }
+  @media (min-width: 992px){
+    font-size: 18px;
+  }
+}
+
+.social-media-belt{
+  font-size: 10px;
+  position: absolute;
+  bottom: 10px;
+  left: 109px;
+  @media (min-width: 768px) {
+    bottom: 20px;
+    left: 144px;
+    font-size: 12px;
+  }
+  @media (min-width: 992px) {
+    left: 155px;
+  }
+}
+
+.responsive-text{
+  font-size: 12px;
+  @media(min-width: 768px){
+    font-size: 14px;
+  }
+  @media(min-width: 992px){
+    font-size: 16px;
+  }
+}
+

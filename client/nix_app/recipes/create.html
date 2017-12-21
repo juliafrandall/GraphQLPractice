@@ -1,0 +1,85 @@
+<div class="grey-background">
+  <div class="page-banner basil-bucket">
+    <div class="overlay-300"></div>
+    <div class="overlay-text">
+      <h1>Recipes</h1>
+    </div>
+  </div>
+  <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="#" ui-sref="site.recipes">Recipes</a> &gt;</li>
+        <li class="active">Create New Recipe</li>
+      </ol>
+
+      <div class="content-margin padding">
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+            <h1>
+              Create New Recipe
+            </h1>
+            <br>
+            <form class="form-horizontal" name="form" ng-submit="vm.submit()">
+              <div class="form-group">
+                <label for="recipe-name" class="col-sm-3 col-md-2 control-label">Recipe Name:</label>
+                <div class="col-sm-6 col-md-4">
+                  <input type="text" class="form-control" id="recipe-name" placeholder="Recipe Name" required
+                         ng-model="vm.recipe.food_name">
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <alert type="danger" class="submit-alert inline" ng-if="vm.submit.$error">
+                    {{vm.submit.$error.message}}
+
+                    <!--
+                    <br>
+                    <small>
+                      Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+                      <span ng-if="vm.submit.$error.id">
+                          and reference the code: {{vm.submit.$error.id}}
+                      </span>
+                    </small>
+                    -->
+                  </alert>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="ingredients" class="col-sm-3 col-md-2 control-label">Ingredients:</label>
+                <div class="col-sm-9 col-md-10">
+                  <textarea id="ingredients" name="ingredients" cols="70" rows="10"
+                            class="form-control"
+                            placeholder="2 cups flour
+                                          1tsp salt
+                                          2 sticks butter
+                            "
+                            ng-model="vm.recipe.ingredients"></textarea>
+                  <div class="hint">
+                    * For best results, please limit one ingredient per line.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="servings" class="col-xs-12 col-sm-3 col-md-2 control-label">Recipe Makes:</label>
+                <div class="col-xs-4 col-sm-2  col-md-1">
+                  <input type="text" class="form-control" id="servings"
+                         ng-model="vm.recipe.serving_qty">
+                </div>
+                <div class="col-xs-8 col-sm-4  col-md-3">
+                  <input type="text" class="form-control" id="serving-name" placeholder="Serving"
+                         ng-model="vm.recipe.serving_unit">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-6 col-md-offset-2 col-md-4">
+                  <button type="submit" class="btn btn-success" ng-disabled="form.$invalid || vm.submit.$busy">
+                    Let's Go!
+                  </button>
+
+
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+  </div>
+  <!-- end container fluid -->
+</div>

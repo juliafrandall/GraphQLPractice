@@ -1,0 +1,77 @@
+<ol class="breadcrumb">
+  <li><a ui-sref="site.labs.twitter-analyzer.tweets">Twitter Diet Analyzer</a> &gt;</li>
+  <li class="active">View Tweet</li>
+</ol>
+<div class="container padding-top">
+  <h1 class="padding-bottom title-xs">
+    Real-Time Twitter Diet Analyzer
+    <sup>
+      <span class="label label-info"> Beta </span>
+    </sup>
+  </h1>
+  <div class="row bg-white padding">
+    <div class="col-md-8">
+      <h4>
+        a tweet from <a href="https://twitter.com/{{vm.tweet.user}}" target="_blank">@{{vm.tweet.user}}</a>
+        <span class="nobr" am-time-ago="vm.tweet.time | amUtc | noFutureDate"></span>:
+      </h4>
+      <br>
+      <twitter-widget twitter-widget-id="vm.tweet.tweet_id"></twitter-widget>
+      <br>
+      <table class="table table-striped" ng-show="vm.tweet.foods.length">
+        <thead>
+        <tr>
+          <th>Qty</th>
+          <th>Unit</th>
+          <th>Food</th>
+          <th>Calories</th>
+          <th>Weight</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="food in vm.tweet.foods">
+          <td>{{food.serving_qty || 1}}</td>
+          <td>{{food.serving_unit}}</td>
+          <td>
+            <a ui-sref="site.go({redirectType: 'usda', item_id: food.ndb_no})">
+              {{food.food_name}}
+            </a>
+          </td>
+          <td>
+            {{food.nf_calories}} kcal
+          </td>
+          <td>{{food.serving_weight_grams}} g</td>
+        </tr>
+        </tbody>
+      </table>
+      <p>
+        <a href="#" ui-sref="site.labs.twitter-analyzer.tweets">&laquo; Back to Twitter Diet Analyzer</a>
+        <a tweet-reply="vm.tweet" target="_blank" class="pull-right"></a>
+      </p>
+    </div>
+    <div class="col-md-4" ng-show="vm.total">
+      <div id="nutrition-label" nutrition-label="vm.total"></div>
+      <br>
+      <h4>Micronutrients</h4>
+      <table id="micronutrients" class="table table-striped table-fluid">
+        <tbody>
+        <tr ng-repeat="nutrient in vm.total.micronutrients" ng-show="$index < 3 || vm.total.micronutrients.showAll">
+          <td>
+            <strong>{{nutrient.name}}</strong>
+          </td>
+          <td class="nobr">
+            {{nutrient.value | number : nutrient.value < 0.5 ? 2 : 1}} {{nutrient.unit}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <button class="btn btn-success" type="button"
+                ng-click="vm.total.micronutrients.showAll = !vm.total.micronutrients.showAll">
+          <span ng-hide="vm.total.micronutrients.showAll">View All Micronutrients</span>
+          <span ng-show="vm.total.micronutrients.showAll">View Less Micronutrients</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

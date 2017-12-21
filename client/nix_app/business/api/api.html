@@ -1,0 +1,283 @@
+<!-- Banner -->
+<div class="body">
+  <div class="container-fluid container-banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+
+          <h1 class="heading-light">
+            Nutrition &amp; Exercise API
+          </h1>
+          <h3>
+            Now powering 1000+ health and fitness apps!
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Tracking -->
+  <div class="container-fluid container-tracking">
+    <div class="container">
+      <h2 class="heading-light">
+        Features:
+      </h2>
+      <div class="plan-services">
+        <div class="service" ng-repeat="service in vm.planInclusive">
+          <div class="service-icon" ng-bind-html="service.icon">
+          </div>
+          <div class="service-info">
+            <h3 class="heading-light">
+              {{service.name}}
+            </h3>
+            <p class="intro">
+              {{service.description}}
+
+            </p>
+            <div ng-if="service.extraTemplate">
+              <ng-include src="service.extraTemplate"></ng-include>
+            </div>
+
+            <a ng-href="{{service.link}}">{{service.linkText}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Pricing -->
+  <div class="container-fluid container-pricing">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="heading-light">
+            API Pricing Plans
+          </h2>
+          <p class="intro">
+            Our pricing plans are designed to work with the most common app business models.
+          </p>
+        </div>
+      </div>
+
+      <!-- for desktop -->
+      <div class="row-pricing hidden-xs hidden-sm">
+        <div class="col-md-12">
+          <table class="table-api-pricing">
+            <colgroup>
+              <col>
+              <col>
+              <col>
+              <col>
+              <col>
+            </colgroup>
+            <tr>
+              <td></td>
+              <td ng-repeat="plan in vm.plans">
+                <h3 class="heading-light"
+                    ng-class="plan.headingClass"
+                    ng-bind-html="plan.price">
+                </h3>
+                <h4 class="heading-light">
+                  {{ plan.name }}
+                </h4>
+              </td>
+            </tr>
+            <tr class="bordered" ng-repeat="feature in vm.features">
+              <td>
+                <strong>{{ feature.label }}</strong>
+                <i class="fa fa-info-circle blue"
+                   tooltip="{{feature.tooltip}}"
+                   tooltip-placement="right"
+                   ng-if="feature.tooltip">
+                </i>
+              </td>
+              <td ng-repeat="plan in vm.plans"
+                  ng-bind-html="plan.features[feature.attribute]">
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td ng-repeat="plan in vm.plans">
+                <a ng-href="{{ plan.buttonLink }}" class="btn btn-lg btn-primary-outline btn-block">
+                  {{ plan.buttonText }}
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- for mobile & tablet -->
+      <div class="row-pricing hidden-md hidden-lg">
+        <div class="pricing-box" ng-repeat="plan in vm.plans">
+          <h3 class="heading-light"
+              ng-class="plan.headingClass"
+              ng-bind-html="plan.price">
+          </h3>
+          <h4 class="heading-light">
+            {{ plan.name }}
+          </h4>
+          <ul class="pricing-features">
+            <li ng-repeat="feature in vm.features" ng-if="plan.features[feature.attribute].length > 0">
+              <strong>
+                {{ feature.label }}
+                <i class="fa fa-info-circle blue"
+                   tooltip="{{feature.tooltip}}"
+                   ng-if="feature.tooltip">
+                </i>
+              </strong>
+              <div ng-bind-html="plan.features[feature.attribute]"></div>
+            </li>
+          </ul>
+          <a ng-href="{{ plan.buttonLink }}" class="btn btn-lg btn-primary-outline btn-block">
+            {{ plan.buttonText }}
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <p class="intro">If you have a freemium app business model, sell a hardware product, or have more than 100K monthly active users,
+            please <a ng-href="#contact-form">contact us</a>
+            to discuss a customized pricing plan to fit your needs.
+          </p>
+          <p class="intro">
+            <i class="fa fa-download"></i> Interested in bulk database licensing?  Please <a ng-href="#contact-form">contact us</a>.
+          </p>
+          <p class="intro">
+            <i class="fa fa-book"></i> Browse our
+            <a href="https://developer.nutritionix.com/docs/v2" target="_blank">
+              API Documentation
+            </a>
+          </p>
+          <p class="intro">
+            <i class="fa fa-list"></i> Read our
+            <a href="/apiterms" target="_blank">
+              API Terms and Conditions
+            </a>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Track App -->
+  <div class="container-fluid container-track-app">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h2 class="heading-light">
+            Nutritionix Track App
+          </h2>
+          <p class="intro">
+            Don't want to build your own app? Have your users use the Nutritionix Track App to log food, exercise, and
+            weight. Our API can
+            push data into your platform.
+          </p>
+          <p class="text-align-xs">
+            <a ng-href="#contact-form" class="btn btn-lg btn-primary-outline">Contact Us for Pricing</a>
+          </p>
+        </div>
+        <div class="col-md-offset-1 col-md-4">
+          <img src="/nix_assets/images/track_app.png" class="img-responsive center-block" alt="Track App">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Contact -->
+  <div class="container-fluid container-contact" id="contact-form">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8">
+          <h2 class="heading-light text-center">
+            Want to learn more? Contact Us.
+          </h2>
+          <form class="form-horizontal message-form" name="vm.contactForm" novalidate>
+            <alert type="success" ng-if="vm.contact.$success">{{vm.contact.$success}}</alert>
+
+            <div class="form-group">
+              <label for="name" class="sr-only">Your Name</label>
+              <div class="col-md-6"
+                   ng-class="{
+                      'has-error': vm.contactForm.name.$dirty && !(vm.contactForm.name.$error | isEmptyObject),
+                      'has-success': vm.contactForm.name.$dirty && vm.contactForm.name.$valid
+                   }"
+              >
+                <input type="text" class="form-control input-lg no-border-radius"
+                       id="name" name="name"
+                       ng-model="vm.model.name"
+                       placeholder="Your Name"
+                       required>
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </div>
+              <label for="email" class="sr-only">Your Email</label>
+              <div class="col-md-6"
+                   ng-class="{
+                      'has-error': vm.contactForm.email.$dirty && !(vm.contactForm.email.$error | isEmptyObject),
+                      'has-success': vm.contactForm.email.$dirty && vm.contactForm.email.$valid
+                   }"
+              >
+                <input type="email" class="form-control input-lg no-border-radius"
+                       id="email" name="email"
+                       ng-model="vm.model.email"
+                       placeholder="Your Email"
+                       required>
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message" class="sr-only">Message</label>
+              <div class="col-md-12"
+                   ng-class="{
+                      'has-error': vm.contactForm.message.$dirty && !(vm.contactForm.message.$error | isEmptyObject),
+                      'has-success': vm.contactForm.message.$dirty && vm.contactForm.message.$valid
+                   }"
+              >
+                <textarea name="message" class="form-control input-lg no-border-radius"
+                          id="message" name="message"
+                          ng-model="vm.model.message"
+                          cols="30" rows="10"
+                          placeholder="Message"
+                          required></textarea>
+                <i class="fa fa-commenting-o" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-12">
+                <div vc-recaptcha
+                     ng-model="vm.recaptcha.response"
+                     on-create="vm.recaptcha.widgetId = widgetId"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-8 text-center">
+                <alert class="tidy-alert" type="danger"
+                       ng-if="vm.contactForm.$submitted && vm.contactForm.$invalid">
+                  <div ng-show="vm.contactForm.$error.recaptcha">
+                    You need to pass recaptcha
+                  </div>
+                  <div ng-show="vm.contactForm.name.$invalid">
+                    Please enter your name
+                  </div>
+                  <div ng-show="vm.contactForm.email.$invalid">
+                    Please enter a valid email
+                  </div>
+                  <div ng-show="vm.contactForm.message.$invalid">
+                    Please enter a message
+                  </div>
+                </alert>
+                <alert class="tidy-alert" type="danger" ng-if="vm.contact.$error">{{vm.contact.$error}}</alert>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" class="btn btn-lg btn-primary-filled btn-block"
+                        ng-disabled="vm.contact.$busy"
+                        ng-click="vm.contact()"
+                >Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,224 @@
+<div class="container reports-nutrient" ng-show="vm.log && vm.me">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+        <img class="brand-print" ng-src="https://s3.amazonaws.com/cdn4-nutritionix/images/nutritionix_logo_500px.png"
+             alt="Nutritionix" src="https://s3.amazonaws.com/cdn4-nutritionix/images/nutritionix_logo_500px.png">
+        Nutrient Report
+      </h1>
+      <div class="row">
+        <div class="col-xs-6">
+          <div>
+            <table class="table-user-info">
+              <tr>
+                <td><strong>User ID</strong></td>
+                <td>{{vm.me.id}}</td>
+              </tr>
+              <tr>
+                <td><strong>Date Range</strong></td>
+                <td>{{vm.dateRange.begin | amDateFormat: 'M/D/YY'}} to {{vm.dateRange.displayEnd | amDateFormat: 'M/D/YY'}}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Days Tracked</strong></td>
+                <td>
+                  {{vm.daysTracked}}/{{vm.dateRange.daysCount}}
+                  ({{(vm.daysTracked / vm.dateRange.daysCount * 100) | number: 0}}%)
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Daily Calorie Goal</strong></td>
+                <td>{{vm.report.targets[vm.nixTrackApiClient.calories_nutrient]}}</td>
+              </tr>
+              <tr>
+                <td><strong>Calorie Goal Success</strong></td>
+                <td>
+                  {{vm.report.caloriesGoalSuccessDays}}/{{vm.report.caloriesDates.length}}
+                  ({{(vm.report.caloriesGoalSuccessDays / vm.report.caloriesDates.length * 100) | number: 0}}%)
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div>
+            <h4 class="text-center">
+              Daily Average
+            </h4>
+            <div class="report-label" nutrition-label="vm.report.label"></div>
+          </div>
+
+        </div>
+        <div class="col-xs-6">
+          <div class="panel panel-default" ng-if="vm.report.foodsToLimit.length">
+            <div class="panel-heading">Foods contributing highest calories:</div>
+            <div class="panel-body">
+              <ul>
+                <li ng-repeat="food in vm.report.foodsToLimit">
+                  {{food.food_name | ucwords}} (avg. {{food.avg_portion_calories | fdaRound: 'calories'}} cal per portion)
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">Percentage of Kcals</h3>
+            </div>
+            <div class="panel-body chart-wrapper">
+              <div class="canvas-graph">
+                <canvas ng-if="vm.log" class="chart chart-pie"
+                        chart-data="vm.report.pieChart.data"
+                        chart-labels="vm.report.pieChart.labels"
+                        chart-legend="true"
+                        chart-colors="['#1AA6B7', '#F0AB00', '#b3217c']"
+                        chart-options="{
+                          responsive: true,
+                          maintainAspectRatio: true,
+                          legend: {
+                              display: true,
+                              position: 'right',
+                              labels: {
+                                generateLabels: vm.report.pieChart.generateLabels
+                              },
+                              onClick: null
+                          },
+                          tooltips: {
+                            callbacks: {
+                              label: vm.report.pieChart.label
+                            }
+                          }
+                        }"
+                >
+                </canvas>
+              </div>
+              <div class="img-graph">
+                <div class="chart-container">
+                  <img>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 col1">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Calories</h3>
+        </div>
+        <div class="panel-body chart-wrapper">
+          <div class="canvas-graph">
+            <canvas ng-if="vm.log" class="chart chart-bar"
+                    chart-data="vm.report.caloriesChart.data"
+                    chart-labels="vm.report.chartLabels"
+                    chart-series="vm.report.caloriesChart.series"
+                    chart-legend="true"
+                    chart-options="{
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }"
+                    chart-dataset-override="vm.report.datasetOverride"
+            >
+            </canvas>
+          </div>
+          <div class="img-graph">
+            <div class="chart-container">
+              <img>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Carbs</h3>
+        </div>
+        <div class="panel-body chart-wrapper">
+          <div class="canvas-graph">
+            <canvas ng-if="vm.log" class="chart chart-bar"
+                    chart-data="vm.report.carbsChart.data"
+                    chart-labels="vm.report.chartLabels"
+                    chart-series="vm.report.carbsChart.series"
+                    chart-legend="true"
+                    chart-options="{
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }"
+            >
+            </canvas>
+          </div>
+          <div class="img-graph">
+            <div class="chart-container">
+              <img>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col1">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Protein</h3>
+        </div>
+        <div class="panel-body chart-wrapper">
+          <div class="canvas-graph">
+            <canvas ng-if="vm.log" class="chart chart-bar"
+                    chart-data="vm.report.proteinChart.data"
+                    chart-labels="vm.report.chartLabels"
+                    chart-series="vm.report.proteinChart.series"
+                    chart-legend="true"
+                    chart-options="{
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }"
+            >
+            </canvas>
+          </div>
+          <div class="img-graph">
+            <div class="chart-container">
+              <img>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Sodium</h3>
+        </div>
+        <div class="panel-body chart-wrapper">
+          <div class="canvas-graph">
+            <canvas ng-if="vm.log" class="chart chart-bar"
+                    chart-data="vm.report.sodiumChart.data"
+                    chart-labels="vm.report.chartLabels"
+                    chart-series="vm.report.sodiumChart.series"
+                    chart-legend="true"
+                    chart-options="{
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }"
+            >
+            </canvas>
+          </div>
+          <div class="img-graph">
+            <div class="chart-container">
+              <img>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    Nutrient report generated by Nutritionix.com
+  </div>
+</div>
+<div style="page-break-after: always"></div>
+<ng-include src="'/nix_app/reports/nutrient3.html'" ng-controller="ReportsNutrient3Ctrl as vm"></ng-include>

@@ -1,0 +1,71 @@
+<div class="container customer">
+  <div ng-if="!vm.customer">
+    <form name="vm.recaptcha.form">
+      <label class="control-label">
+        Confirm to Continue:
+      </label>
+      <div
+        vc-recaptcha
+        ng-model="vm.recaptcha.response"
+        on-create="vm.recaptcha.widgetId = widgetId"
+        on-success="vm.loadUserData(response)"
+        on-expire="vm.recaptcha.expired()"
+      ></div>
+    </form>
+  </div>
+
+  <div class="card-form-wrapper" ng-if="vm.customer">
+    <h1>
+      Update Form of Payment for <br>
+      {{vm.customer.description}}
+    </h1>
+
+    <form name="paymentForm" id="payment-form">
+      <div class="form-group">
+        <label>
+          Credit or debit card
+        </label>
+        <stripe-card class="stripe-card" card="vm.card" error="vm.error"
+          card-style="vm.stripeCardStyle"
+        ></stripe-card>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-8">
+          <alert type="danger" ng-show="vm.error">
+            Something went wrong:
+
+            {{vm.error.message || vm.error}}
+
+            Please try again or contact
+            <a href="mailto:billing@nutritionix.com">
+              billing@nutritionix.com
+            </a>
+          </alert>
+
+          <alert type="success" ng-show="vm.success">
+            <div class="success-check">
+              <i class="fa fa-check"></i>
+            </div>
+
+            Your card has been updated successfully. <br>
+            You may now close this page.
+          </alert>
+        </div>
+        <div class="col-xs-4">
+          <div class="buttons">
+            <button ng-if="vm.submit"
+                    ng-disabled="vm.error || vm.submit.$busy"
+                    class="btn btn-success" ng-click="vm.submit()">
+              <span ng-show="!vm.submit.$busy">Submit</span>
+              <span ng-show="vm.submit.$busy">
+                Submitting
+                <i class="fa fa-spinner fa-spin"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

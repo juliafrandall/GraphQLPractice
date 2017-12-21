@@ -1,0 +1,243 @@
+html {
+  overflow-y: scroll;
+}
+.navbar {
+    margin-bottom: 0px;
+    z-index: 1001;
+}
+
+.navbar > .container-fluid .navbar-brand {
+    margin-top: -5px;
+    @media(max-width: 1200px) {
+        margin-top: 0px;
+    }
+}
+
+.navbar-brand {
+    color: $official-green;
+    white-space: nowrap;
+    img {
+        @media(max-width: 1200px) {
+            margin-left: -5px;
+        }
+    }
+    span {
+      float: right;
+      margin: -19px -52px 0 0;
+      text-transform: uppercase;
+      color: #999;
+      font-size: 16px;
+    }
+}
+/*
+.navbar-collapse {
+    @media(max-width: 1200px) {
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0px 1px 2px;
+        position: absolute;
+        top: $navbar-height;
+    }
+}
+*/
+
+.navbar-collapse.ng-animate {
+  overflow: hidden;
+}
+
+#nav-menu {
+    a:hover {
+        color: $official-green;
+    }
+    @media(max-width: 1200px) {
+        padding-top: -15px;
+        li:hover {
+            background-color: #555;
+            a {
+                color: $official-green;
+            }
+        }
+    }
+}
+
+.navbar-toggle {
+    padding: 10px 15px;
+    @media(max-width: 1200px) {
+        margin-right: 5px;
+    }
+    margin-top: 6px;
+}
+
+.navbar-default {
+    background-color: #fff;
+
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+
+    // height: $navbar-height;
+}
+
+
+.toggle-active {
+    background-color: #ddd !important;
+}
+
+.toggle-inactive {
+    background-color: #f8f8f8 !important;
+}
+
+#nav-menu {
+    font-family: Open Sans, Sans-serif;
+    font-weight: 300;
+}
+
+#searchBar {
+    font-family: Open Sans, Sans-serif;
+
+    @media(min-width: 1200px) {
+      position: absolute;
+      left: 160px;
+      top: 9px;
+      width: 380px;
+    }
+
+
+    /*
+    @media(min-width: 1201px) {
+        height: auto !important;
+        display: inline-block !important;
+        position: absolute !important;
+        top: 5px;
+        left: 160px;
+        @include transition(none);
+    }
+    @media(max-width: 1200px) {
+        background-color: #fff;
+    }
+    */
+    .ui-select-bootstrap  {
+      .ui-select-choices-row {
+        a {
+          .te {
+            width: 220px;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+}
+
+#searchBar form .input-group {
+    margin: 4px 5px;
+    @media (min-width: 1200px) {
+        max-width: 420px;
+    }
+}
+
+.navbar-collapse.in {
+    overflow-y: visible;
+}
+
+.dropdown-menu {
+    width: 100%;
+    padding: 0;
+}
+
+.dropdown-menu > li > a {
+    padding: 10px 20px;
+}
+
+.dropdown-menu > li {
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu > li:last-child {
+    border-bottom: none;
+}
+
+.no-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    width: 100%;
+    padding: 5px;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0 0 4px 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+    box-sizing: border-box;
+    color: #999;
+}
+
+.wrap {
+    background-color: #fff;
+    margin-top: 60px;
+    @media(min-width: 768px) {
+        margin-bottom: 10px;
+        border: 1px solid #e7e7e7;
+    }
+}
+
+#navmenu-toggle {
+    position: relative;
+    .badge-alert {
+        position: absolute;
+        top: -5px;
+        right: -4px;
+    }
+}
+
+.collapsing {
+    -webkit-transition: height .10s ease !important;
+       -o-transition: height .10s ease !important;
+          transition: height .10s ease !important;
+}
+
+.alert-wrap {
+    position: fixed;
+    width: 80%;
+    left: 50%;
+    margin-left: -40%;
+    text-align: center;
+    top: 70px;
+    z-index: 10000;
+}
+.alert-sitewide {
+    display: inline-block;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.navbar-right .fa-mobile.left {
+  float: left;
+  margin: -4px 0 0 -20px;
+}
+
+.navbar-right .fa-mobile.right {
+  float: left;
+  margin: -4px -45px 0 32px;
+}
+
+.navbar-nav>li>a {
+  font-weight: 400;
+}
+
+
+
+.input-group>.ui-select-bootstrap>input.ui-select-search.form-control {
+  width: 100%;
+}

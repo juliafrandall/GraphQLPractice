@@ -1,0 +1,54 @@
+.banner {
+  display: block;
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(19,19,19, 0.1);
+  padding: 15px;
+  &:link, &:visited, &:hover {
+    color: rgb(51,51,51);
+    text-decoration: none;
+  }
+  &-icon {
+    float: left;
+    font-size: 3em;
+    @media(min-width: 768px) {
+      font-size: 6em;
+    }
+  }
+  &-title {
+    display: block;
+    font-size: 16px;
+    @extend %text-margins;
+    @media(min-width: 768px) {
+      font-size: 24px;
+    }
+  }
+  &-text {
+    display: block;
+    font-size: 13px;
+    @extend %text-margins;
+    @media(min-width: 768px) {
+      font-size: 16px;
+    }
+  }
+  .fa-chevron-right {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    font-size: 1.4em;
+    margin-top: -7px;
+    @media(min-width: 768px) {
+      font-size: 2.4em;
+      margin-top: -14px;
+    }
+  }
+}
+
+%text-margins {
+  margin: 0 20px 0 60px;
+  @media(min-width: 768px) {
+    margin: 0 40px 0 105px;
+  }
+}

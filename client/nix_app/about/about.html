@@ -1,0 +1,42 @@
+<div class="page-banner basil-bucket">
+    <div class="overlay-300"> </div>
+    <div class="overlay-text">
+      <article>
+        <h1> About Us</h1>
+        <h4 class="about-subtitle"> Our goal is to make it easier to understand what you eat.  Through our interactive nutrition tools and world-renowned nutrition database, we help millions of consumers understand nutrition every single day. </h4>
+      </article>
+    </div>
+</div>
+<div class="container">
+    <div class="text-center">
+        <h2>
+				The Team
+			</h2>
+    </div>
+    <div class="row">
+        <div ng-repeat="employee in vm.employees" class="col-sm-6 col-md-6 col-lg-6">
+            <div class="employee-container" ng-mouseenter="employee.active = true;" ng-mouseleave="employee.active=false;">
+                <div class="col-xs-12">
+                    <div class="profile-pic">
+                        <img class="aboutPicture"
+                             alt="{{employee.name}}"
+                             ng-show="!employee.active || !employee.image2"
+                             ng-src="{{employee.image}}">
+                        <img class="aboutPicture"
+                             alt="{{employee.name}}"
+                             ng-show="employee.active && employee.image2"
+                             ng-src="{{employee.image2}}">
+                    </div>
+                    <div class="profile-pic-container">
+                        <p class="bold-title"> {{employee.name}} </p>
+                        <p class="responsive-text"> {{employee.jobTitle}} </p>
+                    </div>
+                </div>
+                <div class="social-media-belt pull-right">
+                    <a ng-href="{{employee.github}}" target="_blank"><i class="fa fa-github-square fa-2x pull-right" ng-show="employee.github"></i></a>
+                    <a ng-href="{{employee.linkedin}}" target="_blank"><i class="fa fa-linkedin-square fa-2x pull-right" ng-show="employee.linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

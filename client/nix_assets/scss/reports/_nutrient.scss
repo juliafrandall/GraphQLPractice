@@ -1,0 +1,220 @@
+.reports-nutrient {
+  h1 {
+    padding-bottom: 10px;
+    border-bottom: 3px solid #333;
+    margin-bottom: 20px;
+  }
+  .table-user-info > tbody > tr > td {
+    padding-right: 15px;
+  }
+  .table > thead > tr > th:first-child,
+  .table > tbody > tr > td:first-child {
+    padding-left: 0;
+  }
+  .chart-placeholder {
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    line-height: 150px;
+    text-align: center;
+  }
+  .brand-print {
+    height: 50px;
+    margin: -20px 10px 0 0;
+  }
+  .footer {
+    margin-top: 30px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+
+    border-top: 1px solid #ccc;
+  }
+
+  .canvas-graph {
+    display: block;
+  }
+
+  .img-graph {
+    display: none;
+  }
+
+  @media print {
+    .brand-print {
+      height: 32px;
+      margin: -12px 20px 0 0;
+    }
+    h1 {
+      font-size: 24px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #333;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    .table-user-info>tbody>tr>td {
+      padding-right: 15px;
+    }
+    table>thead>tr>th,
+    .table>thead>tr>th,
+    .panel-title {
+      font-size: 11px;
+    }
+
+    .table>thead>tr>th:first-child,
+    .table>tbody>tr>td:first-child {
+      padding-left: 0;
+    }
+    table>tbody>tr>td,
+    .table>tbody>tr>td {
+      padding-top:0 !important;
+      padding-bottom:0 !important;
+      font-size: 10px;
+    }
+
+    .col1 {
+      width: 50%;
+      float: left;
+    }
+    .col2 {
+      width: 50%;
+      float: right;
+    }
+    .chart-placeholder {
+      border: 1px solid #ddd;
+      margin: 0 auto;
+      line-height: 150px;
+      text-align: center;
+    }
+    .footer {
+      width: 100%;
+      padding-top: 6px;
+      font-size: 10px;
+      border-top: 1px solid #ccc;
+      /*
+      position: absolute;
+      bottom: 0;
+      left: auto;
+      */
+    }
+
+    .canvas-graph {
+      display: none;
+    }
+
+    .img-graph {
+      display: block;
+    }
+  }
+  .report-label .nutritionLabel {
+    margin: 0 auto 30px auto;
+  }
+}
+
+.panel-log-food {
+  border-left: none;
+  border-right: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+
+  .panel-heading {
+    background-color: #eee;
+    -webkit-print-color-adjust: exact !important;
+    color: #333;
+    margin: -1px -1px 0 -1px;
+    cursor: pointer;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+
+    .panel-title {
+      float: left;
+
+      span {
+        display: block;
+
+        &:nth-child(2) {
+          font-size: 12px;
+          padding-top: 2px;
+        }
+      }
+    }
+
+    .progress-wrap {
+      margin-left: 60px;
+    }
+
+    .target-calories {
+      float: right;
+    }
+
+    .target-calories,
+    .current-calories {
+      font-weight: normal;
+      font-size: 12px;
+      color: #999;
+      padding-bottom: 2px;
+      span {
+        color: #333;
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+
+    .calorie-progress {
+      margin-bottom: 2px;
+      height: 10px;
+      line-height: 10px;
+      background-color: #ddd;
+
+      .progress-bar {
+        background-color: #28A54C;
+        &.warning {
+          background-color: orange;
+        }
+        &.danger {
+          background-color: #DC0000;
+        }
+      }
+    }
+  }
+
+  .list-group-item {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    cursor: pointer;
+  }
+
+  .block {
+    display: block;
+    font-weight: normal;
+    padding-top: 2px;
+  }
+
+  .item-serving {
+    display: block;
+    font-size: 11px;
+    color: #999;
+  }
+
+  .badge-calorie {
+    background-color: transparent;
+    font-size: 13px;
+    border-radius: 12px;
+    margin-top: 7px;
+    color: #28A54C;
+    font-weight: bold;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+
+    .note {
+      text-align: right;
+    }
+  }
+
+  .grey {
+    color: #999;
+  }
+}

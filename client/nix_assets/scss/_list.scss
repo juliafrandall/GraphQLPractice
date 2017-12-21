@@ -1,0 +1,157 @@
+.created-by {
+  margin: 20px 0 0 50px;
+
+  &-photo, &-icon {
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    float: left;
+    margin: -8px 0 0 -50px;
+  }
+
+  &-photo {
+    border-radius: 50%;
+    img {
+      max-height: 42px;
+      max-width: 42px;
+    }
+  }
+}
+
+.edit-list-link {
+  clear: both;
+  padding-top: 10px;
+}
+
+.list-diets {
+  clear: both;
+  margin-top: 20px;
+
+  .badge {
+    margin-right: 5px;
+  }
+}
+
+.table-food-list {
+  thead {
+    tr {
+      th {
+        text-align:center;
+        &:nth-child(1) {
+          text-align: left;
+          width: 60px;
+        }
+        &:nth-child(2) {
+          text-align: left;
+        }
+
+        &:nth-child(4) {
+          width: 30px;
+        }
+
+        /*span:after {
+        font-family: 'FontAwesome';
+        content: "\f0dc";
+        color: #666;
+        margin-left: 8px;
+        }*/
+      }
+    }
+  }
+  tbody {
+    tr>td {
+      vertical-align: middle;
+      text-align: center;
+      &:nth-child(1) {
+        img {
+          max-width: 100px;
+          max-height: 50px;
+        }
+      }
+      &:nth-child(2) {
+        text-align: left;
+        a {
+          font-size: 16px;
+        }
+      }
+
+      .list-measure {
+        white-space: nowrap;
+
+        input {
+          width: 50px;
+        }
+
+        select {
+          margin-top: 1px;
+          width: 100px;
+        }
+      }
+    }
+  }
+}
+
+
+.food-lists {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    display: table;
+    width: 100%;
+    &:hover {
+      background-color: #fafafa;
+    }
+    .food-thumb {
+      display: table-cell;
+      width: 85px;
+      vertical-align: middle;
+      @media(min-width: 768px) {
+        width: 105px;
+      }
+    }
+    .food-description {
+      display: table-cell;
+      vertical-align: middle;
+      padding-left: 20px;
+      p {
+        font-size: 16px;
+        margin-bottom: 0;
+        @media(min-width: 768px) {
+          font-size: 18px;
+        }
+      }
+      .created-by {
+        margin: 4px 0 0 0;
+        .created-by-photo,
+        .created-by-icon {
+          height: 20px;
+          width: 20px;
+          float: none;
+          display: inline-block;
+          margin-left: 3px;
+          margin-bottom: -5px;
+          img {
+            max-height: 22px;
+            max-width: 22px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.search-bar {
+  background-color: #fafafa;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  .input-group {
+    @media(min-width: 768px) {
+      max-width: 400px;
+    }
+  }
+}

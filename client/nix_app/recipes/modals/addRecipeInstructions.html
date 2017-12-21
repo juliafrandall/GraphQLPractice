@@ -1,0 +1,35 @@
+<form ng-submit="modal.submit()">
+<div class="modal-header">
+  <button type="button" class="close" ng-click="modal.close()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h3 class="modal-title">Recipe Instructions</h3>
+</div>
+<div class="modal-body">
+
+  <div class="form-group">
+        <textarea class="form-control" cols="20" rows="10"
+                  ng-model="vm.recipe.directions"
+                  placeholder="1. Prep all of the vegetables.
+2.  Bake at 375 degrees for 20 minutes.
+3.  Let cool for 5 minutes before serving."></textarea>
+    </div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" type="submit">Save</button>
+  <button class="btn btn-default" type="button" ng-click="modal.close()">Cancel</button>
+
+
+  <alert class="submit-alert" type="danger" ng-if="modal.$error">
+    <span>An unexpected server error has occurred.</span>
+    <br>
+    <small>
+      Please email <a href="mailto:support@nutritionix.com">support@nutritionix.com</a>
+      <span ng-if="modal.$error.id">
+        and reference the error code: {{modal.$error.id}}
+      </span>
+    </small>
+  </alert>
+</div>
+</form>

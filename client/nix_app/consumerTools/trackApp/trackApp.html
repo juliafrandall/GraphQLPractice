@@ -1,0 +1,215 @@
+<div class="container-fluid track-app-landing">
+  <div class="row">
+    <div class="col col1">
+      <div class="colwrap">
+
+        <p class="track-logo">
+          <img alt="Nutritionix" title="Nutritionix" class="img-responsive center-block"
+               ng-src="https://d2eawub7utcl6.cloudfront.net/assets/nix_track2.png" alt="Nutritionix Track">
+        </p>
+        <h1 class="sr-only">
+          Nutritionix Track
+        </h1>
+        <h2 class="track-app-intro top">
+          Log everything you eat in as little as 60 seconds per day.
+        </h2>
+
+        <div class="hidden-xs hidden-sm">
+          <div class="quotes-wrap">
+            <div class="app-testimonial">
+              <slick class="quotes" adaptive-height="true" arrows="false" fade="true">
+                <div ng-repeat="quote in vm.quotes" style="background-color: #fff;">
+                  &#8220;{{ quote.text }}&#8221;
+                </div>
+              </slick>
+            </div>
+            <div class="app-testimonial-author">
+              <slick class="quote-authors" as-nav-for=".quotes" arrows="false" autoplay="true" fade="true"
+                     autoplay-speed="5000">
+                        <span ng-repeat="quote in vm.quotes" style="background-color: #fff;">
+                        {{ quote.author }}
+                      </span>
+              </slick>
+            </div>
+
+          </div>
+          <div fb-like></div>
+          <div class="download-track-app">
+            <div class="promo-counter">
+              Join our growing community of over {{vm.stats.track_total_users | number}} users!
+            </div>
+            <h4>
+              Download the free app now
+            </h4>
+            <p>
+                    <span class="app-link">
+                        <a
+                          ga-track-event="['Outbound Link', 'click', 'https://itunes.apple.com/us/app/track-food-tracker-by-nutritionix/id1061691342?ls=1&mt=8']"
+                          href="https://itunes.apple.com/us/app/track-food-tracker-by-nutritionix/id1061691342?ls=1&mt=8">
+                            <img src="nix_assets/images/Download_on_the_App_Store_Badge_US-UK_135x40.svg"
+                                 alt="Download on the App Store" title="Download on the App Store">
+                        </a>
+                    </span>
+              &nbsp;
+              <span class="app-link">
+                        <a
+                          ga-track-event="['Outbound Link', 'click', 'https://play.google.com/store/apps/details?id=com.nutritionix.nixtrack&hl=en']"
+                          href="https://play.google.com/store/apps/details?id=com.nutritionix.nixtrack&hl=en">
+                            <img src="/nix_assets/images/google-play-badge.png" width="135" height="40"
+                                 alt="Get it on Google Play" title="Get it on Google Play">
+                        </a>
+                    </span>
+              &nbsp;
+              <span class="app-link">
+                      <a ui-sref="account.cabinet.dashboard" class="btn btn-success btn-web-app"><i
+                        class="fa fa-desktop" aria-hidden="true"></i> Desktop</a>
+                    </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col col2 clearfix">
+      <div class="iphone6-wrap">
+        <div class="iphone6">
+          <slick id="screens" settings="vm.slickScreens">
+            <div class="screen"
+                 ng-repeat="feature in vm.features">
+              <img ng-src="{{ feature.screen }}" class="img-responsive" alt="feature.title" title="feature.title">
+            </div>
+          </slick>
+        </div>
+      </div>
+      <slick id="highlights" settings="vm.slickHighlights">
+        <div class="highlight highlight{{ $index }}"
+             ng-repeat="feature in vm.features track by $index"
+             ng-class="vm.fade($index)">
+          <div class="as-table">
+            <div class="as-table-cell">
+              <h4>{{ feature.title }}</h4>
+              <p>{{ feature.text }}</p>
+            </div>
+          </div>
+        </div>
+      </slick>
+
+    </div>
+    <div class="col col3 text-center hidden-md hidden-lg">
+      <div class="quotes-wrap">
+        <div class="app-testimonial">
+          <slick class="quotes2" adaptive-height="true" arrows="false" fade="true">
+            <div ng-repeat="quote in vm.quotes" style="background-color: #fff;">
+              &#8220;{{ quote.text }}&#8221;
+            </div>
+          </slick>
+        </div>
+        <p class="app-testimonial-author">
+          <slick class="quote-authors2" as-nav-for=".quotes2" arrows="false" autoplay="true" fade="true"
+                 autoplay-speed="5000">
+                      <span ng-repeat="quote in vm.quotes" style="background-color: #fff;">
+                      {{ quote.author }}
+                    </span>
+          </slick>
+        </p>
+      </div>
+      <div fb-like></div>
+      <div class="download-track-app">
+        <div class="promo-counter">
+          Join our growing community of over {{vm.stats.track_total_users | number}} users!
+        </div>
+        <h4>
+          Download the free app now
+        </h4>
+        <p>
+                  <span class="app-link">
+                      <a
+                        ga-track-event="['Outbound Link', 'click', 'https://itunes.apple.com/us/app/track-food-tracker-by-nutritionix/id1061691342?ls=1&mt=8']"
+                        href="https://itunes.apple.com/us/app/track-food-tracker-by-nutritionix/id1061691342?ls=1&mt=8">
+                          <img src="nix_assets/images/Download_on_the_App_Store_Badge_US-UK_135x40.svg"
+                               alt="Download on the App Store" title="Download on the App Store">
+                      </a>
+                  </span>
+          &nbsp;
+          <span class="app-link">
+                      <a
+                        ga-track-event="['Outbound Link', 'click', 'https://play.google.com/store/apps/details?id=com.nutritionix.nixtrack&hl=en']"
+                        href="https://play.google.com/store/apps/details?id=com.nutritionix.nixtrack&hl=en">
+                          <img src="/nix_assets/images/google-play-badge.png" width="135" height="40"
+                               alt="Get it on Google Play" title="Get it on Google Play">
+                      </a>
+                  </span>
+        </p>
+        <p>
+          <a ui-sref="account.cabinet.dashboard" class="btn btn-success btn-web-app"><i class="fa fa-desktop"
+                                                                                        aria-hidden="true"></i> Desktop</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-info panel-send-sms">
+        <div class="panel-heading">
+          Send to your phone
+        </div>
+        <div class="panel-body">
+          <p>
+            We will text you a link to download the Track App.
+          </p>
+          <form class="form-horizontal" novalidate name="form" ng-submit="vm.sendAppLink()">
+
+            <!--<div vc-recaptcha
+                 ng-model="vm.recaptcha.response"
+                 on-create="vm.recaptcha.widgetId = widgetId"></div>-->
+
+            <label for="mobile">Your mobile number:</label>
+
+            <div class="input-group">
+              <div class="input-group-addon">+1</div>
+              <input type="tel" class="form-control" id="mobile"
+                     ng-model="vm.phone"
+                     placeholder="555-555-5555"
+                     us-phone required
+                     focus-if="vm.focus">
+
+              <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid">
+                  Send
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+          <div class="note">
+            Standard text messaging rates may apply.
+          </div>
+
+          <alert ng-if="vm.sendAppLink.$success" class="tidy-alert"
+                 dismiss-on-timeout="5000"
+                 type="success"
+                 close="vm.sendAppLink.clearMessages()">
+            SMS message link was successfully sent
+          </alert>
+          <alert ng-if="vm.sendAppLink.$error" class="tidy-alert"
+                 dismiss-on-timeout="5000"
+                 type="danger"
+                 close="vm.sendAppLink.clearMessages()">
+            Sorry, but we could not send you the link:
+            <br>
+            {{vm.sendAppLink.$error.message}}
+          </alert>
+          <alert ng-if="form.$submitted && form.$error.recaptcha" class="tidy-alert"
+                 type="danger">
+            You need to pass recaptcha
+          </alert>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div mini title="Want to use the Track app for your business? Contact us"></div>

@@ -1,0 +1,85 @@
+<div class="container bg-white">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+        Food Lists
+      </h1>
+      <p class="intro">
+        Want to learn more about foods that fit with your diet?
+        Browse our food lists, curated by our in-house team of nutrition experts.
+      </p>
+
+      <div class="search-bar">
+        <div class="input-group">
+          <input type="text" class="form-control"
+                 placeholder="Search Lists"
+                 ng-model="vm.search"
+                 ng-change="vm.setPage(1)"
+          >
+          <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </span>
+        </div>
+      </div>
+
+      <div ng-if="vm.lists.length == 0">
+        <p>
+          There are no lists
+          <span ng-if="!vm.search">to display</span>
+          <span ng-if="vm.search">matching your query</span>
+        </p>
+      </div>
+      <div ng-if="vm.lists.length > 0">
+        <ul class="food-lists">
+          <li ng-repeat="list in vm.lists" class="clearfix"
+              ui-sref="site.listDetail({id: list.id, name: (list.name | cleanurl)})">
+            <div class="food-thumb">
+             <img class="img-responsive center-block" ng-src="{{ list.photo.thumb || '//d2eawub7utcl6.cloudfront.net/images/nix-apple-grey.png' }}" alt="{{list.name}}">
+            </div>
+            <div class="food-description">
+              <p>
+                <a href ui-sref="site.listDetail({id: list.id, name: (list.name | cleanurl)})">
+                {{list.name}}
+                </a>
+              </p>
+              <div class="created-by">
+                By {{list.user_name}}
+                <span ng-if="!list.user_profile_link">{{list.user_name}}</span>
+                <div ng-class="{'created-by-photo': list.user_photo, 'created-by-icon': !list.user_photo}">
+                  <img ng-src="{{list.user_photo}}" alt="{{list.user_name}}"
+                       ng-if="list.user_photo"
+                  >
+                  <i class="fa fa-3x fa-user"  ng-if="!list.user_photo"></i>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center" ng-if="vm.lists.length && vm.total / vm.itemsPerPage > 1">
+    <div class="col-md-12">
+      <pagination class="pagination-sm"
+                  total-items="vm.total"
+                  ng-model="vm.currentPage"
+                  ng-change="vm.setPage(vm.currentPage)"
+                  items-per-page="vm.itemsPerPage"
+                  boundary-links="true"
+                  max-size="7"
+                  href-pattern="'/lists[?page={page}]'">
+      </pagination>
+    </div>
+  </div>
+  <div class="row padding-bottom" ng-if="vm.lists.length && vm.total / vm.itemsPerPage > 1">
+    <div class="col-md-offset-3 col-md-6">
+      <pagination-info total-items="vm.total"
+                       current-page="vm.currentPage"
+                       items-per-page="vm.itemsPerPage">
+      </pagination-info>
+    </div>
+  </div>
+</div>

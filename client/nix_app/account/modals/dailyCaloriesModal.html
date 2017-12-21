@@ -1,0 +1,14 @@
+<div class="modal-body">
+  <daily-calories-calculator
+    enable-user-calories-widget
+    user-daily-calories="vm.userDailyCalories"
+    sync-user-daily-calories
+    widget-control-buttons="[
+      {label: 'Set', action: vm.close, class: 'btn-success'},
+    ]"
+    control-buttons="[
+      {label: 'Close', action: vm.dismiss}
+    ]"
+  ></daily-calories-calculator>
+</div>
+<div class="modal-footer"></div>

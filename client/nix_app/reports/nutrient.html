@@ -1,0 +1,150 @@
+<div class="container reports-nutrient" ng-show="vm.log && vm.me">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+        <img class="brand-print" ng-src="https://s3.amazonaws.com/cdn4-nutritionix/images/nutritionix_logo_500px.png"
+             alt="Nutritionix" src="https://s3.amazonaws.com/cdn4-nutritionix/images/nutritionix_logo_500px.png">
+        Nutrient Report
+      </h1>
+      <div class="row">
+        <div class="col-xs-6">
+          <table class="table-user-info">
+            <tr>
+              <td><strong>User ID</strong></td>
+              <td>{{vm.me.id}}</td>
+            </tr>
+            <tr>
+              <td><strong>Date Range</strong></td>
+              <td>{{vm.dateRange.begin | amDateFormat: 'M/D/YY'}} to {{vm.dateRange.end | amDateFormat: 'M/D/YY'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Days Tracked</strong></td>
+              <td>
+                {{vm.daysTracked}}/{{vm.dateRange.daysCount}}
+                ({{(vm.daysTracked / vm.dateRange.daysCount * 100) | number: 0}}%)
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Daily Calorie Goal</strong></td>
+              <td>{{vm.report.targets[vm.nixTrackApiClient.calories_nutrient]}}</td>
+            </tr>
+            <tr>
+              <td><strong>Calorie Goal Success</strong></td>
+              <td>
+                {{vm.report.caloriesGoalSuccessDays}}/{{vm.report.caloriesByDates.dates.length}}
+                ({{(vm.report.caloriesGoalSuccessDays / vm.report.caloriesByDates.dates.length * 100) | number: 0}}%)
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-xs-6">
+          <div class="panel panel-default" ng-if="vm.report.foodsToLimit.length">
+            <div class="panel-heading">Foods contributing highest calories:</div>
+            <div class="panel-body">
+              <ul>
+                <li ng-repeat="food in vm.report.foodsToLimit">
+                  {{food.food_name | ucwords}} (avg. {{food.avg_portion_calories | fdaRound: 'calories'}} cal per portion)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        Nutrient Averages
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col{{column}}" ng-repeat="column in [1,2]">
+      <table class="table" ng-repeat="group in vm.report.nutrientGroups.names[column]">
+        <thead>
+        <tr>
+          <th>{{group}}</th>
+          <th>Daily Avg.</th>
+          <!--<th>Unit</th>
+          <th>Goal</th>
+          <th>%</th>
+        -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="nutrient in vm.report.nutrientGroups[group]">
+          <td>{{nutrient.name}}</td>
+          <td>
+            {{(vm.report.full_nutrients | nutrient: nutrient.id) &&
+            vm.report.round(
+            (vm.report.full_nutrients | nutrient: nutrient.id: 'value') / vm.daysTracked,
+            nutrient.id) || '-'}}
+            {{(vm.report.full_nutrients | nutrient: nutrient.id) &&
+            (vm.report.full_nutrients | nutrient: nutrient.id: 'unit') || '-'}}
+          </td>
+          <!--<td>{{(vm.report.full_nutrients | nutrient: nutrient.id) &&
+            (vm.report.full_nutrients | nutrient: nutrient.id: 'unit') || '-'}}
+          </td>-->
+          <!--
+          <td>
+            {{vm.report.targets[nutrient.id] &&
+            vm.report.round(vm.report.targets[nutrient.id], nutrient.id) || '-'}}
+          </td>
+          <td>
+            {{vm.report.targets[nutrient.id] && (vm.report.full_nutrients | nutrient: nutrient.id) &&
+            ((vm.report.full_nutrients | nutrient: nutrient.id: 'value') / vm.daysTracked /
+            vm.report.targets[nutrient.id] * 100 | number: 0) + '%' || '-'}}
+          </td>
+        -->
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col1">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">{{vm.dateRange.daysCount}} Day Calorie Graph</h3>
+        </div>
+        <div class="panel-body">
+          <div class="canvas-graph">
+            <canvas ng-if="vm.log" class="chart chart-line"
+                    chart-data="vm.report.caloriesChart.data"
+                    chart-labels="vm.report.caloriesChart.labels"
+                    chart-series="vm.report.caloriesChart.series"
+                    chart-legend="true"
+                    chart-options="{
+                      responsive: true,
+                      maintainAspectRatio: true
+                  }"
+            >
+            </canvas>
+          </div>
+          <div class="img-graph">
+            <div class="chart-container">
+              <img>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">Sources of Calories</h3>
+        </div>
+        <div class="panel-body">
+          <div class="chart-placeholder" style="width:150px;">
+            Chart
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="footer">
+    Nutrient report generated by Nutritionix.com
+  </div>
+</div>

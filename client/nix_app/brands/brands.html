@@ -1,0 +1,78 @@
+<div class="statbar-wrap"><div statbar> </div></div>
+<div class="container">
+    <div class="row">
+        <div class="brands-detail-background">
+            <h1 class='brand-title'> {{vm.typeName}} Brands </h1>
+            <h4 class="brand-subtitle">
+              Find your favorite {{vm.typeHintName}}s's nutrition information
+            </h4>
+        </div>
+    </div>
+
+  <div class="row" ng-if="vm.type === 'restaurant'">
+    <div ads></div>
+  </div>
+
+    <div class="row bg-white padding">
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-sm-6 padding-bottom">
+                    <div class="input-group">
+                        <input type="text" placholder="Search By Brand Name" class="form-control"
+                               ng-model="vm.navigationState.params.search"
+                               ng-model-params="{debounce: 500}"
+                               ng-change="vm.setPage(1)">
+                        <span class="input-group-addon">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-6 padding-bottom text-right">
+                    <a class="btn btn-success" ui-sref="site.brandsList.navigate({type: vm.switchType})">
+                    Browse {{vm.switchTypeName}} Brands
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="brands-wrap">
+                    <div class="brand-grid" ng-repeat="brand in vm.brands">
+                        <a class="block" ui-sref="site.brandsDetail.navigate({brand_name: (brand.name | cleanurl), id: brand.id})">
+                            <div class="brand-container">
+                                <div class="brand-logo">
+                                    <img ng-show="brand.logo" ng-src="{{brand.logo}}" alt="{{brand.name}}">
+                                </div>
+                                <div class="brand-name-container">
+                                    <p> {{brand.name}}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center" ng-show="vm.brands.length && vm.total / vm.itemsPerPage > 1">
+                <div class="col-md-12">
+                    <pagination class="pagination-sm"
+                                total-items="vm.total"
+                                ng-model="vm.currentPage"
+                                ng-change="vm.setPage(vm.currentPage)"
+                                items-per-page="vm.itemsPerPage"
+                                boundary-links="true"
+                                max-size="7"
+                                state="vm.navigationState">
+                    </pagination>
+                </div>
+            </div>
+            <div class="row padding-bottom" ng-if="vm.brands.length && vm.total / vm.itemsPerPage > 1">
+                <div class="col-md-offset-3 col-md-6">
+                    <pagination-info total-items="vm.total"
+                                     current-page="vm.currentPage"
+                                     items-per-page="vm.itemsPerPage">
+                    </pagination-info>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div ads></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default hidden-xs hidden-sm">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/" ui-sref="site.landing">
+                <img ng-src="//d2eawub7utcl6.cloudfront.net/images/nutritionix_logo_250px.png" alt="Nutritionix" src="//d2eawub7utcl6.cloudfront.net/images/nutritionix_logo_250px.png">
+                <span>Track</span>
+            </a>
+        </div>
+    </div>
+</nav>
+<slideout panel-selector="'#panel'" menu-selector="'#menu'">
+    <div id="menu">
+        <navbar></navbar>
+    </div>
+    <div id="panel" class="slideout-panel">
+        <nav class="navbar navbar-default hidden-md hidden-lg">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="slideout-nav-button">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="track">
+            <div class="container nav-spacer" ui-view></div>
+        </div>
+    </div>
+</slideout>
+
+
+
+
